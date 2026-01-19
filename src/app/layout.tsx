@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DevTools } from "./DevTools";
+import { ThemeProvider, ThemeSwitcher } from "@/components/theme";
 
 export const metadata: Metadata = {
   title: "Daily Pulse",
@@ -12,9 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased">
+        <ThemeProvider>
+          {children}
+          <ThemeSwitcher />
+          <DevTools />
+        </ThemeProvider>
       </body>
     </html>
   );

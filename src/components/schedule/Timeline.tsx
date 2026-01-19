@@ -43,7 +43,7 @@ function calculateDuration(start: string, end: string): number {
 export function Timeline({ meetings }: TimelineProps) {
   if (meetings.length === 0) {
     return (
-      <div className="text-stone-500 text-sm py-4">
+      <div className="text-sm py-4" style={{ color: 'var(--text-muted)' }}>
         No meetings scheduled — wide open for focused work.
       </div>
     );
@@ -61,21 +61,33 @@ export function Timeline({ meetings }: TimelineProps) {
             {/* Meeting row */}
             <div className="flex items-center gap-4 py-2 group">
               {/* Time */}
-              <div className="w-14 text-right text-sm text-stone-400 font-mono shrink-0">
+              <div
+                className="w-14 text-right text-sm font-mono shrink-0"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 {meeting.start}
               </div>
 
               {/* Bar */}
               <div className="flex-1">
-                <div className="h-10 rounded-lg bg-stone-100 group-hover:bg-stone-200/80 transition-colors flex items-center px-4 gap-3">
-                  <span className="text-sm font-medium text-stone-700 flex-1 truncate">
+                <div
+                  className="h-10 rounded-lg transition-colors flex items-center px-4 gap-3"
+                  style={{ backgroundColor: 'var(--bg-tertiary)' }}
+                >
+                  <span
+                    className="text-sm font-medium flex-1 truncate"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
                     {meeting.title}
                   </span>
-                  <span className="text-xs text-stone-400 shrink-0">
+                  <span className="text-xs shrink-0" style={{ color: 'var(--text-muted)' }}>
                     {duration}m
                   </span>
                   {meeting.attendees && meeting.attendees.length > 0 && (
-                    <span className="text-xs text-stone-400 hidden sm:block shrink-0">
+                    <span
+                      className="text-xs hidden sm:block shrink-0"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
                       {meeting.attendees.slice(0, 2).join(', ')}
                       {meeting.attendees.length > 2 && ` +${meeting.attendees.length - 2}`}
                     </span>
@@ -85,7 +97,17 @@ export function Timeline({ meetings }: TimelineProps) {
                       href={meeting.meetLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-2.5 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded transition shrink-0"
+                      className="px-2.5 py-1 text-xs font-medium rounded transition shrink-0"
+                      style={{
+                        color: 'var(--accent)',
+                        backgroundColor: 'transparent',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = 'var(--bg-accent-subtle)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                      }}
                       onClick={(e) => e.stopPropagation()}
                     >
                       Join
@@ -98,15 +120,18 @@ export function Timeline({ meetings }: TimelineProps) {
             {/* Gap between meetings */}
             {gap && (
               <div className="flex items-center gap-4 py-1">
-                <div className="w-14 text-right text-xs text-stone-300 font-mono shrink-0">
+                <div
+                  className="w-14 text-right text-xs font-mono shrink-0"
+                  style={{ color: 'var(--text-tertiary)' }}
+                >
                   {meeting.end}
                 </div>
                 <div className="flex-1 flex items-center gap-2 px-4">
-                  <div className="h-px flex-1 bg-stone-200" />
-                  <span className="text-xs text-stone-400">
+                  <div className="h-px flex-1" style={{ backgroundColor: 'var(--border-subtle)' }} />
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                     {gap.duration}m · {gap.suggestion}
                   </span>
-                  <div className="h-px flex-1 bg-stone-200" />
+                  <div className="h-px flex-1" style={{ backgroundColor: 'var(--border-subtle)' }} />
                 </div>
               </div>
             )}
@@ -116,10 +141,13 @@ export function Timeline({ meetings }: TimelineProps) {
 
       {/* End time */}
       <div className="flex items-center gap-4 py-2 opacity-60">
-        <div className="w-14 text-right text-sm text-stone-400 font-mono shrink-0">
+        <div
+          className="w-14 text-right text-sm font-mono shrink-0"
+          style={{ color: 'var(--text-muted)' }}
+        >
           {meetings[meetings.length - 1].end}
         </div>
-        <div className="text-xs text-stone-400 px-4">
+        <div className="text-xs px-4" style={{ color: 'var(--text-muted)' }}>
           Free for the rest of the day
         </div>
       </div>

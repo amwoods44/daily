@@ -30,6 +30,8 @@ import type {
   Risk,
   DailyBriefing,
 } from './mock-data';
+import type { VaultReminder, VaultItem } from './vault/types';
+import { CATEGORY_META } from './vault/types';
 
 // ============================================================================
 // TYPES
@@ -614,6 +616,115 @@ function bucketEmail(email: Email): UnifiedItem | null {
     ],
     originalData: email,
   };
+}
+
+// ----------------------------------------------------------------------------
+// VAULT REMINDERS
+// ----------------------------------------------------------------------------
+
+function daysUntilDate(dateStr: string): number {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const target = new Date(dateStr);
+  target.setHours(0, 0, 0, 0);
+  return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+export function bucketVaultReminder(
+  reminder: VaultReminder,
+  item: VaultItem
+): UnifiedItem | null {
+  // Skip dismissed or snoozed reminders
+  if (reminder.dismissed) return null;
+  if (reminder.snoozedUntil) {
+    const today = new Date().toISOString().split('T')[0];
+    if (reminder.snoozedUntil > today) return null;
+  }
+
+  const days = daysUntilDate(reminder.dueDate);
+  const meta = CATEGORY_META[item.category];
+
+  let bucket: TemporalBucket = 'this_week';
+  let urgencyScore = 40;
+
+  // Determine bucket based on priority and days
+  if (reminder.priority === 'high' || days <= 0) {
+    bucket = 'right_now';
+    urgencyScore = days <= 0 ? 95 : 85;
+  } else if (reminder.priority === 'medium' || days <= 3) {
+    bucket = 'today';
+    urgencyScore = 65 - days;
+  } else if (days <= 7) {
+    bucket = 'this_week';
+    urgencyScore = 45 - Math.floor(days / 2);
+  } else {
+    bucket = 'this_week';
+    urgencyScore = 30;
+  }
+
+  const urgencyReason =
+    days < 0
+      ? `${Math.abs(days)} days overdue`
+      : days === 0
+        ? 'Due today'
+        : `In ${days} days`;
+
+  return {
+    id: `vault-${reminder.id}`,
+    type: 'life_admin',
+    bucket,
+    title: reminder.title,
+    subtitle: item.name,
+    description: reminder.message,
+    daysUntil: days,
+    emoji: meta?.emoji || '📋',
+    urgencyScore,
+    urgencyReason,
+    severity: reminder.priority,
+    actions: [
+      {
+        id: 'view',
+        label: 'View',
+        icon: 'eye',
+        variant: 'primary',
+        handler: `vault:view:${item.id}`,
+      },
+      {
+        id: 'snooze',
+        label: 'Snooze',
+        icon: 'clock',
+        variant: 'ghost',
+        handler: `vault:snooze:${reminder.id}`,
+      },
+      {
+        id: 'dismiss',
+        label: 'Dismiss',
+        icon: 'x',
+        variant: 'ghost',
+        handler: `vault:dismiss:${reminder.id}`,
+      },
+    ],
+    originalData: { reminder, item },
+  };
+}
+
+// Helper to convert vault reminders to unified items (call from client components)
+export function bucketVaultReminders(
+  reminders: VaultReminder[],
+  items: VaultItem[]
+): UnifiedItem[] {
+  const itemMap = new Map(items.map((i) => [i.id, i]));
+  const result: UnifiedItem[] = [];
+
+  for (const reminder of reminders) {
+    const item = itemMap.get(reminder.itemId);
+    if (item) {
+      const unified = bucketVaultReminder(reminder, item);
+      if (unified) result.push(unified);
+    }
+  }
+
+  return result.sort((a, b) => b.urgencyScore - a.urgencyScore);
 }
 
 // ============================================================================

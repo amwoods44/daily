@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus, Heart, DollarSign, Users, Activity, ClipboardList } from 'lucide-react';
+import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus, Heart, DollarSign, Users, Activity, ClipboardList, Shield } from 'lucide-react';
+import Link from 'next/link';
 import type { PulseScore, HealthMetrics, FinanceOverview, Relationship, HabitToday, Vehicle } from '@/lib/mock-data';
 
 interface PulseCheckSectionProps {
@@ -14,29 +15,32 @@ interface PulseCheckSectionProps {
 }
 
 function TrendIcon({ trend }: { trend: 'up' | 'down' | 'stable' }) {
-  if (trend === 'up') return <TrendingUp className="w-3 h-3 text-emerald-500" />;
-  if (trend === 'down') return <TrendingDown className="w-3 h-3 text-red-500" />;
-  return <Minus className="w-3 h-3 text-stone-400" />;
+  if (trend === 'up') return <TrendingUp className="w-3 h-3" style={{ color: 'var(--success)' }} />;
+  if (trend === 'down') return <TrendingDown className="w-3 h-3" style={{ color: 'var(--error)' }} />;
+  return <Minus className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />;
 }
 
 function ScoreBar({ score, label, trend }: { score: number; label: string; trend: 'up' | 'down' | 'stable' }) {
   const getColor = (s: number) => {
-    if (s >= 80) return 'bg-emerald-500';
-    if (s >= 60) return 'bg-amber-500';
-    return 'bg-red-500';
+    if (s >= 80) return 'var(--success)';
+    if (s >= 60) return 'var(--warning)';
+    return 'var(--error)';
   };
 
   return (
     <div className="flex items-center gap-3">
-      <div className="w-24 text-xs text-stone-500">{label}</div>
-      <div className="flex-1 h-2 bg-stone-100 rounded-full overflow-hidden">
+      <div className="w-24 text-xs" style={{ color: 'var(--text-tertiary)' }}>{label}</div>
+      <div
+        className="flex-1 h-1.5 rounded-full overflow-hidden"
+        style={{ backgroundColor: 'var(--bg-tertiary)' }}
+      >
         <div
-          className={`h-full ${getColor(score)} transition-all`}
-          style={{ width: `${score}%` }}
+          className="h-full rounded-full transition-all"
+          style={{ width: `${score}%`, backgroundColor: getColor(score) }}
         />
       </div>
-      <div className="flex items-center gap-1 w-16">
-        <span className="text-xs font-medium text-stone-700">{score}</span>
+      <div className="flex items-center gap-1.5 w-14">
+        <span className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>{score}</span>
         <TrendIcon trend={trend} />
       </div>
     </div>
@@ -57,24 +61,27 @@ function SubSection({
   const [expanded, setExpanded] = useState(defaultExpanded);
 
   return (
-    <div className="border-b border-stone-100 last:border-b-0">
+    <div style={{ borderBottom: '1px solid var(--border-subtle)' }} className="last:border-b-0">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between py-3 group"
+        className="w-full flex items-center justify-between py-4 group"
       >
-        <div className="flex items-center gap-2">
-          <Icon className="w-4 h-4 text-stone-400" />
-          <span className="text-sm font-medium text-stone-700 group-hover:text-stone-900">
+        <div className="flex items-center gap-2.5">
+          <Icon className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+          <span
+            className="text-sm font-medium transition-colors"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             {title}
           </span>
         </div>
         {expanded ? (
-          <ChevronUp className="w-4 h-4 text-stone-400" />
+          <ChevronUp className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
         ) : (
-          <ChevronDown className="w-4 h-4 text-stone-400" />
+          <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
         )}
       </button>
-      {expanded && <div className="pb-4">{children}</div>}
+      {expanded && <div className="pb-5">{children}</div>}
     </div>
   );
 }
@@ -92,45 +99,58 @@ export function PulseCheckSection({
   const completedHabits = habitsToday.filter((h) => h.completed).length;
   const totalHabits = habitsToday.length;
 
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return 'var(--success)';
+    if (score >= 60) return 'var(--warning)';
+    return 'var(--error)';
+  };
+
   return (
-    <div className="bg-white rounded-xl border border-stone-200">
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        backgroundColor: 'var(--bg-card)',
+        border: '1px solid var(--border)',
+      }}
+    >
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between p-5 group"
+        className="w-full flex items-center justify-between p-6 group"
       >
-        <div className="flex items-center gap-4">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-stone-400 group-hover:text-stone-600">
+        <div className="flex items-center gap-5">
+          <h2
+            className="text-xs font-semibold uppercase tracking-[0.15em] transition-colors"
+            style={{ color: 'var(--text-muted)' }}
+          >
             Pulse Check
           </h2>
           {/* Overall Score Badge */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm ${
-                pulseScore.overall >= 80
-                  ? 'bg-emerald-500'
-                  : pulseScore.overall >= 60
-                    ? 'bg-amber-500'
-                    : 'bg-red-500'
-              }`}
+              className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm"
+              style={{
+                backgroundColor: getScoreColor(pulseScore.overall),
+                color: 'white',
+              }}
             >
               {pulseScore.overall}
             </div>
-            <span className="text-sm text-stone-500">Overall</span>
+            <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Overall</span>
           </div>
         </div>
         {expanded ? (
-          <ChevronUp className="w-4 h-4 text-stone-400" />
+          <ChevronUp className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
         ) : (
-          <ChevronDown className="w-4 h-4 text-stone-400" />
+          <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
         )}
       </button>
 
       {/* Content */}
       {expanded && (
-        <div className="px-5 pb-5 border-t border-stone-100">
+        <div className="px-6 pb-6" style={{ borderTop: '1px solid var(--border-subtle)' }}>
           {/* Score Breakdown */}
-          <div className="py-4 space-y-3">
+          <div className="py-5 space-y-3">
             <ScoreBar
               score={pulseScore.breakdown.responsiveness.score}
               label="Responsiveness"
@@ -159,39 +179,39 @@ export function PulseCheckSection({
           </div>
 
           {/* Subsections */}
-          <div className="border-t border-stone-100 pt-2">
+          <div style={{ borderTop: '1px solid var(--border-subtle)' }} className="pt-2">
             {/* Health */}
             <SubSection title="Health" icon={Heart}>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-stone-400">Sleep</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Sleep</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     {health.sleep.hours}h ({health.sleep.quality})
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">HRV</span>
-                  <p className="font-medium text-stone-700">{health.hrv} ms</p>
+                  <span style={{ color: 'var(--text-muted)' }}>HRV</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.hrv} ms</p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Steps</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Steps</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     {health.steps.toLocaleString()} / {health.stepsGoal.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Resting HR</span>
-                  <p className="font-medium text-stone-700">{health.restingHR} bpm</p>
+                  <span style={{ color: 'var(--text-muted)' }}>Resting HR</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.restingHR} bpm</p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Water</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Water</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     {health.waterGlasses} / {health.waterGoal} glasses
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Active Minutes</span>
-                  <p className="font-medium text-stone-700">{health.activeMinutes} min</p>
+                  <span style={{ color: 'var(--text-muted)' }}>Active Minutes</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.activeMinutes} min</p>
                 </div>
               </div>
             </SubSection>
@@ -200,42 +220,48 @@ export function PulseCheckSection({
             <SubSection title="Finance" icon={DollarSign}>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-stone-400">Checking</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Checking</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     ${finance.checking.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Savings</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Savings</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     ${finance.savings.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Credit Card</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Credit Card</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     ${finance.creditCardBalance.toLocaleString()} / ${finance.creditCardLimit.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <span className="text-stone-400">Investments</span>
-                  <p className="font-medium text-stone-700">
+                  <span style={{ color: 'var(--text-muted)' }}>Investments</span>
+                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                     ${finance.investmentValue.toLocaleString()}
-                    <span className={finance.investmentChange >= 0 ? 'text-emerald-600' : 'text-red-600'}>
+                    <span style={{ color: finance.investmentChange >= 0 ? 'var(--success)' : 'var(--error)' }}>
                       {' '}({finance.investmentChange >= 0 ? '+' : ''}{finance.investmentChange}%)
                     </span>
                   </p>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-stone-400">Monthly Spending</span>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="flex-1 h-2 bg-stone-100 rounded-full overflow-hidden">
+                  <span style={{ color: 'var(--text-muted)' }}>Monthly Spending</span>
+                  <div className="flex items-center gap-3 mt-2">
+                    <div
+                      className="flex-1 h-1.5 rounded-full overflow-hidden"
+                      style={{ backgroundColor: 'var(--bg-tertiary)' }}
+                    >
                       <div
-                        className="h-full bg-blue-500"
-                        style={{ width: `${(finance.monthlySpent / finance.monthlyBudget) * 100}%` }}
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${(finance.monthlySpent / finance.monthlyBudget) * 100}%`,
+                          backgroundColor: 'var(--accent)',
+                        }}
                       />
                     </div>
-                    <span className="text-xs text-stone-500">
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                       ${finance.monthlySpent.toLocaleString()} / ${finance.monthlyBudget.toLocaleString()}
                     </span>
                   </div>
@@ -245,16 +271,16 @@ export function PulseCheckSection({
 
             {/* Relationships */}
             <SubSection title="Relationships" icon={Users}>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2.5 text-sm">
                 {relationships.slice(0, 5).map((rel) => {
                   const isOverdue = rel.daysSinceContact > rel.targetFrequencyDays;
                   return (
                     <div key={rel.id} className="flex items-center justify-between">
                       <div>
-                        <span className="font-medium text-stone-700">{rel.name}</span>
-                        <span className="text-stone-400 ml-2">{rel.type}</span>
+                        <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>{rel.name}</span>
+                        <span className="ml-2" style={{ color: 'var(--text-muted)' }}>{rel.type}</span>
                       </div>
-                      <span className={isOverdue ? 'text-amber-600' : 'text-stone-400'}>
+                      <span style={{ color: isOverdue ? 'var(--warning)' : 'var(--text-muted)' }}>
                         {rel.daysSinceContact}d ago
                       </span>
                     </div>
@@ -266,19 +292,24 @@ export function PulseCheckSection({
             {/* Habits */}
             <SubSection title="Habits" icon={Activity}>
               <div className="space-y-2">
-                <p className="text-sm text-stone-500 mb-3">
+                <p className="text-sm mb-3" style={{ color: 'var(--text-tertiary)' }}>
                   {completedHabits} of {totalHabits} completed today
                 </p>
                 {habitsToday.map(({ habit, completed }) => (
                   <div key={habit.id} className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                       <span>{habit.emoji}</span>
-                      <span className={completed ? 'text-stone-400 line-through' : 'text-stone-700'}>
+                      <span
+                        style={{
+                          color: completed ? 'var(--text-muted)' : 'var(--text-secondary)',
+                          textDecoration: completed ? 'line-through' : 'none',
+                        }}
+                      >
                         {habit.name}
                       </span>
                     </div>
                     {habit.streak > 0 && (
-                      <span className="text-xs text-amber-600">{habit.streak}🔥</span>
+                      <span className="text-xs" style={{ color: 'var(--warning)' }}>{habit.streak}🔥</span>
                     )}
                   </div>
                 ))}
@@ -291,10 +322,10 @@ export function PulseCheckSection({
                 <div className="space-y-3 text-sm">
                   {vehicles.map((vehicle) => (
                     <div key={vehicle.id}>
-                      <p className="font-medium text-stone-700">
+                      <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
                         {vehicle.year} {vehicle.make} {vehicle.model}
                       </p>
-                      <p className="text-stone-400">
+                      <p style={{ color: 'var(--text-muted)' }}>
                         {vehicle.mileage.toLocaleString()} miles · Next: {vehicle.nextService.type}
                       </p>
                     </div>
@@ -302,6 +333,26 @@ export function PulseCheckSection({
                 </div>
               </SubSection>
             )}
+
+            {/* Life Vault */}
+            <SubSection title="Life Vault" icon={Shield}>
+              <div className="text-sm">
+                <p className="mb-4" style={{ color: 'var(--text-tertiary)' }}>
+                  Track important documents, assets, and accounts with automatic reminders.
+                </p>
+                <Link
+                  href="/vault"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  <Shield className="w-4 h-4" />
+                  Open Vault
+                </Link>
+              </div>
+            </SubSection>
           </div>
         </div>
       )}

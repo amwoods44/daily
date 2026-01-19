@@ -73,13 +73,33 @@ function ActionButton({
   const baseStyles =
     size === 'small' ? 'px-2.5 py-1 text-xs' : 'px-3 py-1.5 text-sm';
 
-  const variantStyles = {
-    primary:
-      'bg-stone-900 text-white hover:bg-stone-800 active:scale-[0.98]',
-    secondary:
-      'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 active:scale-[0.98]',
-    ghost: 'text-stone-500 hover:text-stone-700 hover:bg-stone-100',
-    danger: 'bg-red-600 text-white hover:bg-red-700 active:scale-[0.98]',
+  // Build inline styles based on variant
+  const getVariantStyles = (variant: ItemAction['variant']) => {
+    switch (variant) {
+      case 'primary':
+        return {
+          backgroundColor: 'var(--accent)',
+          color: 'var(--text-on-accent)',
+        };
+      case 'secondary':
+        return {
+          backgroundColor: 'var(--bg-card)',
+          color: 'var(--text-secondary)',
+          border: '1px solid var(--border)',
+        };
+      case 'ghost':
+        return {
+          backgroundColor: 'transparent',
+          color: 'var(--text-muted)',
+        };
+      case 'danger':
+        return {
+          backgroundColor: 'var(--error)',
+          color: 'white',
+        };
+      default:
+        return {};
+    }
   };
 
   return (
@@ -88,7 +108,8 @@ function ActionButton({
         e.stopPropagation();
         onClick();
       }}
-      className={`font-medium rounded-lg transition-all flex items-center gap-1.5 ${baseStyles} ${variantStyles[action.variant]}`}
+      className={`font-medium rounded-lg transition-all flex items-center gap-1.5 active:scale-[0.98] ${baseStyles}`}
+      style={getVariantStyles(action.variant)}
     >
       {Icon && (
         <Icon className={size === 'small' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />
@@ -107,104 +128,130 @@ export function UnifiedItemCard({
 
   return (
     <div
-      className={`relative bg-white rounded-xl transition-all ${
-        isSecondary
-          ? 'p-4 border border-stone-200 hover:border-stone-300'
-          : 'p-5 border border-stone-200 shadow-sm hover:shadow-md'
+      className={`relative rounded-xl transition-all ${
+        isSecondary ? 'p-4' : 'p-4'
       }`}
+      style={{
+        backgroundColor: 'var(--bg-card)',
+        border: '1px solid var(--border)',
+        boxShadow: isSecondary ? 'none' : 'var(--shadow-sm)',
+      }}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3">
         {/* Type icon or emoji */}
-        <div className={`shrink-0 ${isSecondary ? 'mt-0.5' : 'mt-1'}`}>
+        <div className="shrink-0 mt-0.5">
           {item.emoji ? (
-            <span className={isSecondary ? 'text-base' : 'text-lg'}>
-              {item.emoji}
-            </span>
+            <span className="text-base">{item.emoji}</span>
           ) : (
             <TypeIcon
-              className={`text-stone-400 ${isSecondary ? 'w-4 h-4' : 'w-5 h-5'}`}
+              className="w-4 h-4"
+              style={{ color: 'var(--text-muted)' }}
             />
           )}
         </div>
 
-        {/* Content */}
+        {/* Content + Actions in single column */}
         <div className="flex-1 min-w-0">
-          {/* Title row */}
-          <div className="flex items-start justify-between gap-3 mb-1">
-            <div className="min-w-0">
-              <h4
-                className={`font-semibold text-stone-900 ${isSecondary ? 'text-sm' : 'text-base'}`}
-              >
-                {item.title}
-              </h4>
-              {item.subtitle && (
-                <p
-                  className={`text-stone-500 ${isSecondary ? 'text-xs' : 'text-sm'}`}
-                >
-                  {item.subtitle}
-                  {item.relationshipNote && (
-                    <span className="text-stone-400 italic">
-                      {' '}
-                      ({item.relationshipNote})
-                    </span>
-                  )}
-                </p>
-              )}
-            </div>
-
-            {/* Context badge */}
+          {/* Title row with inline badge */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <h4
+              className="font-medium text-sm"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {item.title}
+            </h4>
             {(item.time || item.urgencyReason) && (
-              <span className="text-xs text-stone-400 bg-stone-100 px-2 py-1 rounded-md shrink-0">
+              <span
+                className="text-xs px-1.5 py-0.5 rounded shrink-0"
+                style={{
+                  color: 'var(--text-muted)',
+                  backgroundColor: 'var(--bg-tertiary)',
+                }}
+              >
                 {item.time || item.urgencyReason}
               </span>
             )}
           </div>
 
+          {/* Subtitle */}
+          {item.subtitle && (
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              {item.subtitle}
+              {item.relationshipNote && (
+                <span style={{ color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
+                  {' '}({item.relationshipNote})
+                </span>
+              )}
+            </p>
+          )}
+
           {/* Description (for risks) */}
           {item.description && !isSecondary && (
-            <p className="text-sm text-stone-600 mt-2 leading-relaxed">
+            <p
+              className="text-sm mt-2 leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
               {item.description}
             </p>
           )}
 
           {/* AI Suggestion (for risks) */}
           {item.suggestedAction && !isSecondary && (
-            <div className="mt-4 p-4 bg-stone-50 rounded-lg border border-stone-100">
-              <p className="text-xs font-medium text-stone-400 uppercase tracking-wide mb-1">
+            <div
+              className="mt-3 p-3 rounded-lg"
+              style={{
+                backgroundColor: 'var(--bg-secondary)',
+                border: '1px solid var(--border-subtle)',
+              }}
+            >
+              <p
+                className="text-xs font-medium uppercase tracking-wide mb-1"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Suggested Action
               </p>
-              <p className="text-sm text-stone-700">{item.suggestedAction}</p>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                {item.suggestedAction}
+              </p>
             </div>
           )}
 
           {/* Severity badge for risks */}
           {item.severity && (
-            <div className="mt-3">
+            <div className="mt-2">
               <span
-                className={`text-xs font-medium px-2 py-1 rounded ${
-                  item.severity === 'high'
-                    ? 'bg-red-50 text-red-700'
-                    : item.severity === 'medium'
-                      ? 'bg-amber-50 text-amber-700'
-                      : 'bg-stone-100 text-stone-600'
-                }`}
+                className="text-xs font-medium px-2 py-0.5 rounded"
+                style={{
+                  backgroundColor:
+                    item.severity === 'high'
+                      ? 'var(--error-subtle)'
+                      : item.severity === 'medium'
+                        ? 'var(--warning-subtle)'
+                        : 'var(--bg-tertiary)',
+                  color:
+                    item.severity === 'high'
+                      ? 'var(--error)'
+                      : item.severity === 'medium'
+                        ? 'var(--warning)'
+                        : 'var(--text-secondary)',
+                }}
               >
                 {item.severity.toUpperCase()} SEVERITY
               </span>
             </div>
           )}
-        </div>
 
-        {/* Actions */}
-        <div className={`flex gap-2 shrink-0 ${isSecondary ? 'flex-col' : ''}`}>
-          {item.actions.slice(0, isSecondary ? 2 : 3).map((action) => (
-            <ActionButton
-              key={action.id}
-              action={action}
-              onClick={() => onAction(action.handler, item)}
-              size={isSecondary ? 'small' : 'default'}
-            />
-          ))}
+          {/* Actions - always below content */}
+          <div className="flex gap-1.5 flex-wrap mt-2">
+            {item.actions.slice(0, 3).map((action) => (
+              <ActionButton
+                key={action.id}
+                action={action}
+                onClick={() => onAction(action.handler, item)}
+                size="small"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -225,7 +272,7 @@ export function UnifiedItemList({
   if (items.length === 0) {
     if (emptyMessage) {
       return (
-        <div className="text-center py-8 text-stone-400">
+        <div className="text-center py-8" style={{ color: 'var(--text-muted)' }}>
           <p className="text-sm">{emptyMessage}</p>
         </div>
       );

@@ -261,14 +261,16 @@ export function CommandBar({
       setResult(null);
       setSuggestions(getCommandSuggestions('', { currentPage, recentQueries }));
     }
-  }, [isOpen, currentPage, recentQueries]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, currentPage]);
 
   // Update suggestions as user types
   useEffect(() => {
     const newSuggestions = getCommandSuggestions(input, { currentPage, recentQueries });
     setSuggestions(newSuggestions);
     setSelectedIndex(0);
-  }, [input, currentPage, recentQueries]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input, currentPage]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
