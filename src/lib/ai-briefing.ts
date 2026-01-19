@@ -72,15 +72,15 @@ export function getAdaptiveGreeting(name: string): string {
   const isWeekend = day === 0 || day === 6;
 
   if (isWeekend) {
-    if (day === 0) return `Happy Sunday, ${name}.`;
-    return `Happy Saturday, ${name}.`;
+    if (day === 0) return `Happy Sunday, ${name}`;
+    return `Happy Saturday, ${name}`;
   }
 
   if (hour >= 21) return `Working late, ${name}?`;
-  if (hour >= 17) return `Good evening, ${name}.`;
-  if (hour >= 13) return `Good afternoon, ${name}.`;
-  if (hour >= 11) return `Hey ${name}.`;
-  if (hour >= 5) return `Good morning, ${name}.`;
+  if (hour >= 17) return `Good evening, ${name}`;
+  if (hour >= 13) return `Good afternoon, ${name}`;
+  if (hour >= 11) return `Hey ${name}`;
+  if (hour >= 5) return `Good morning, ${name}`;
   return `Burning the midnight oil, ${name}?`;
 }
 

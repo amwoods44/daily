@@ -39,10 +39,14 @@
   --error: #B91C1C;
   --error-subtle: #FEE2E2;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
-  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.06);
-  --shadow-lg: 0 12px 32px rgba(28, 25, 23, 0.1);
+  /* Shadows - 3-tier system with depth */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.1), 0 16px 32px rgba(0, 0, 0, 0.12);
+
+  /* Critical alert glow */
+  --shadow-glow-accent: 0 0 0 1px var(--accent), 0 4px 12px rgba(194, 65, 12, 0.25);
 
   /* Fonts */
   --font-heading: "Playfair Display", Georgia, serif;
@@ -78,12 +82,12 @@
   --space-20: 80px;
   --space-24: 96px;
 
-  /* Premium border radius scale */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
-  --radius-2xl: 28px;
+  /* Premium border radius scale - sharper, more refined */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
   --radius-full: 9999px;
 }
 
@@ -811,68 +815,41 @@ code, pre, .font-mono {
 }
 
 /* ============================================
-   PREMIUM CARD SYSTEM
+   PREMIUM CARD SYSTEM - Shadow-based depth (no borders)
    ============================================ */
 
 .premium-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border: none;
+  border-radius: var(--radius-lg);
   padding: var(--space-6);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.02),
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.02);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s var(--ease-out-quart);
   overflow: hidden;
   position: relative;
 }
 
-/* Subtle top highlight for depth */
-.premium-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5) 20%,
-    rgba(255, 255, 255, 0.5) 80%,
-    transparent
-  );
-  opacity: 0.5;
-}
-
 .premium-card:hover {
-  border-color: var(--border-accent);
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 8px 16px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-1px);
 }
 
 .premium-card-lg {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-2xl);
+  border: none;
+  border-radius: var(--radius-xl);
   padding: var(--space-8);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.02),
-    0 4px 12px rgba(0, 0, 0, 0.03),
-    0 8px 24px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-lg);
   position: relative;
 }
 
-/* Featured/Hero card */
+/* Featured/Hero card - accent glow for emphasis */
 .premium-card-featured {
   background: var(--bg-card);
-  border: 2px solid var(--accent);
-  border-radius: var(--radius-2xl);
+  border: none;
+  border-radius: var(--radius-xl);
   padding: var(--space-10);
-  box-shadow: 0 8px 32px rgba(194, 65, 12, 0.08);
+  box-shadow: var(--shadow-glow-accent);
   position: relative;
   overflow: hidden;
 }
@@ -883,22 +860,19 @@ code, pre, .font-mono {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-subtle));
+  height: 3px;
+  background: var(--accent);
 }
 
-/* Hero Focus Card - THE one thing */
+/* Hero Focus Card - THE one thing (accent glow) */
 .hero-focus-card {
   background: var(--bg-card);
-  border: 2px solid var(--accent);
-  border-radius: var(--radius-2xl);
+  border: none;
+  border-radius: var(--radius-xl);
   padding: var(--space-8);
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(194, 65, 12, 0.1),
-    0 4px 24px rgba(194, 65, 12, 0.08),
-    0 12px 48px rgba(194, 65, 12, 0.05);
+  box-shadow: var(--shadow-glow-accent);
 }
 
 .hero-focus-card::before {
@@ -908,9 +882,7 @@ code, pre, .font-mono {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-subtle), var(--accent));
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+  background: var(--accent);
 }
 
 @keyframes shimmer {
@@ -1023,39 +995,37 @@ code, pre, .font-mono {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--text-on-accent);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35);
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #FF5722 0%, #FF7B3D 100%);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.45);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: var(--bg-card);
+  background: transparent;
   color: var(--text-secondary);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .btn-secondary:hover {
   background: var(--bg-secondary);
   color: var(--text-primary);
-  border-color: var(--border-accent);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
 }
 
 .btn-ghost:hover {
-  background: var(--bg-tertiary);
+  background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
@@ -1352,16 +1322,17 @@ code, pre, .font-mono {
 }
 
 .masthead-greeting {
-  font-size: 2.25rem;
-  font-weight: 500;
+  font-size: 2.5rem;
+  font-weight: 300;
   color: var(--text-primary);
-  letter-spacing: -0.035em;
+  letter-spacing: 0.02em;
   line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
 @media (min-width: 768px) {
   .masthead-greeting {
-    font-size: 2.75rem;
+    font-size: 2.5rem; /* 40px - intentionally same on desktop for consistency */
   }
 }
 
@@ -1452,29 +1423,32 @@ code, pre, .font-mono {
   border-color: var(--border);
 }
 
-/* Premium card dark glow */
+/* Premium card dark mode - deeper shadows, no borders */
 .dark .premium-card {
   box-shadow:
-    0 0 0 1px var(--border),
-    0 4px 24px rgba(0, 0, 0, 0.3);
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dark .premium-card:hover {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .dark .premium-card-lg {
   box-shadow:
-    0 0 0 1px var(--border),
-    0 8px 32px rgba(0, 0, 0, 0.4);
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Enhanced accent glow for dark mode hero card */
 .dark .hero-focus-card {
   box-shadow:
-    0 0 0 1px var(--border-accent),
-    0 0 30px rgba(194, 65, 12, 0.15),
-    0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-.dark .hero-focus-card::before {
-  opacity: 0.8;
+    0 0 0 1px #FF6B35,
+    0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 /* Reminder cards in dark mode */

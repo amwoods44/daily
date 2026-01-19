@@ -100,7 +100,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
       <div className="premium-card-lg h-full">
         {/* Section header */}
         <div className="section-header" style={{ marginBottom: 'var(--space-6)' }}>
-          <span className="section-header-label" style={{ color: 'var(--accent)' }}>Today's Outlook</span>
+          <span className="section-header-label">Today's Outlook</span>
           <div className="section-header-line" />
         </div>
 
@@ -110,9 +110,12 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
             className="text-xl leading-relaxed"
             style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)', letterSpacing: '-0.01em' }}
           >
-            <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{verdict.rating}</span>
+            <span style={{
+              color: verdict.rating === 'Needs attention' || verdict.rating === 'Heavy' ? 'var(--accent)' : 'var(--text-primary)',
+              fontWeight: 600
+            }}>{verdict.rating}</span>
             {verdict.summary && (
-              <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}> — {verdict.summary}</span>
+              <span style={{ color: 'var(--text-tertiary)', fontWeight: 400 }}> — {verdict.summary}</span>
             )}
           </p>
         </div>
@@ -138,7 +141,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
                   className="flex items-start"
                   style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-2)', gap: 'var(--space-2)' }}
                 >
-                  <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--accent)', marginTop: '2px' }} />
+                  <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-muted)', marginTop: '2px' }} />
                   {firstMove.action}
                 </p>
               </div>
@@ -147,21 +150,21 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
             {freeTime && (
               <div
                 style={{
-                  backgroundColor: 'var(--bg-accent-subtle)',
+                  backgroundColor: 'var(--bg-secondary)',
                   padding: 'var(--space-4)',
                   borderRadius: 'var(--radius-lg)',
                 }}
               >
                 <div className="flex items-center" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
-                  <Clock className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                  <span style={{ fontWeight: 600, color: 'var(--accent)', fontSize: '14px' }}>
+                  <Clock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '14px' }}>
                     {freeTime.duration} min free
                   </span>
                   <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                     {freeTime.startTime}–{freeTime.endTime}
                   </span>
                 </div>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
+                <p style={{ color: 'var(--text-tertiary)', fontSize: '13px' }}>
                   {freeTime.suggestion}
                 </p>
               </div>
@@ -186,7 +189,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
                         className="flex items-start"
                         style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-1)', gap: 'var(--space-2)' }}
                       >
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--accent)', marginTop: '2px' }} />
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-muted)', marginTop: '2px' }} />
                         {item.action}
                       </p>
                     </div>
@@ -243,8 +246,9 @@ function HeroPriority({ oneThing, onAction }: {
               gap: 8,
               padding: '6px 14px',
               borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--accent)',
-              color: 'var(--text-on-accent)',
+              backgroundColor: 'transparent',
+              border: '1px solid var(--accent)',
+              color: 'var(--accent)',
               fontSize: 11,
               fontWeight: 700,
               textTransform: 'uppercase',
@@ -255,7 +259,7 @@ function HeroPriority({ oneThing, onAction }: {
               width: 6,
               height: 6,
               borderRadius: '50%',
-              backgroundColor: 'currentColor',
+              backgroundColor: 'var(--accent)',
               animation: 'pulse 2s infinite',
             }} />
             Focus Now

@@ -21,29 +21,29 @@ interface VisualTimelineBarProps {
 
 const EVENT_COLORS: Record<EventType, { bg: string; border: string; text: string }> = {
   meeting: {
-    bg: 'var(--accent-subtle)',
+    bg: 'rgba(194, 65, 12, 0.1)',
     border: 'var(--accent)',
-    text: 'var(--accent)',
+    text: '#FFFFFF',
   },
   focus: {
-    bg: 'rgba(34, 197, 94, 0.15)',
+    bg: 'rgba(34, 197, 94, 0.1)',
     border: 'var(--success)',
-    text: 'var(--success)',
+    text: '#FFFFFF',
   },
   break: {
-    bg: 'var(--bg-tertiary)',
-    border: 'var(--border)',
-    text: 'var(--text-muted)',
+    bg: 'rgba(120, 113, 108, 0.1)',
+    border: 'var(--text-muted)',
+    text: 'var(--text-secondary)',
   },
   task: {
-    bg: 'rgba(59, 130, 246, 0.15)',
+    bg: 'rgba(59, 130, 246, 0.1)',
     border: 'rgb(59, 130, 246)',
-    text: 'rgb(59, 130, 246)',
+    text: '#FFFFFF',
   },
   travel: {
-    bg: 'rgba(168, 85, 247, 0.15)',
+    bg: 'rgba(168, 85, 247, 0.1)',
     border: 'rgb(168, 85, 247)',
-    text: 'rgb(168, 85, 247)',
+    text: '#FFFFFF',
   },
 };
 
@@ -145,11 +145,10 @@ export function VisualTimelineBar({
         className="timeline-track"
         style={{
           position: 'relative',
-          height: 56,
+          height: 64,
           backgroundColor: 'var(--bg-secondary)',
           borderRadius: 'var(--radius-lg)',
           overflow: 'visible',
-          border: '1px solid var(--border)',
         }}
       >
         {/* Hour markers */}
@@ -209,18 +208,21 @@ export function VisualTimelineBar({
                 position: 'absolute',
                 left: `${left}%`,
                 width: `${width}%`,
-                top: 8,
-                bottom: 8,
+                top: 6,
+                bottom: 6,
+                minHeight: 32,
                 backgroundColor: colors.bg,
-                borderLeft: `3px solid ${colors.border}`,
-                borderRadius: 'var(--radius-md)',
+                borderLeft: `4px solid ${colors.border}`,
+                borderRadius: 'var(--radius-sm)',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 transform: isHovered ? 'scale(1.02)' : 'scale(1)',
                 zIndex: isHovered ? 10 : 1,
                 display: 'flex',
-                alignItems: 'center',
-                paddingLeft: 8,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                paddingLeft: 10,
+                paddingRight: 6,
                 overflow: 'hidden',
               }}
             >
@@ -228,15 +230,27 @@ export function VisualTimelineBar({
               {width > 8 && (
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: 500,
-                    color: colors.text,
+                    color: 'var(--text-primary)',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}
                 >
                   {event.title}
+                </span>
+              )}
+              {/* Time stamp - show if width allows */}
+              {width > 12 && (
+                <span
+                  style={{
+                    fontSize: 10,
+                    color: 'var(--text-muted)',
+                    marginTop: 2,
+                  }}
+                >
+                  {minutesToTime(timeToMinutes(event.startTime))}
                 </span>
               )}
 

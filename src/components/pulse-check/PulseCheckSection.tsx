@@ -99,51 +99,97 @@ export function PulseCheckSection({
   const completedHabits = habitsToday.filter((h) => h.completed).length;
   const totalHabits = habitsToday.length;
 
+  // Calculate items needing attention
+  const overdueRelationships = relationships.filter(r => r.daysSinceContact > r.targetFrequencyDays).length;
+  const lowScoreAreas = Object.values(pulseScore.breakdown).filter(b => b.score < 60).length;
+
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'var(--success)';
     if (score >= 60) return 'var(--warning)';
     return 'var(--error)';
   };
 
+  // Progress ring SVG
+  const ringSize = 52;
+  const strokeWidth = 4;
+  const radius = (ringSize - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (pulseScore.overall / 100) * circumference;
+
   return (
     <div
-      className="rounded-2xl overflow-hidden"
+      className="rounded-xl overflow-hidden"
       style={{
         backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-md)',
       }}
     >
-      {/* Header */}
+      {/* Header - Full width insights */}
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between p-6 group"
       >
-        <div className="flex items-center gap-5">
-          <h2
-            className="text-xs font-semibold uppercase tracking-[0.15em] transition-colors"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            Pulse Check
-          </h2>
-          {/* Overall Score Badge */}
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
+          {/* Progress Ring */}
+          <div className="relative">
+            <svg width={ringSize} height={ringSize} className="progress-ring">
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={radius}
+                fill="none"
+                stroke="var(--bg-tertiary)"
+                strokeWidth={strokeWidth}
+              />
+              <circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={radius}
+                fill="none"
+                stroke={getScoreColor(pulseScore.overall)}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={circumference - progress}
+                style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+              />
+            </svg>
             <div
-              className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm"
-              style={{
-                backgroundColor: getScoreColor(pulseScore.overall),
-                color: 'white',
-              }}
+              className="absolute inset-0 flex items-center justify-center font-bold text-sm"
+              style={{ color: 'var(--text-primary)' }}
             >
               {pulseScore.overall}
             </div>
-            <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Overall</span>
+          </div>
+
+          {/* Summary insights */}
+          <div className="text-left">
+            <h2
+              className="text-xs font-semibold uppercase tracking-[0.1em] mb-1"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              Life Pulse
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <span className="font-medium">{completedHabits} of {totalHabits}</span>
+              <span style={{ color: 'var(--text-muted)' }}> habits today</span>
+              {overdueRelationships > 0 && (
+                <span style={{ color: 'var(--warning)' }}> · {overdueRelationships} overdue check-ins</span>
+              )}
+              {lowScoreAreas > 0 && (
+                <span style={{ color: 'var(--error)' }}> · {lowScoreAreas} areas need attention</span>
+              )}
+            </p>
           </div>
         </div>
-        {expanded ? (
-          <ChevronUp className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-        ) : (
-          <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-        )}
+
+        <ChevronDown
+          className="w-4 h-4 transition-transform"
+          style={{
+            color: 'var(--text-muted)',
+            transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        />
       </button>
 
       {/* Content */}

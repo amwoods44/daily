@@ -126,16 +126,45 @@ export function UnifiedItemCard({
 }: UnifiedItemCardProps) {
   const TypeIcon = TYPE_ICONS[item.type] || ListTodo;
 
+  // Priority-based styling
+  const isHighPriority = item.severity === 'high' || item.type === 'risk';
+  const isMediumPriority = item.severity === 'medium';
+  const isLowPriority = item.severity === 'low' || (!item.severity && !item.urgencyReason);
+
+  // Compute dynamic styles based on priority
+  const getCardStyle = () => {
+    const baseStyle = {
+      backgroundColor: 'var(--bg-card)',
+      border: 'none',
+    };
+
+    if (isHighPriority) {
+      return {
+        ...baseStyle,
+        boxShadow: '0 0 0 1px var(--error), 0 4px 12px rgba(185, 28, 28, 0.15)',
+        minHeight: '80px',
+      };
+    }
+    if (isMediumPriority) {
+      return {
+        ...baseStyle,
+        boxShadow: '0 0 0 1px var(--warning), 0 4px 12px rgba(180, 83, 9, 0.1)',
+        minHeight: '60px',
+      };
+    }
+    return {
+      ...baseStyle,
+      boxShadow: 'var(--shadow-sm)',
+      opacity: isLowPriority ? 0.75 : 1,
+    };
+  };
+
   return (
     <div
-      className={`relative rounded-xl transition-all ${
-        isSecondary ? 'p-4' : 'p-4'
+      className={`relative rounded-lg transition-all hover:shadow-md ${
+        isSecondary ? 'p-3' : isHighPriority ? 'p-5' : 'p-4'
       }`}
-      style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
-        boxShadow: isSecondary ? 'none' : 'var(--shadow-sm)',
-      }}
+      style={getCardStyle()}
     >
       <div className="flex items-start gap-3">
         {/* Type icon or emoji */}
@@ -155,7 +184,7 @@ export function UnifiedItemCard({
           {/* Title row with inline badge */}
           <div className="flex items-center gap-2 flex-wrap">
             <h4
-              className="font-medium text-sm"
+              className={`font-medium ${isHighPriority ? 'text-base font-semibold' : 'text-sm'}`}
               style={{ color: 'var(--text-primary)' }}
             >
               {item.title}

@@ -157,38 +157,38 @@ export const themes: Record<string, Theme> = {
     description: 'Dark and dramatic, evening reading',
     isDark: true,
     colors: {
-      bgPrimary: '#0C0A09',      // Warm off-black
-      bgSecondary: '#1C1917',    // Warm dark charcoal
-      bgTertiary: '#292524',     // Warm medium charcoal
-      bgCard: '#1C1917',
-      bgCardHover: '#292524',
-      bgAccent: '#F97316',       // Vibrant coral
-      bgAccentSubtle: '#431407',
+      bgPrimary: '#0A0A0A',      // True dark background
+      bgSecondary: '#141414',    // Slightly lifted surface
+      bgTertiary: '#1E1E1E',     // Elevated surface
+      bgCard: '#141414',
+      bgCardHover: '#1E1E1E',
+      bgAccent: '#FF6B35',       // Vibrant orange (reserved for CTAs)
+      bgAccentSubtle: '#1A0F0A',
 
-      textPrimary: '#FAFAF9',    // Warm white
-      textSecondary: '#D6D3D1',  // Warm light gray
-      textTertiary: '#A8A29E',   // Warm medium gray
-      textMuted: '#78716C',      // Warm darker gray
+      textPrimary: '#FFFFFF',    // Pure white for max contrast
+      textSecondary: '#E5E5E5',  // High contrast secondary
+      textTertiary: '#A3A3A3',   // Medium gray
+      textMuted: '#6B7280',      // Muted gray (timestamps, meta)
       textOnAccent: '#FFFFFF',
 
-      accent: '#F97316',         // Vibrant coral
-      accentHover: '#FB923C',    // Lighter coral
-      accentSubtle: '#EA580C',   // Deeper coral
+      accent: '#FF6B35',         // Vibrant orange
+      accentHover: '#FF8E53',    // Lighter on hover
+      accentSubtle: '#EA580C',   // Deeper for subtle uses
 
-      border: '#292524',
-      borderSubtle: '#1C1917',
-      borderAccent: '#F97316',
+      border: '#262626',
+      borderSubtle: '#1A1A1A',
+      borderAccent: '#FF6B35',
 
-      success: '#22C55E',
-      successSubtle: '#14532D',
+      success: '#10B981',        // Subtle green for checkmarks
+      successSubtle: '#0D3628',
       warning: '#F59E0B',
-      warningSubtle: '#451A03',
+      warningSubtle: '#2D1B00',
       error: '#EF4444',
-      errorSubtle: '#450A0A',
+      errorSubtle: '#2D0A0A',
 
-      shadowSm: '0 1px 2px rgba(0, 0, 0, 0.3)',
-      shadowMd: '0 4px 12px rgba(0, 0, 0, 0.4)',
-      shadowLg: '0 12px 32px rgba(0, 0, 0, 0.5)',
+      shadowSm: '0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14)',
+      shadowMd: '0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15)',
+      shadowLg: '0 4px 8px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(0, 0, 0, 0.2)',
     },
     fonts: {
       heading: '"Sora", system-ui, sans-serif',
