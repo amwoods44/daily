@@ -2,6 +2,40 @@
 
 A personal life dashboard that shows what your day looks like, what's pressing, and what needs attention - designed to feel like a premium editorial publication.
 
+## Git Workflow (IMPORTANT - Claude handles this)
+
+**Claude: You are responsible for ALL git operations. The user should never have to run git commands.**
+
+### Automatic Behaviors
+
+1. **After completing any significant work** (new feature, bug fix, design change):
+   - Stage all changes: `git add -A`
+   - Commit with descriptive message
+   - Push to origin: `git push origin main`
+   - Tell the user it's been saved to GitHub
+
+2. **At the start of a session**, if user mentions pulling or syncing:
+   - Run `git pull origin main` to get latest
+   - Run `npm install` if package.json changed
+   - Restart dev server if needed
+
+3. **Commit message format**:
+   ```
+   Short description of what changed
+
+   - Bullet points for details if needed
+
+   Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+   ```
+
+### Repository Info
+- **Local folder**: `/Users/aaronwoods/Code/daily-pulse`
+- **Remote**: `github.com/amwoods44/daily.git`
+- **Branch**: `main` (single branch workflow)
+
+### If user asks about git/saving/syncing:
+Just do it. Don't explain git concepts unless asked. Run the commands and confirm "Saved and pushed to GitHub" or "Pulled latest from GitHub".
+
 ## Tech Stack
 
 - **Framework**: Next.js 16 (App Router, Turbopack)
