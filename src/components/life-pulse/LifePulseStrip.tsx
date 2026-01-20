@@ -88,9 +88,9 @@ function PulseItemCard({
       >
         <PulseOrb status={item.status} isExpanded={isExpanded} />
         <span
+          className="text-mono"
           style={{
-            fontSize: 13,
-            fontWeight: 500,
+            fontWeight: 'var(--weight-semibold)',
             color: 'var(--text-primary)',
             whiteSpace: 'nowrap',
           }}
@@ -98,8 +98,8 @@ function PulseItemCard({
           {item.value}
         </span>
         <span
+          className="text-label-sm"
           style={{
-            fontSize: 12,
             color: 'var(--text-tertiary)',
             whiteSpace: 'nowrap',
           }}
@@ -128,36 +128,26 @@ function PulseItemCard({
             animation: 'fadeInUp 0.2s ease',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-muted)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Icon style={{ width: 18, height: 18, color: 'var(--text-secondary)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
+            <div className="stat-icon-sm">
+              <Icon style={{ width: 18, height: 18, color: 'var(--brand-primary)' }} />
             </div>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>
+              <div className="text-body" style={{ fontWeight: 'var(--weight-semibold)', color: 'var(--text-primary)' }}>
                 {item.detail.headline}
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+              <div className="text-mono-sm" style={{ color: 'var(--text-tertiary)' }}>
                 {item.detail.subtext}
               </div>
             </div>
           </div>
 
           {item.detail.progress !== undefined && (
-            <div style={{ marginBottom: 12 }}>
+            <div style={{ marginBottom: 'var(--space-4)' }}>
               <div
                 style={{
                   height: 6,
-                  borderRadius: 3,
+                  borderRadius: 'var(--radius-sm)',
                   backgroundColor: 'var(--bg-muted)',
                   overflow: 'hidden',
                 }}
@@ -166,18 +156,24 @@ function PulseItemCard({
                   style={{
                     height: '100%',
                     width: `${item.detail.progress}%`,
-                    borderRadius: 3,
+                    borderRadius: 'var(--radius-sm)',
                     backgroundColor:
                       item.status === 'good'
                         ? 'var(--semantic-success)'
                         : item.status === 'attention'
                           ? 'var(--semantic-warning)'
                           : 'var(--semantic-error)',
-                    transition: 'width 0.5s ease',
+                    transition: 'width 0.5s var(--ease-out-expo)',
                   }}
                 />
               </div>
-              <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 4 }}>
+              <div
+                className="text-mono-sm"
+                style={{
+                  color: 'var(--text-tertiary)',
+                  marginTop: 'var(--space-1)'
+                }}
+              >
                 {item.detail.progress}% of target
               </div>
             </div>
@@ -186,16 +182,16 @@ function PulseItemCard({
           {item.detail.insight && (
             <div
               style={{
-                padding: 10,
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-muted)',
-                fontSize: 12,
-                color: 'var(--text-secondary)',
-                lineHeight: 1.5,
+                padding: 'var(--space-3) var(--space-4)',
+                borderRadius: 'var(--radius-lg)',
+                backgroundColor: 'var(--bg-accent-subtle)',
+                border: '1px solid var(--border-subtle)',
               }}
             >
-              <span style={{ marginRight: 6 }}>💡</span>
-              {item.detail.insight}
+              <p className="text-body-sm" style={{ color: 'var(--text-secondary)', lineHeight: 'var(--leading-relaxed)' }}>
+                <span style={{ marginRight: 'var(--space-2)' }}>💡</span>
+                {item.detail.insight}
+              </p>
             </div>
           )}
         </div>

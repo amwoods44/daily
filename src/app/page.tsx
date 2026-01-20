@@ -548,13 +548,26 @@ function ScheduleSection({ meetings }: { meetings: DailyBriefing['meetings'] }) 
       className="animate-slide-up stagger-3 opacity-0"
       style={{ animationFillMode: 'forwards' }}
     >
+      {/* Signature header with DAILY PULSE style */}
       <div className="section-header">
-        <span className="section-header-label">Your Day</span>
+        <span className="text-label-sm" style={{ color: 'var(--brand-primary)' }}>
+          Your Day
+        </span>
         <div className="section-header-line" />
-        <span className="section-header-badge">{meetings.length} events</span>
+        <span
+          className="text-mono-sm"
+          style={{
+            color: 'var(--text-quaternary)',
+            backgroundColor: 'var(--bg-muted)',
+            padding: 'var(--space-1) var(--space-2)',
+            borderRadius: 'var(--radius-sm)',
+          }}
+        >
+          {meetings.length}
+        </span>
       </div>
 
-      <div className="premium-card">
+      <div className="card-stripe">
         <Timeline meetings={meetings} />
       </div>
     </section>
@@ -574,10 +587,23 @@ function TaskSection({ title, items, onAction, delay = 4 }: {
       className={`animate-slide-up stagger-${delay} opacity-0`}
       style={{ animationFillMode: 'forwards' }}
     >
+      {/* Signature header with DAILY PULSE style */}
       <div className="section-header">
-        <span className="section-header-label">{title}</span>
+        <span className="text-label-sm" style={{ color: 'var(--brand-primary)' }}>
+          {title}
+        </span>
         <div className="section-header-line" />
-        <span className="section-header-badge">{items.length}</span>
+        <span
+          className="text-mono-sm"
+          style={{
+            color: 'var(--text-quaternary)',
+            backgroundColor: 'var(--bg-muted)',
+            padding: 'var(--space-1) var(--space-2)',
+            borderRadius: 'var(--radius-sm)',
+          }}
+        >
+          {items.length}
+        </span>
       </div>
 
       <div className="premium-card stack-md">
@@ -768,30 +794,44 @@ export default function DailyPulse() {
         <LifePulseStrip items={getDefaultPulseItems()} />
       </div>
 
-      {/* Visual Timeline Bar - See your day at a glance */}
+      {/* Visual Timeline Bar - Prominent with signature style */}
       <div
         className="container-premium animate-slide-up stagger-1 opacity-0"
         style={{
-          paddingTop: 'var(--space-4)',
-          paddingBottom: 'var(--space-4)',
+          paddingTop: 'var(--space-6)',
+          paddingBottom: 'var(--space-6)',
           animationFillMode: 'forwards',
         }}
       >
-        <div className="premium-card" style={{ padding: 'var(--space-5)' }}>
+        {/* Signature header */}
+        <div
+          className="flex items-center"
+          style={{
+            gap: 'var(--space-3)',
+            marginBottom: 'var(--space-6)',
+          }}
+        >
+          <div className="accent-line" style={{ width: '32px', height: '3px' }} />
+          <span className="text-label-sm" style={{ color: 'var(--brand-primary)' }}>
+            Timeline
+          </span>
+        </div>
+
+        <div className="card-accent" style={{ padding: 'var(--space-6)' }}>
           <VisualTimelineBar events={getDefaultTimelineEvents()} />
         </div>
       </div>
 
       {/* Main Content */}
       <main className="container-premium" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>
-        {/* Top Section: Brief + Hero side by side on larger screens */}
-        <div className="grid-premium grid-premium-2">
-          {/* AI Briefing - The Lead Story */}
+        {/* Top Section: Brief + Hero with ASYMMETRIC emphasis on Brief */}
+        <div className="grid-premium grid-asymmetric-3-2">
+          {/* AI Briefing - The Lead Story (60% width on desktop) */}
           <FocusModeSection>
             <EditorsBrief briefing={briefing} />
           </FocusModeSection>
 
-          {/* Hero Priority - Always visible in focus mode */}
+          {/* Hero Priority - Always visible in focus mode (40% width on desktop) */}
           {oneThing && (
             <FocusModeSection isPriority>
               <HeroPriority oneThing={oneThing} onAction={handleAction} />
@@ -808,32 +848,44 @@ export default function DailyPulse() {
           </FocusModeSection>
         )}
 
-        {/* Schedule + Tasks Grid */}
-        <div className="grid-premium grid-premium-3" style={{ marginTop: 'var(--space-12)' }}>
-          {/* Schedule - Left column */}
-          <FocusModeSection>
-            <ScheduleSection meetings={data.meetings} />
-          </FocusModeSection>
+        {/* Schedule + Tasks Grid - Grouped with warm background tint */}
+        <div
+          className="bg-section-warm animate-fade-in"
+          style={{
+            marginTop: 'var(--space-12)',
+            marginLeft: 'calc(-1 * var(--space-6))',
+            marginRight: 'calc(-1 * var(--space-6))',
+            padding: 'var(--space-10) var(--space-6)',
+          }}
+        >
+          <div className="container-premium">
+            <div className="grid-premium grid-premium-3">
+              {/* Schedule - Left column */}
+              <FocusModeSection>
+                <ScheduleSection meetings={data.meetings} />
+              </FocusModeSection>
 
-          {/* Tasks: Today - Middle column, Priority in focus mode */}
-          <FocusModeSection isPriority>
-            <TaskSection
-              title="Today"
-              items={buckets.today}
-              onAction={handleAction}
-              delay={4}
-            />
-          </FocusModeSection>
+              {/* Tasks: Today - Middle column, Priority in focus mode */}
+              <FocusModeSection isPriority>
+                <TaskSection
+                  title="Today"
+                  items={buckets.today}
+                  onAction={handleAction}
+                  delay={4}
+                />
+              </FocusModeSection>
 
-          {/* Tasks: This Week - Right column */}
-          <FocusModeSection>
-            <TaskSection
-              title="This Week"
-              items={buckets.thisWeek}
-              onAction={handleAction}
-              delay={5}
-            />
-          </FocusModeSection>
+              {/* Tasks: This Week - Right column */}
+              <FocusModeSection>
+                <TaskSection
+                  title="This Week"
+                  items={buckets.thisWeek}
+                  onAction={handleAction}
+                  delay={5}
+                />
+              </FocusModeSection>
+            </div>
+          </div>
         </div>
 
         {/* Pulse Check */}

@@ -21,29 +21,29 @@ interface VisualTimelineBarProps {
 
 const EVENT_COLORS: Record<EventType, { bg: string; border: string; text: string }> = {
   meeting: {
-    bg: 'rgba(194, 65, 12, 0.1)',
+    bg: 'rgba(184, 81, 31, 0.08)',
     border: 'var(--brand-primary)',
-    text: '#FFFFFF',
+    text: 'var(--text-on-accent)',
   },
   focus: {
-    bg: 'rgba(34, 197, 94, 0.1)',
+    bg: 'rgba(45, 107, 61, 0.08)',
     border: 'var(--semantic-success)',
-    text: '#FFFFFF',
+    text: 'var(--text-on-accent)',
   },
   break: {
-    bg: 'rgba(120, 113, 108, 0.1)',
+    bg: 'rgba(151, 142, 135, 0.08)',
     border: 'var(--text-tertiary)',
     text: 'var(--text-secondary)',
   },
   task: {
-    bg: 'rgba(59, 130, 246, 0.1)',
-    border: 'rgb(59, 130, 246)',
-    text: '#FFFFFF',
+    bg: 'rgba(28, 107, 122, 0.08)',
+    border: 'var(--semantic-info)',
+    text: 'var(--text-on-accent)',
   },
   travel: {
-    bg: 'rgba(168, 85, 247, 0.1)',
-    border: 'rgb(168, 85, 247)',
-    text: '#FFFFFF',
+    bg: 'rgba(184, 101, 31, 0.08)',
+    border: 'var(--semantic-warning)',
+    text: 'var(--text-on-accent)',
   },
 };
 
@@ -115,26 +115,13 @@ export function VisualTimelineBar({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: 12,
+          marginBottom: 'var(--space-4)',
         }}
       >
-        <span
-          style={{
-            fontSize: 12,
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: 'var(--text-tertiary)',
-          }}
-        >
+        <span className="text-label-md" style={{ color: 'var(--text-tertiary)' }}>
           Your Day
         </span>
-        <span
-          style={{
-            fontSize: 12,
-            color: 'var(--text-secondary)',
-          }}
-        >
+        <span className="text-mono-sm" style={{ color: 'var(--text-secondary)' }}>
           {events.length} events · {Math.round((dayEndMinutes - currentMinutes) / 60)}h remaining
         </span>
       </div>
@@ -178,11 +165,11 @@ export function VisualTimelineBar({
             {/* Label - show only even hours */}
             {i % 2 === 0 && (
               <span
+                className="text-mono-sm"
                 style={{
                   position: 'absolute',
                   top: -18,
-                  fontSize: 10,
-                  color: 'var(--text-tertiary)',
+                  color: 'var(--text-quaternary)',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -229,9 +216,9 @@ export function VisualTimelineBar({
               {/* Event title - only show if width allows */}
               {width > 8 && (
                 <span
+                  className="text-body-sm"
                   style={{
-                    fontSize: 12,
-                    fontWeight: 500,
+                    fontWeight: 'var(--weight-medium)',
                     color: 'var(--text-primary)',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
@@ -244,8 +231,8 @@ export function VisualTimelineBar({
               {/* Time stamp - show if width allows */}
               {width > 12 && (
                 <span
+                  className="text-mono-sm"
                   style={{
-                    fontSize: 10,
                     color: 'var(--text-tertiary)',
                     marginTop: 2,
                   }}
@@ -257,34 +244,33 @@ export function VisualTimelineBar({
               {/* Hover tooltip */}
               {isHovered && (
                 <div
-                  className="timeline-tooltip"
+                  className="timeline-tooltip animate-fade-in"
                   style={{
                     position: 'absolute',
                     bottom: '100%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    marginBottom: 8,
-                    padding: '8px 12px',
+                    marginBottom: 'var(--space-2)',
+                    padding: 'var(--space-3) var(--space-4)',
                     backgroundColor: 'var(--bg-surface)',
                     border: '1px solid var(--border-default)',
-                    borderRadius: 'var(--radius-md)',
-                    boxShadow: 'var(--shadow-lg)',
+                    borderRadius: 'var(--radius-lg)',
+                    boxShadow: 'var(--shadow-xl)',
                     whiteSpace: 'nowrap',
                     zIndex: 100,
-                    animation: 'fadeIn 0.15s ease',
                   }}
                 >
                   <div
+                    className="text-body"
                     style={{
-                      fontSize: 13,
-                      fontWeight: 600,
+                      fontWeight: 'var(--weight-semibold)',
                       color: 'var(--text-primary)',
-                      marginBottom: 2,
+                      marginBottom: 'var(--space-1)',
                     }}
                   >
                     {event.title}
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>
+                  <div className="text-mono-sm" style={{ color: 'var(--text-tertiary)' }}>
                     {minutesToTime(timeToMinutes(event.startTime))} –{' '}
                     {minutesToTime(timeToMinutes(event.endTime))}
                     {event.subtitle && ` · ${event.subtitle}`}
@@ -313,15 +299,15 @@ export function VisualTimelineBar({
           >
             {/* Current time label */}
             <div
+              className="text-mono-sm"
               style={{
                 position: 'absolute',
                 top: -20,
                 left: '50%',
                 transform: 'translateX(-50%)',
                 backgroundColor: 'var(--semantic-error)',
-                color: 'white',
-                fontSize: 10,
-                fontWeight: 600,
+                color: 'var(--text-on-accent)',
+                fontWeight: 'var(--weight-semibold)',
                 padding: '2px 6px',
                 borderRadius: 'var(--radius-sm)',
                 whiteSpace: 'nowrap',
@@ -351,8 +337,8 @@ export function VisualTimelineBar({
       <div
         style={{
           display: 'flex',
-          gap: 16,
-          marginTop: 12,
+          gap: 'var(--space-4)',
+          marginTop: 'var(--space-4)',
           flexWrap: 'wrap',
         }}
       >
@@ -362,25 +348,19 @@ export function VisualTimelineBar({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
+              gap: 'var(--space-2)',
             }}
           >
             <div
               style={{
                 width: 10,
                 height: 10,
-                borderRadius: 2,
+                borderRadius: 'var(--radius-xs)',
                 backgroundColor: colors.bg,
                 borderLeft: `2px solid ${colors.border}`,
               }}
             />
-            <span
-              style={{
-                fontSize: 11,
-                color: 'var(--text-tertiary)',
-                textTransform: 'capitalize',
-              }}
-            >
+            <span className="text-label-sm" style={{ color: 'var(--text-tertiary)' }}>
               {type}
             </span>
           </div>
