@@ -3,11 +3,9 @@
 import React from 'react';
 import {
   Moon,
-  Sun,
   Heart,
   Footprints,
   Droplets,
-  Activity,
   TrendingUp,
   TrendingDown,
   Minus,
@@ -34,27 +32,27 @@ interface HealthOverviewProps {
 // ============================================================================
 
 function getScoreColor(score: number): string {
-  if (score >= 80) return 'text-emerald-600';
-  if (score >= 60) return 'text-amber-600';
-  if (score >= 40) return 'text-orange-600';
-  return 'text-red-600';
+  if (score >= 80) return 'text-[var(--semantic-success)]';
+  if (score >= 60) return 'text-[var(--semantic-warning)]';
+  if (score >= 40) return 'text-[var(--semantic-warning)]';
+  return 'text-[var(--semantic-error)]';
 }
 
 function getScoreBackground(score: number): string {
-  if (score >= 80) return 'bg-emerald-100';
-  if (score >= 60) return 'bg-amber-100';
-  if (score >= 40) return 'bg-orange-100';
-  return 'bg-red-100';
+  if (score >= 80) return 'bg-[var(--semantic-success-subtle)]';
+  if (score >= 60) return 'bg-[var(--semantic-warning-subtle)]';
+  if (score >= 40) return 'bg-[var(--semantic-warning-subtle)]';
+  return 'bg-[var(--semantic-error-subtle)]';
 }
 
 function getTrendIcon(trend: 'up' | 'down' | 'stable') {
   switch (trend) {
     case 'up':
-      return <TrendingUp className="w-3 h-3 text-emerald-500" />;
+      return <TrendingUp className="w-3 h-3 text-[var(--semantic-success)]" />;
     case 'down':
-      return <TrendingDown className="w-3 h-3 text-red-500" />;
+      return <TrendingDown className="w-3 h-3 text-[var(--semantic-error)]" />;
     default:
-      return <Minus className="w-3 h-3 text-stone-400" />;
+      return <Minus className="w-3 h-3 text-[var(--text-tertiary)]" />;
   }
 }
 
@@ -80,16 +78,16 @@ function MetricCard({
   insight?: string;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-4">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
       <div className="flex items-start gap-3">
         <div className={`w-10 h-10 rounded-lg ${getScoreBackground(score)} flex items-center justify-center`}>
           {icon}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-xs text-stone-500 uppercase tracking-wide">{label}</div>
+          <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wide">{label}</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-semibold text-stone-900">{value}</span>
-            {subvalue && <span className="text-sm text-stone-500">{subvalue}</span>}
+            <span className="text-xl font-semibold text-[var(--text-primary)]">{value}</span>
+            {subvalue && <span className="text-sm text-[var(--text-secondary)]">{subvalue}</span>}
           </div>
           <div className={`text-xs mt-1 ${getScoreColor(score)}`}>{status}</div>
         </div>
@@ -98,8 +96,8 @@ function MetricCard({
         </div>
       </div>
       {insight && (
-        <div className="mt-3 pt-3 border-t border-stone-100">
-          <p className="text-xs text-stone-600">{insight}</p>
+        <div className="mt-3 pt-3 border-t border-[var(--border-subtle)]">
+          <p className="text-xs text-[var(--text-secondary)]">{insight}</p>
         </div>
       )}
     </div>
@@ -114,7 +112,7 @@ function ProgressRing({
   progress,
   size = 60,
   strokeWidth = 6,
-  color = 'text-emerald-500',
+  color = 'text-[var(--semantic-success)]',
   children,
 }: {
   progress: number;
@@ -137,7 +135,7 @@ function ProgressRing({
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-stone-100"
+          className="text-[var(--bg-muted)]"
         />
         <circle
           cx={size / 2}
@@ -174,26 +172,25 @@ function FullHealthOverview({
   onViewDetails?: () => void;
 }) {
   const stepsProgress = (health.steps / health.stepsGoal) * 100;
-  const waterProgress = (health.waterGlasses / health.waterGoal) * 100;
 
   return (
     <div className="space-y-4">
       {/* Overall Score */}
-      <div className="bg-white rounded-xl border border-stone-200 p-5">
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-5">
         <div className="flex items-center gap-5">
           <ProgressRing
             progress={healthScore.overall}
             size={80}
             strokeWidth={8}
-            color={getScoreColor(healthScore.overall).replace('text-', 'text-')}
+            color={getScoreColor(healthScore.overall)}
           >
             <div className={`text-2xl font-light ${getScoreColor(healthScore.overall)}`}>
               {healthScore.overall}
             </div>
           </ProgressRing>
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-stone-900">Health Score</h3>
-            <div className="flex items-center gap-2 text-sm text-stone-500">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)]">Health Score</h3>
+            <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
               {getTrendIcon(healthScore.trend === 'improving' ? 'up' : healthScore.trend === 'declining' ? 'down' : 'stable')}
               <span>
                 {healthScore.trend === 'improving' ? 'Improving' :
@@ -201,13 +198,13 @@ function FullHealthOverview({
               </span>
             </div>
             {healthScore.topConcern && (
-              <div className="mt-2 flex items-center gap-1 text-xs text-amber-600">
+              <div className="mt-2 flex items-center gap-1 text-xs text-[var(--semantic-warning)]">
                 <AlertTriangle className="w-3 h-3" />
                 {healthScore.topConcern}
               </div>
             )}
             {healthScore.topWin && !healthScore.topConcern && (
-              <div className="mt-2 flex items-center gap-1 text-xs text-emerald-600">
+              <div className="mt-2 flex items-center gap-1 text-xs text-[var(--semantic-success)]">
                 <CheckCircle className="w-3 h-3" />
                 {healthScore.topWin}
               </div>
@@ -242,36 +239,36 @@ function FullHealthOverview({
       </div>
 
       {/* Activity Progress */}
-      <div className="bg-white rounded-xl border border-stone-200 p-4">
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Footprints className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-stone-900">Steps</span>
+            <Footprints className="w-5 h-5 text-[var(--semantic-info)]" />
+            <span className="font-medium text-[var(--text-primary)]">Steps</span>
           </div>
-          <span className="text-sm text-stone-500">
+          <span className="text-sm text-[var(--text-secondary)]">
             {health.steps.toLocaleString()} / {health.stepsGoal.toLocaleString()}
           </span>
         </div>
-        <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-[var(--bg-muted)] rounded-full overflow-hidden">
           <div
-            className="h-full bg-blue-500 rounded-full transition-all"
+            className="h-full bg-[var(--semantic-info)] rounded-full transition-all"
             style={{ width: `${Math.min(100, stepsProgress)}%` }}
           />
         </div>
-        <div className="mt-2 flex items-center justify-between text-xs text-stone-500">
+        <div className="mt-2 flex items-center justify-between text-xs text-[var(--text-secondary)]">
           <span>{health.activeMinutes} active minutes</span>
           <span>{Math.round(stepsProgress)}% of goal</span>
         </div>
       </div>
 
       {/* Hydration */}
-      <div className="bg-white rounded-xl border border-stone-200 p-4">
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Droplets className="w-5 h-5 text-cyan-600" />
-            <span className="font-medium text-stone-900">Hydration</span>
+            <Droplets className="w-5 h-5 text-[var(--semantic-info)]" />
+            <span className="font-medium text-[var(--text-primary)]">Hydration</span>
           </div>
-          <span className="text-sm text-stone-500">
+          <span className="text-sm text-[var(--text-secondary)]">
             {health.waterGlasses} / {health.waterGoal} glasses
           </span>
         </div>
@@ -280,7 +277,7 @@ function FullHealthOverview({
             <div
               key={i}
               className={`flex-1 h-3 rounded ${
-                i < health.waterGlasses ? 'bg-cyan-500' : 'bg-stone-100'
+                i < health.waterGlasses ? 'bg-[var(--semantic-info)]' : 'bg-[var(--bg-muted)]'
               }`}
             />
           ))}
@@ -291,7 +288,7 @@ function FullHealthOverview({
       {onViewDetails && (
         <button
           onClick={onViewDetails}
-          className="w-full py-3 text-sm text-stone-500 hover:text-stone-700 transition flex items-center justify-center gap-1"
+          className="w-full py-3 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition flex items-center justify-center gap-1"
         >
           View all health data
           <ChevronRight className="w-4 h-4" />
@@ -317,17 +314,17 @@ function CompactHealthOverview({
   return (
     <button
       onClick={onViewDetails}
-      className="w-full flex items-center gap-4 p-4 bg-white rounded-xl border border-stone-200 hover:shadow-sm transition text-left"
+      className="w-full flex items-center gap-4 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] hover:shadow-sm transition text-left"
     >
       <div className={`w-12 h-12 rounded-full ${getScoreBackground(healthScore.overall)} flex items-center justify-center`}>
         <Heart className={`w-6 h-6 ${getScoreColor(healthScore.overall)}`} />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900">Health</div>
-        <div className="text-sm text-stone-500">
+        <div className="font-medium text-[var(--text-primary)]">Health</div>
+        <div className="text-sm text-[var(--text-secondary)]">
           {health.sleep.hours.toFixed(1)}h sleep
           {health.sleep.quality !== 'good' && health.sleep.quality !== 'excellent' && (
-            <span className="text-amber-600"> • {health.sleep.quality}</span>
+            <span className="text-[var(--semantic-warning)]"> • {health.sleep.quality}</span>
           )}
         </div>
       </div>
@@ -335,9 +332,9 @@ function CompactHealthOverview({
         <div className={`text-2xl font-light ${getScoreColor(healthScore.overall)}`}>
           {healthScore.overall}
         </div>
-        <div className="text-xs text-stone-400">score</div>
+        <div className="text-xs text-[var(--text-tertiary)]">score</div>
       </div>
-      <ChevronRight className="w-5 h-5 text-stone-400" />
+      <ChevronRight className="w-5 h-5 text-[var(--text-tertiary)]" />
     </button>
   );
 }
@@ -355,7 +352,7 @@ function MinimalHealthOverview({
     <div className="flex items-center gap-3">
       <Heart className={`w-5 h-5 ${getScoreColor(healthScore.overall)}`} />
       <div className="flex-1">
-        <div className="text-sm font-medium text-stone-700">Health</div>
+        <div className="text-sm font-medium text-[var(--text-primary)]">Health</div>
       </div>
       <div className={`text-lg font-light ${getScoreColor(healthScore.overall)}`}>
         {healthScore.overall}
