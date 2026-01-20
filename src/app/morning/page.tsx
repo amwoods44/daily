@@ -50,13 +50,25 @@ function getGreeting(name: string): { greeting: string; emoji: React.ReactNode }
   const timeOfDay = getTimeOfDay();
   switch (timeOfDay) {
     case 'morning':
-      return { greeting: `Good morning, ${name}`, emoji: <Sun className="w-8 h-8 text-amber-500" /> };
+      return {
+        greeting: `Good morning, ${name}`,
+        emoji: <Sun className="w-8 h-8" style={{ color: 'var(--brand-primary-vivid)' }} />
+      };
     case 'afternoon':
-      return { greeting: `Good afternoon, ${name}`, emoji: <Sun className="w-8 h-8 text-orange-500" /> };
+      return {
+        greeting: `Good afternoon, ${name}`,
+        emoji: <Sun className="w-8 h-8" style={{ color: 'var(--brand-primary)' }} />
+      };
     case 'evening':
-      return { greeting: `Good evening, ${name}`, emoji: <Moon className="w-8 h-8 text-indigo-400" /> };
+      return {
+        greeting: `Good evening, ${name}`,
+        emoji: <Moon className="w-8 h-8" style={{ color: 'var(--semantic-info-vivid)' }} />
+      };
     case 'night':
-      return { greeting: `Night owl, ${name}?`, emoji: <Moon className="w-8 h-8 text-indigo-500" /> };
+      return {
+        greeting: `Night owl, ${name}?`,
+        emoji: <Moon className="w-8 h-8" style={{ color: 'var(--semantic-info)' }} />
+      };
   }
 }
 
@@ -126,7 +138,7 @@ function GreetingStep({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring' }}
-        className="mb-8"
+        style={{ marginBottom: 'var(--space-10)' }}
       >
         {emoji}
       </motion.div>
@@ -135,7 +147,12 @@ function GreetingStep({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="text-4xl font-light text-stone-900 mb-4"
+        className="text-display-md text-balance"
+        style={{
+          color: 'var(--text-primary)',
+          marginBottom: 'var(--space-6)',
+          fontWeight: 'var(--weight-medium)'
+        }}
       >
         {greeting}
       </motion.h1>
@@ -144,19 +161,25 @@ function GreetingStep({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="flex items-center justify-center gap-6 text-stone-500"
+        className="flex items-center justify-center text-body-lg"
+        style={{
+          gap: 'var(--space-8)',
+          color: 'var(--text-secondary)'
+        }}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center" style={{ gap: 'var(--space-2)' }}>
           <span className="text-2xl">😴</span>
-          <span>
+          <span className="text-mono" style={{ fontWeight: 'var(--weight-medium)' }}>
             {sleepHours.toFixed(1)}h • {sleepQuality}
           </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center" style={{ gap: 'var(--space-2)' }}>
           <span className="text-2xl">
             {data.weather.condition === 'sunny' ? '☀️' : data.weather.condition === 'cloudy' ? '☁️' : '🌧️'}
           </span>
-          <span>{data.weather.temp}°F</span>
+          <span className="text-mono" style={{ fontWeight: 'var(--weight-medium)' }}>
+            {data.weather.temp}°F
+          </span>
         </div>
       </motion.div>
 
@@ -165,7 +188,11 @@ function GreetingStep({
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
         onClick={onNext}
-        className="mt-12 text-stone-400 hover:text-stone-600 transition flex items-center gap-2 mx-auto"
+        className="btn btn-ghost text-label-md flex items-center mx-auto"
+        style={{
+          marginTop: 'var(--space-16)',
+          gap: 'var(--space-2)'
+        }}
       >
         <span>Continue</span>
         <ChevronRight className="w-4 h-4" />
@@ -548,8 +575,11 @@ export default function MorningRitualPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-stone-50 flex items-center justify-center">
-        <div className="animate-pulse text-stone-400">Loading...</div>
+      <div
+        className="min-h-screen grain-overlay flex items-center justify-center"
+        style={{ backgroundColor: 'var(--bg-canvas)' }}
+      >
+        <div className="skeleton h-8 w-32" style={{ borderRadius: 'var(--radius-lg)' }} />
       </div>
     );
   }
@@ -558,21 +588,33 @@ export default function MorningRitualPage() {
   const currentIndex = steps.indexOf(step);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-stone-50 flex flex-col">
+    <div
+      className="min-h-screen grain-overlay flex flex-col"
+      style={{ backgroundColor: 'var(--bg-canvas)' }}
+    >
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-stone-100 z-50">
+      <div
+        className="fixed top-0 left-0 right-0 z-50"
+        style={{
+          height: '2px',
+          backgroundColor: 'var(--bg-muted)'
+        }}
+      >
         <motion.div
-          className="h-full bg-stone-900"
+          style={{
+            height: '100%',
+            backgroundColor: 'var(--brand-primary)'
+          }}
           initial={{ width: 0 }}
           animate={{ width: `${((currentIndex + 1) / steps.length) * 100}%` }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
 
       {/* Skip button */}
       <button
         onClick={handleComplete}
-        className="fixed top-6 right-6 text-sm text-stone-400 hover:text-stone-600 transition z-50"
+        className="btn btn-ghost btn-sm fixed top-6 right-6 z-50"
       >
         Skip ritual
       </button>

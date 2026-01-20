@@ -853,9 +853,21 @@ export default function DailyPulse() {
       </main>
 
       {/* Footer */}
-      <footer className="container-premium" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
+      <footer
+        className="container-premium"
+        style={{
+          paddingTop: 'var(--space-8)',
+          paddingBottom: 'var(--space-20)'
+        }}
+      >
         <div className="divider-subtle" />
-        <p className="text-center" style={{ fontSize: '12px', color: 'var(--text-tertiary)', marginTop: 'var(--space-6)' }}>
+        <p
+          className="text-mono-sm text-center"
+          style={{
+            color: 'var(--text-quaternary)',
+            marginTop: 'var(--space-6)'
+          }}
+        >
           Updated {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
         </p>
       </footer>
@@ -867,13 +879,13 @@ export default function DailyPulse() {
         currentPage="/"
       />
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - Glass morphism floating nav */}
       <nav
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 glass-nav flex items-center gap-1 z-40"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 glass-nav flex items-center z-40"
         style={{
+          gap: 'var(--space-1)',
           padding: 'var(--space-2)',
           borderRadius: 'var(--radius-full)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
         }}
       >
         {[
