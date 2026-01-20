@@ -64,24 +64,58 @@ function getCategoryIcon(category: string) {
   }
 }
 
-function getCategoryColor(category: string): string {
+function getCategoryColor(category: string): { bg: string; text: string; bar: string } {
+  // All categories use theme-aware CSS custom properties
+  // Using semantic colors and brand colors for variety while maintaining theme compatibility
   switch (category.toLowerCase()) {
     case 'food':
-      return 'bg-orange-100 text-orange-600';
+      return {
+        bg: 'bg-[var(--semantic-warning-subtle)]',
+        text: 'text-[var(--semantic-warning)]',
+        bar: 'bg-[var(--semantic-warning)]'
+      };
     case 'transport':
-      return 'bg-blue-100 text-blue-600';
+      return {
+        bg: 'bg-[var(--semantic-info-subtle)]',
+        text: 'text-[var(--semantic-info)]',
+        bar: 'bg-[var(--semantic-info)]'
+      };
     case 'entertainment':
-      return 'bg-purple-100 text-purple-600';
+      return {
+        bg: 'bg-[var(--brand-primary-subtle)]',
+        text: 'text-[var(--brand-primary)]',
+        bar: 'bg-[var(--brand-primary)]'
+      };
     case 'shopping':
-      return 'bg-pink-100 text-pink-600';
+      return {
+        bg: 'bg-[var(--brand-primary-subtle)]',
+        text: 'text-[var(--brand-primary-vivid)]',
+        bar: 'bg-[var(--brand-primary-vivid)]'
+      };
     case 'housing':
-      return 'bg-stone-100 text-stone-600';
+      return {
+        bg: 'bg-[var(--bg-muted)]',
+        text: 'text-[var(--text-secondary)]',
+        bar: 'bg-[var(--text-secondary)]'
+      };
     case 'health':
-      return 'bg-red-100 text-red-600';
+      return {
+        bg: 'bg-[var(--semantic-error-subtle)]',
+        text: 'text-[var(--semantic-error)]',
+        bar: 'bg-[var(--semantic-error)]'
+      };
     case 'utilities':
-      return 'bg-yellow-100 text-yellow-600';
+      return {
+        bg: 'bg-[var(--semantic-warning-subtle)]',
+        text: 'text-[var(--semantic-warning-vivid)]',
+        bar: 'bg-[var(--semantic-warning-vivid)]'
+      };
     default:
-      return 'bg-emerald-100 text-emerald-600';
+      return {
+        bg: 'bg-[var(--semantic-success-subtle)]',
+        text: 'text-[var(--semantic-success)]',
+        bar: 'bg-[var(--semantic-success)]'
+      };
   }
 }
 
@@ -103,31 +137,32 @@ function CategoryBar({
   maxPercentage: number;
 }) {
   const barWidth = (percentage / maxPercentage) * 100;
+  const colors = getCategoryColor(category);
 
   return (
     <div className="flex items-center gap-3 py-2">
-      <div className={`w-8 h-8 rounded-lg ${getCategoryColor(category)} flex items-center justify-center flex-shrink-0`}>
+      <div className={`w-8 h-8 rounded-lg ${colors.bg} ${colors.text} flex items-center justify-center flex-shrink-0`}>
         {getCategoryIcon(category)}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-sm font-medium text-stone-700 capitalize truncate">
+          <span className="text-sm font-medium text-[var(--text-secondary)] capitalize truncate">
             {category}
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-stone-900">
+            <span className="text-sm font-medium text-[var(--text-primary)]">
               {formatCurrency(amount)}
             </span>
             {trend && trend !== 'stable' && (
-              <span className={`text-xs ${trend === 'up' ? 'text-red-500' : 'text-emerald-500'}`}>
+              <span className={`text-xs ${trend === 'up' ? 'text-[var(--semantic-error)]' : 'text-[var(--semantic-success)]'}`}>
                 {trend === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               </span>
             )}
           </div>
         </div>
-        <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-[var(--bg-muted)] rounded-full overflow-hidden">
           <div
-            className={`h-full rounded-full ${getCategoryColor(category).replace('text-', 'bg-').replace('-100', '-400')}`}
+            className={`h-full rounded-full ${colors.bar}`}
             style={{ width: `${barWidth}%` }}
           />
         </div>
@@ -149,37 +184,37 @@ function UpcomingBillItem({ bill }: { bill: Bill }) {
     <div
       className={`flex items-center gap-3 p-3 rounded-lg border ${
         isOverdue
-          ? 'bg-red-50 border-red-200'
+          ? 'bg-[var(--semantic-error-subtle)] border-[var(--semantic-error)]'
           : isDueSoon
-            ? 'bg-amber-50 border-amber-200'
-            : 'bg-white border-stone-200'
+            ? 'bg-[var(--semantic-warning-subtle)] border-[var(--semantic-warning)]'
+            : 'bg-[var(--bg-surface)] border-[var(--border-default)]'
       }`}
     >
       <div
         className={`w-8 h-8 rounded-lg flex items-center justify-center ${
           isOverdue
-            ? 'bg-red-200 text-red-700'
+            ? 'bg-[var(--semantic-error)] text-[var(--text-on-accent)]'
             : isDueSoon
-              ? 'bg-amber-200 text-amber-700'
-              : 'bg-stone-100 text-stone-600'
+              ? 'bg-[var(--semantic-warning)] text-[var(--text-on-accent)]'
+              : 'bg-[var(--bg-muted)] text-[var(--text-secondary)]'
         }`}
       >
         <DollarSign className="w-4 h-4" />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900 truncate">{bill.name}</div>
-        <div className="text-xs text-stone-500">
+        <div className="font-medium text-[var(--text-primary)] truncate">{bill.name}</div>
+        <div className="text-xs text-[var(--text-secondary)]">
           {isOverdue ? (
-            <span className="text-red-600">Overdue</span>
+            <span className="text-[var(--semantic-error)]">Overdue</span>
           ) : isDueSoon ? (
-            <span className="text-amber-600">Due in {bill.daysUntilDue} day{bill.daysUntilDue !== 1 ? 's' : ''}</span>
+            <span className="text-[var(--semantic-warning)]">Due in {bill.daysUntilDue} day{bill.daysUntilDue !== 1 ? 's' : ''}</span>
           ) : (
             `Due in ${bill.daysUntilDue} days`
           )}
-          {bill.autopay && <span className="ml-1 text-stone-400">• Autopay</span>}
+          {bill.autopay && <span className="ml-1 text-[var(--text-tertiary)]">• Autopay</span>}
         </div>
       </div>
-      <div className="font-medium text-stone-900">
+      <div className="font-medium text-[var(--text-primary)]">
         {formatCurrency(bill.amount)}
       </div>
     </div>
@@ -192,25 +227,25 @@ function UpcomingBillItem({ bill }: { bill: Bill }) {
 
 function InsightCard({ insight }: { insight: { type: string; title: string; description: string } }) {
   const iconMap = {
-    warning: <AlertTriangle className="w-5 h-5 text-amber-500" />,
-    success: <CheckCircle className="w-5 h-5 text-emerald-500" />,
-    info: <Info className="w-5 h-5 text-blue-500" />,
-    suggestion: <Info className="w-5 h-5 text-purple-500" />,
+    warning: <AlertTriangle className="w-5 h-5 text-[var(--semantic-warning)]" />,
+    success: <CheckCircle className="w-5 h-5 text-[var(--semantic-success)]" />,
+    info: <Info className="w-5 h-5 text-[var(--semantic-info)]" />,
+    suggestion: <Info className="w-5 h-5 text-[var(--brand-primary)]" />,
   };
 
   const bgMap = {
-    warning: 'bg-amber-50 border-amber-200',
-    success: 'bg-emerald-50 border-emerald-200',
-    info: 'bg-blue-50 border-blue-200',
-    suggestion: 'bg-purple-50 border-purple-200',
+    warning: 'bg-[var(--semantic-warning-subtle)] border-[var(--semantic-warning)]',
+    success: 'bg-[var(--semantic-success-subtle)] border-[var(--semantic-success)]',
+    info: 'bg-[var(--semantic-info-subtle)] border-[var(--semantic-info)]',
+    suggestion: 'bg-[var(--brand-primary-subtle)] border-[var(--brand-primary)]',
   };
 
   return (
     <div className={`flex items-start gap-3 p-4 rounded-lg border ${bgMap[insight.type as keyof typeof bgMap] || bgMap.info}`}>
       {iconMap[insight.type as keyof typeof iconMap] || iconMap.info}
       <div>
-        <div className="font-medium text-stone-900">{insight.title}</div>
-        <div className="text-sm text-stone-600 mt-0.5">{insight.description}</div>
+        <div className="font-medium text-[var(--text-primary)]">{insight.title}</div>
+        <div className="text-sm text-[var(--text-secondary)] mt-0.5">{insight.description}</div>
       </div>
     </div>
   );
@@ -253,8 +288,8 @@ export function SpendingInsights({ finance, onViewDetails }: SpendingInsightsPro
   return (
     <div className="space-y-6">
       {/* Spending by Category */}
-      <div className="bg-white rounded-xl border border-stone-200 p-5">
-        <h3 className="text-sm font-semibold text-stone-900 mb-4">Spending by Category</h3>
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-5">
+        <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Spending by Category</h3>
         <div className="space-y-1">
           {spendingCategories.slice(0, 5).map((cat) => (
             <CategoryBar
@@ -267,9 +302,9 @@ export function SpendingInsights({ finance, onViewDetails }: SpendingInsightsPro
             />
           ))}
         </div>
-        <div className="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
-          <span className="text-sm text-stone-500">Total this month</span>
-          <span className="font-semibold text-stone-900">
+        <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
+          <span className="text-sm text-[var(--text-secondary)]">Total this month</span>
+          <span className="font-semibold text-[var(--text-primary)]">
             {formatCurrency(finance.monthlySpent)}
           </span>
         </div>
@@ -277,8 +312,8 @@ export function SpendingInsights({ finance, onViewDetails }: SpendingInsightsPro
 
       {/* Upcoming Bills */}
       {urgentBills.length > 0 && (
-        <div className="bg-white rounded-xl border border-stone-200 p-5">
-          <h3 className="text-sm font-semibold text-stone-900 mb-4">Upcoming Bills</h3>
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-5">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Upcoming Bills</h3>
           <div className="space-y-2">
             {urgentBills.slice(0, 4).map((bill) => (
               <UpcomingBillItem key={bill.id} bill={bill} />
@@ -287,7 +322,7 @@ export function SpendingInsights({ finance, onViewDetails }: SpendingInsightsPro
           {finance.upcomingBills.length > 4 && (
             <button
               onClick={onViewDetails}
-              className="w-full mt-3 py-2 text-sm text-stone-500 hover:text-stone-700 transition flex items-center justify-center gap-1"
+              className="w-full mt-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition flex items-center justify-center gap-1"
             >
               View all {finance.upcomingBills.length} bills
               <ChevronRight className="w-4 h-4" />
@@ -299,7 +334,7 @@ export function SpendingInsights({ finance, onViewDetails }: SpendingInsightsPro
       {/* Insights */}
       {insights.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-stone-900">Insights</h3>
+          <h3 className="text-sm font-semibold text-[var(--text-primary)]">Insights</h3>
           {insights.map((insight, i) => (
             <InsightCard key={i} insight={insight} />
           ))}
