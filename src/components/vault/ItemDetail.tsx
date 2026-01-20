@@ -73,7 +73,7 @@ interface SectionProps {
 function Section({ title, icon: Icon, children }: SectionProps) {
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-sm font-medium text-stone-500">
+      <div className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)]">
         <Icon className="w-4 h-4" />
         {title}
       </div>
@@ -125,13 +125,13 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-[var(--bg-secondary)]">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b border-stone-200">
+      <header className="sticky top-0 z-10 bg-[var(--bg-card)] border-b border-[var(--border)]">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => router.push('/vault')}
-            className="p-2 -ml-2 text-stone-600 hover:text-stone-900 transition-colors"
+            className="p-2 -ml-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -139,7 +139,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
           <div className="relative">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 -mr-2 text-stone-600 hover:text-stone-900 transition-colors"
+              className="p-2 -mr-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             >
               <MoreVertical className="w-5 h-5" />
             </button>
@@ -150,13 +150,13 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                   className="fixed inset-0 z-10"
                   onClick={() => setMenuOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-1 z-20 w-48 bg-white rounded-xl border border-stone-200 shadow-lg overflow-hidden">
+                <div className="absolute right-0 top-full mt-1 z-20 w-48 bg-[var(--bg-card)] rounded-xl border border-[var(--border)] shadow-lg overflow-hidden">
                   <button
                     onClick={() => {
                       setMenuOpen(false);
                       handleEdit();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-stone-700 hover:bg-stone-50 transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
                   >
                     <Edit className="w-4 h-4" />
                     Edit
@@ -166,7 +166,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                       setMenuOpen(false);
                       handleArchive();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-stone-700 hover:bg-stone-50 transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
                   >
                     <Archive className="w-4 h-4" />
                     Archive
@@ -176,7 +176,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                       setMenuOpen(false);
                       setConfirmDelete(true);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-red-600 hover:bg-red-50 transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--error)] hover:bg-[var(--error-subtle)] transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                     Delete
@@ -193,11 +193,11 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         {/* Item header */}
         <div className="text-center">
           <span className="text-4xl">{meta?.emoji || '📦'}</span>
-          <h1 className="text-2xl font-bold text-stone-900 mt-3">{item.name}</h1>
-          <p className="text-stone-500 mt-1">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] mt-3">{item.name}</h1>
+          <p className="text-[var(--text-muted)] mt-1">
             {meta?.label || item.category} • {item.type}
           </p>
-          <p className="text-xs text-stone-400 mt-2">
+          <p className="text-xs text-[var(--text-muted)] mt-2">
             Updated {formatRelativeDate(item.updatedAt)} ago
           </p>
         </div>
@@ -207,8 +207,8 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
           <div
             className={`flex items-center gap-3 p-4 rounded-xl ${
               alertSeverity === 'high'
-                ? 'bg-red-50 border border-red-200 text-red-700'
-                : 'bg-amber-50 border border-amber-200 text-amber-700'
+                ? 'bg-[var(--error-subtle)] border border-[var(--error)] text-[var(--error)]'
+                : 'bg-[var(--warning-subtle)] border border-[var(--warning)] text-[var(--warning)]'
             }`}
           >
             <AlertTriangle className="w-5 h-5 shrink-0" />
@@ -228,64 +228,64 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
 
         {/* Description */}
         {item.description && (
-          <p className="text-stone-600 leading-relaxed">{item.description}</p>
+          <p className="text-[var(--text-secondary)] leading-relaxed">{item.description}</p>
         )}
 
         {/* Details section */}
         <Section title="DETAILS" icon={FileText}>
-          <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100">
+          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] divide-y divide-[var(--border)]">
             {item.purchasePrice !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Purchase Price</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Purchase Price</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.purchasePrice)}
                 </span>
               </div>
             )}
             {item.currentValue !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Current Value</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Current Value</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.currentValue)}
                 </span>
               </div>
             )}
             {item.monthlyPayment !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Monthly Payment</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Monthly Payment</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.monthlyPayment)}
                 </span>
               </div>
             )}
             {item.purchaseDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Purchased</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Purchased</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.purchaseDate)}
                 </span>
               </div>
             )}
             {item.expirationDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Expires</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Expires</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.expirationDate)}
                 </span>
               </div>
             )}
             {item.renewalDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Renews</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Renews</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.renewalDate)}
                 </span>
               </div>
             )}
             {item.nextActionDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-stone-500">Next Action</span>
-                <span className="font-medium text-stone-900">
+                <span className="text-[var(--text-muted)]">Next Action</span>
+                <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.nextActionDate)}
                 </span>
               </div>
@@ -317,14 +317,14 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                   <button
                     key={relatedItem.id}
                     onClick={() => router.push(`/vault/${relatedItem.id}`)}
-                    className="w-full flex items-center gap-3 p-3 rounded-lg bg-white border border-stone-200 hover:border-stone-300 transition-colors text-left"
+                    className="w-full flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-card)] border border-[var(--border)] hover:border-[var(--border)] transition-colors text-left"
                   >
                     <span className="text-lg">{relatedMeta?.emoji || '📦'}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-stone-900 text-sm truncate">
+                      <p className="font-medium text-[var(--text-primary)] text-sm truncate">
                         {relatedItem.name}
                       </p>
-                      <p className="text-xs text-stone-500">
+                      <p className="text-xs text-[var(--text-muted)]">
                         {relatedMeta?.label || relatedItem.category}
                       </p>
                     </div>
@@ -338,8 +338,8 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         {/* Notes */}
         {item.notes && (
           <Section title="NOTES" icon={FileText}>
-            <div className="bg-white rounded-xl border border-stone-200 p-4">
-              <p className="text-stone-600 whitespace-pre-wrap">{item.notes}</p>
+            <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] p-4">
+              <p className="text-[var(--text-secondary)] whitespace-pre-wrap">{item.notes}</p>
             </div>
           </Section>
         )}
@@ -351,7 +351,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
               {item.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-stone-100 text-stone-600 text-sm"
+                  className="px-3 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] text-sm"
                 >
                   {tag}
                 </span>
@@ -362,17 +362,17 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
 
         {/* Reminder status */}
         <Section title="REMINDERS" icon={Clock}>
-          <div className="bg-white rounded-xl border border-stone-200 p-4">
+          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] p-4">
             {item.reminderEnabled ? (
-              <p className="text-stone-600">
+              <p className="text-[var(--text-secondary)]">
                 Reminders enabled • {item.reminderDays} days before due dates
               </p>
             ) : (
-              <p className="text-stone-400">Reminders disabled</p>
+              <p className="text-[var(--text-muted)]">Reminders disabled</p>
             )}
             {itemReminders.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-stone-100">
-                <p className="text-sm text-stone-500 mb-2">
+              <div className="mt-3 pt-3 border-t border-[var(--border)]">
+                <p className="text-sm text-[var(--text-muted)] mb-2">
                   {itemReminders.length} active reminder{itemReminders.length > 1 ? 's' : ''}
                 </p>
               </div>
@@ -384,20 +384,20 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         <div className="flex gap-3 pt-4">
           <button
             onClick={handleEdit}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-900 text-white font-medium hover:bg-stone-800 transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] transition-colors"
           >
             <Edit className="w-4 h-4" />
             Edit
           </button>
           <button
             onClick={handleArchive}
-            className="px-4 py-3 rounded-xl border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 transition-colors"
+            className="px-4 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
           >
             <Archive className="w-4 h-4" />
           </button>
           <button
             onClick={() => setConfirmDelete(true)}
-            className="px-4 py-3 rounded-xl border border-red-200 text-red-600 font-medium hover:bg-red-50 transition-colors"
+            className="px-4 py-3 rounded-xl border border-[var(--error)] text-[var(--error)] font-medium hover:bg-[var(--error-subtle)] transition-colors"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -407,22 +407,22 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
       {/* Delete confirmation modal */}
       {confirmDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="w-full max-w-sm bg-white rounded-2xl p-6">
-            <h3 className="text-lg font-bold text-stone-900 mb-2">Delete Item?</h3>
-            <p className="text-stone-600 mb-6">
+          <div className="w-full max-w-sm bg-[var(--bg-card)] rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Delete Item?</h3>
+            <p className="text-[var(--text-secondary)] mb-6">
               This will permanently delete &quot;{item.name}&quot; and all its attachments. This
               action cannot be undone.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(false)}
-                className="flex-1 px-4 py-2.5 rounded-xl border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--error)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--error)] transition-colors"
               >
                 Delete
               </button>

@@ -212,7 +212,7 @@ function ReminderCard({
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium"
               style={{
                 backgroundColor: 'var(--success)',
-                color: 'white',
+                color: 'var(--text-on-accent)',
                 border: 'none',
                 cursor: 'pointer',
               }}

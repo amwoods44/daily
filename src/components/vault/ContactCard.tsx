@@ -14,14 +14,14 @@ export function ContactCard({ contact, compact = false }: ContactCardProps) {
 
   if (compact) {
     return (
-      <div className="flex items-center justify-between p-3 rounded-lg bg-stone-50 border border-stone-200">
+      <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border)]">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center shrink-0">
-            <User className="w-4 h-4 text-stone-500" />
+          <div className="w-8 h-8 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center shrink-0">
+            <User className="w-4 h-4 text-[var(--text-muted)]" />
           </div>
           <div className="min-w-0">
-            <p className="font-medium text-stone-900 text-sm truncate">{contact.name}</p>
-            <p className="text-xs text-stone-500 truncate">
+            <p className="font-medium text-[var(--text-primary)] text-sm truncate">{contact.name}</p>
+            <p className="text-xs text-[var(--text-muted)] truncate">
               {contact.role}
               {contact.company && ` at ${contact.company}`}
             </p>
@@ -32,7 +32,7 @@ export function ContactCard({ contact, compact = false }: ContactCardProps) {
           {contact.phone && (
             <a
               href={`tel:${contact.phone}`}
-              className="p-2 rounded-lg bg-white border border-stone-200 text-stone-600 hover:bg-stone-100 transition-colors"
+              className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <Phone className="w-4 h-4" />
@@ -41,7 +41,7 @@ export function ContactCard({ contact, compact = false }: ContactCardProps) {
           {contact.email && (
             <a
               href={`mailto:${contact.email}`}
-              className="p-2 rounded-lg bg-white border border-stone-200 text-stone-600 hover:bg-stone-100 transition-colors"
+              className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <Mail className="w-4 h-4" />
@@ -53,42 +53,42 @@ export function ContactCard({ contact, compact = false }: ContactCardProps) {
   }
 
   return (
-    <div className="rounded-xl border border-stone-200 bg-white overflow-hidden">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full p-4 flex items-center justify-between hover:bg-stone-50 transition-colors"
+        className="w-full p-4 flex items-center justify-between hover:bg-[var(--bg-secondary)] transition-colors"
       >
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center">
-            <User className="w-6 h-6 text-stone-400" />
+          <div className="w-12 h-12 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center">
+            <User className="w-6 h-6 text-[var(--text-muted)]" />
           </div>
           <div className="text-left">
-            <h4 className="font-semibold text-stone-900">{contact.name}</h4>
-            <p className="text-sm text-stone-500">{contact.role}</p>
+            <h4 className="font-semibold text-[var(--text-primary)]">{contact.name}</h4>
+            <p className="text-sm text-[var(--text-muted)]">{contact.role}</p>
           </div>
         </div>
         {expanded ? (
-          <ChevronUp className="w-5 h-5 text-stone-400" />
+          <ChevronUp className="w-5 h-5 text-[var(--text-muted)]" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-stone-400" />
+          <ChevronDown className="w-5 h-5 text-[var(--text-muted)]" />
         )}
       </button>
 
       {expanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-stone-100 pt-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-[var(--border)] pt-3">
           {contact.company && (
             <div className="flex items-center gap-3 text-sm">
-              <Building className="w-4 h-4 text-stone-400" />
-              <span className="text-stone-600">{contact.company}</span>
+              <Building className="w-4 h-4 text-[var(--text-muted)]" />
+              <span className="text-[var(--text-secondary)]">{contact.company}</span>
             </div>
           )}
 
           {contact.phone && (
             <a
               href={`tel:${contact.phone}`}
-              className="flex items-center gap-3 text-sm text-stone-600 hover:text-stone-900"
+              className="flex items-center gap-3 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
-              <Phone className="w-4 h-4 text-stone-400" />
+              <Phone className="w-4 h-4 text-[var(--text-muted)]" />
               {contact.phone}
             </a>
           )}
@@ -96,15 +96,15 @@ export function ContactCard({ contact, compact = false }: ContactCardProps) {
           {contact.email && (
             <a
               href={`mailto:${contact.email}`}
-              className="flex items-center gap-3 text-sm text-stone-600 hover:text-stone-900"
+              className="flex items-center gap-3 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
-              <Mail className="w-4 h-4 text-stone-400" />
+              <Mail className="w-4 h-4 text-[var(--text-muted)]" />
               {contact.email}
             </a>
           )}
 
           {contact.notes && (
-            <p className="text-sm text-stone-500 pt-2 border-t border-stone-100">
+            <p className="text-sm text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">
               {contact.notes}
             </p>
           )}
@@ -122,7 +122,7 @@ interface ContactListProps {
 export function ContactList({ contacts, compact = false }: ContactListProps) {
   if (contacts.length === 0) {
     return (
-      <p className="text-sm text-stone-400 text-center py-4">No contacts linked</p>
+      <p className="text-sm text-[var(--text-muted)] text-center py-4">No contacts linked</p>
     );
   }
 

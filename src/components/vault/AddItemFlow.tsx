@@ -66,8 +66,8 @@ function TypeStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900">What are you adding?</h2>
-        <p className="text-stone-500 mt-1">Choose the type of item</p>
+        <h2 className="text-xl font-bold text-[var(--text-primary)]">What are you adding?</h2>
+        <p className="text-[var(--text-muted)] mt-1">Choose the type of item</p>
       </div>
 
       <div className="space-y-3">
@@ -81,24 +81,24 @@ function TypeStep({
               onClick={() => onChange(type.value)}
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 isSelected
-                  ? 'border-stone-900 bg-stone-50'
-                  : 'border-stone-200 bg-white hover:border-stone-300'
+                  ? 'border-[var(--accent)] bg-[var(--bg-secondary)]'
+                  : 'border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--border)]'
               }`}
             >
               <div className="flex items-center gap-4">
                 <div
                   className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    isSelected ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-500'
+                    isSelected ? 'bg-[var(--accent)] text-[var(--text-on-accent)]' : 'bg-[var(--bg-tertiary)] text-[var(--text-muted)]'
                   }`}
                 >
                   <Icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-stone-900">{type.label}</h3>
-                  <p className="text-sm text-stone-500">{type.description}</p>
+                  <h3 className="font-semibold text-[var(--text-primary)]">{type.label}</h3>
+                  <p className="text-sm text-[var(--text-muted)]">{type.description}</p>
                 </div>
                 {isSelected && (
-                  <Check className="w-5 h-5 text-stone-900 ml-auto" />
+                  <Check className="w-5 h-5 text-[var(--text-primary)] ml-auto" />
                 )}
               </div>
             </button>
@@ -124,8 +124,8 @@ function CategoryStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900">What kind of {type}?</h2>
-        <p className="text-stone-500 mt-1">Select a category</p>
+        <h2 className="text-xl font-bold text-[var(--text-primary)]">What kind of {type}?</h2>
+        <p className="text-[var(--text-muted)] mt-1">Select a category</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -139,12 +139,12 @@ function CategoryStep({
               onClick={() => onChange(category)}
               className={`p-4 rounded-xl border-2 text-center transition-all ${
                 isSelected
-                  ? 'border-stone-900 bg-stone-50'
-                  : 'border-stone-200 bg-white hover:border-stone-300'
+                  ? 'border-[var(--accent)] bg-[var(--bg-secondary)]'
+                  : 'border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--border)]'
               }`}
             >
               <span className="text-2xl block mb-2">{meta.emoji}</span>
-              <span className="text-sm font-medium text-stone-900">{meta.label}</span>
+              <span className="text-sm font-medium text-[var(--text-primary)]">{meta.label}</span>
             </button>
           );
         })}
@@ -173,28 +173,28 @@ function DetailsStep({
     <div className="space-y-4">
       <div className="text-center mb-6">
         <span className="text-3xl">{meta.emoji}</span>
-        <h2 className="text-xl font-bold text-stone-900 mt-2">Add {meta.label}</h2>
-        <p className="text-stone-500 mt-1">Enter the details</p>
+        <h2 className="text-xl font-bold text-[var(--text-primary)] mt-2">Add {meta.label}</h2>
+        <p className="text-[var(--text-muted)] mt-1">Enter the details</p>
       </div>
 
       <div className="space-y-4">
         {/* Name - always required */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1.5">
-            Name <span className="text-red-500">*</span>
+          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
+            Name <span className="text-[var(--error)]">*</span>
           </label>
           <input
             type="text"
             value={data.name || ''}
             onChange={(e) => onChange({ name: e.target.value })}
             placeholder={`e.g., ${category === 'vehicles' ? '2021 Honda Accord' : category === 'jewelry' ? 'Engagement Ring' : category === 'subscription' ? 'Netflix' : 'My Item'}`}
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1.5">
+          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
             Description
           </label>
           <textarea
@@ -202,7 +202,7 @@ function DetailsStep({
             onChange={(e) => onChange({ description: e.target.value })}
             placeholder="Optional notes or details"
             rows={3}
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent resize-none"
           />
         </div>
 
@@ -210,32 +210,32 @@ function DetailsStep({
         {showValue && (
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-1.5">
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
                 Purchase Price
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
                 <input
                   type="number"
                   value={data.purchasePrice || ''}
                   onChange={(e) => onChange({ purchasePrice: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="0"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-1.5">
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
                 Current Value
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
                 <input
                   type="number"
                   value={data.currentValue || ''}
                   onChange={(e) => onChange({ currentValue: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="0"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
                 />
               </div>
             </div>
@@ -245,17 +245,17 @@ function DetailsStep({
         {/* Monthly payment for subscriptions/loans */}
         {showMonthlyPayment && (
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1.5">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
               Monthly Payment
             </label>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
               <input
                 type="number"
                 value={data.monthlyPayment || ''}
                 onChange={(e) => onChange({ monthlyPayment: e.target.value ? Number(e.target.value) : undefined })}
                 placeholder="0"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               />
             </div>
           </div>
@@ -263,7 +263,7 @@ function DetailsStep({
 
         {/* Tags */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1.5">
+          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
             Tags
           </label>
           <input
@@ -271,9 +271,9 @@ function DetailsStep({
             value={data.tags?.join(', ') || ''}
             onChange={(e) => onChange({ tags: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })}
             placeholder="e.g., important, insured, work"
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
           />
-          <p className="text-xs text-stone-400 mt-1">Separate with commas</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1">Separate with commas</p>
         </div>
       </div>
     </div>
@@ -301,75 +301,75 @@ function DatesStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <Calendar className="w-8 h-8 text-stone-400 mx-auto mb-2" />
-        <h2 className="text-xl font-bold text-stone-900">Important Dates</h2>
-        <p className="text-stone-500 mt-1">Add dates to track</p>
+        <Calendar className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+        <h2 className="text-xl font-bold text-[var(--text-primary)]">Important Dates</h2>
+        <p className="text-[var(--text-muted)] mt-1">Add dates to track</p>
       </div>
 
       <div className="space-y-4">
         {showPurchaseDate && (
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1.5">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
               Purchase Date
             </label>
             <input
               type="date"
               value={data.purchaseDate || ''}
               onChange={(e) => onChange({ purchaseDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
         )}
 
         {showExpiration && (
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1.5">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
               Expiration Date
             </label>
             <input
               type="date"
               value={data.expirationDate || ''}
               onChange={(e) => onChange({ expirationDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
         )}
 
         {showRenewal && (
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1.5">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
               Renewal Date
             </label>
             <input
               type="date"
               value={data.renewalDate || ''}
               onChange={(e) => onChange({ renewalDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
         )}
 
         {showNextAction && (
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1.5">
+            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
               Next Action Date
             </label>
             <input
               type="date"
               value={data.nextActionDate || ''}
               onChange={(e) => onChange({ nextActionDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
-            <p className="text-xs text-stone-400 mt-1">e.g., next service, checkup, review</p>
+            <p className="text-xs text-[var(--text-muted)] mt-1">e.g., next service, checkup, review</p>
           </div>
         )}
 
         {/* Reminder settings */}
-        <div className="p-4 rounded-xl bg-stone-50 border border-stone-200">
+        <div className="p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)]">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-stone-500" />
-              <span className="font-medium text-stone-700">Reminders</span>
+              <Bell className="w-4 h-4 text-[var(--text-muted)]" />
+              <span className="font-medium text-[var(--text-secondary)]">Reminders</span>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -378,13 +378,13 @@ function DatesStep({
                 onChange={(e) => onChange({ reminderEnabled: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-stone-900 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stone-900"></div>
+              <div className="w-11 h-6 bg-[var(--bg-tertiary)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--accent)] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[var(--bg-card)] after:border-[var(--border)] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
             </label>
           </div>
 
           {(data.reminderEnabled ?? true) && (
             <div>
-              <label className="block text-sm text-stone-600 mb-1.5">
+              <label className="block text-sm text-[var(--text-secondary)] mb-1.5">
                 Remind me this many days before
               </label>
               <input
@@ -393,9 +393,9 @@ function DatesStep({
                 onChange={(e) => onChange({ reminderDays: Number(e.target.value) })}
                 min={1}
                 max={365}
-                className="w-full px-4 py-2 rounded-lg border border-stone-200 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent"
+                className="w-full px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               />
-              <p className="text-xs text-stone-400 mt-1">
+              <p className="text-xs text-[var(--text-muted)] mt-1">
                 Default for {CATEGORY_META[category].label}: {categoryConfig.reminderDays} days
               </p>
             </div>
@@ -447,13 +447,13 @@ function AttachmentsStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <Upload className="w-8 h-8 text-stone-400 mx-auto mb-2" />
-        <h2 className="text-xl font-bold text-stone-900">Attachments</h2>
-        <p className="text-stone-500 mt-1">Add photos, receipts, or documents</p>
+        <Upload className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+        <h2 className="text-xl font-bold text-[var(--text-primary)]">Attachments</h2>
+        <p className="text-[var(--text-muted)] mt-1">Add photos, receipts, or documents</p>
       </div>
 
       {/* Upload area */}
-      <label className="block p-8 border-2 border-dashed border-stone-300 rounded-xl text-center cursor-pointer hover:border-stone-400 transition-colors">
+      <label className="block p-8 border-2 border-dashed border-[var(--border)] rounded-xl text-center cursor-pointer hover:border-[var(--border)] transition-colors">
         <input
           type="file"
           multiple
@@ -463,12 +463,12 @@ function AttachmentsStep({
           disabled={uploading}
         />
         {uploading ? (
-          <Loader2 className="w-8 h-8 text-stone-400 mx-auto animate-spin" />
+          <Loader2 className="w-8 h-8 text-[var(--text-muted)] mx-auto animate-spin" />
         ) : (
           <>
-            <Upload className="w-8 h-8 text-stone-400 mx-auto mb-2" />
-            <p className="text-stone-600 font-medium">Click to upload</p>
-            <p className="text-sm text-stone-400 mt-1">or drag and drop</p>
+            <Upload className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+            <p className="text-[var(--text-secondary)] font-medium">Click to upload</p>
+            <p className="text-sm text-[var(--text-muted)] mt-1">or drag and drop</p>
           </>
         )}
       </label>
@@ -479,7 +479,7 @@ function AttachmentsStep({
           {attachments.map((attachment) => (
             <div
               key={attachment.id}
-              className="flex items-center gap-3 p-3 rounded-lg bg-stone-50 border border-stone-200"
+              className="flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border)]"
             >
               {attachment.type.startsWith('image/') ? (
                 <img
@@ -488,21 +488,21 @@ function AttachmentsStep({
                   className="w-12 h-12 rounded object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded bg-stone-200 flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-stone-500" />
+                <div className="w-12 h-12 rounded bg-[var(--bg-tertiary)] flex items-center justify-center">
+                  <FileText className="w-6 h-6 text-[var(--text-muted)]" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-stone-900 text-sm truncate">
+                <p className="font-medium text-[var(--text-primary)] text-sm truncate">
                   {attachment.name}
                 </p>
-                <p className="text-xs text-stone-500">
+                <p className="text-xs text-[var(--text-muted)]">
                   {(attachment.size / 1024).toFixed(1)} KB
                 </p>
               </div>
               <button
                 onClick={() => onRemove(attachment.id)}
-                className="p-2 text-stone-400 hover:text-red-500 transition-colors"
+                className="p-2 text-[var(--text-muted)] hover:text-[var(--error)] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -511,7 +511,7 @@ function AttachmentsStep({
         </div>
       )}
 
-      <p className="text-xs text-stone-400 text-center">
+      <p className="text-xs text-[var(--text-muted)] text-center">
         This step is optional. You can add attachments later.
       </p>
     </div>
@@ -678,17 +678,17 @@ export function AddItemFlow({
   const isLastStep = currentStep === STEPS.length - 1;
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-secondary)] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b border-stone-200 px-4 py-3">
+      <header className="sticky top-0 z-10 bg-[var(--bg-card)] border-b border-[var(--border)] px-4 py-3">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <button
             onClick={handleBack}
-            className="p-2 -ml-2 text-stone-600 hover:text-stone-900 transition-colors"
+            className="p-2 -ml-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <span className="text-sm text-stone-500">
+          <span className="text-sm text-[var(--text-muted)]">
             Step {currentStep + 1} of {STEPS.length}
           </span>
           <div className="w-9" /> {/* Spacer */}
@@ -696,9 +696,9 @@ export function AddItemFlow({
 
         {/* Progress bar */}
         <div className="max-w-lg mx-auto mt-3">
-          <div className="h-1 bg-stone-200 rounded-full overflow-hidden">
+          <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
             <div
-              className="h-full bg-stone-900 transition-all duration-300"
+              className="h-full bg-[var(--accent)] transition-all duration-300"
               style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -711,7 +711,7 @@ export function AddItemFlow({
       </main>
 
       {/* Footer */}
-      <footer className="sticky bottom-0 bg-white border-t border-stone-200 px-4 py-4">
+      <footer className="sticky bottom-0 bg-[var(--bg-card)] border-t border-[var(--border)] px-4 py-4">
         <div className="max-w-lg mx-auto flex gap-3">
           {isLastStep ? (
             <>
@@ -720,14 +720,14 @@ export function AddItemFlow({
                   onComplete?.();
                   router.push('/vault');
                 }}
-                className="flex-1 px-4 py-3 rounded-xl border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 transition-colors"
+                className="flex-1 px-4 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
               >
                 Skip
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || !canProceed()}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-900 text-white font-medium hover:bg-stone-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {saving ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -743,7 +743,7 @@ export function AddItemFlow({
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-900 text-white font-medium hover:bg-stone-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Continue
               <ArrowRight className="w-5 h-5" />

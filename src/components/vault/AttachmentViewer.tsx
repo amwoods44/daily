@@ -136,7 +136,7 @@ export function AttachmentViewer({
             <p className="text-white/60 text-sm mb-4">{formatFileSize(attachment.size)}</p>
             <button
               onClick={handleDownload}
-              className="px-4 py-2 rounded-lg bg-white text-stone-900 font-medium hover:bg-stone-100 transition-colors"
+              className="px-4 py-2 rounded-lg bg-[var(--bg-card)] text-[var(--text-primary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
             >
               Download File
             </button>
@@ -210,7 +210,7 @@ export function AttachmentGrid({ attachments }: AttachmentGridProps) {
             <button
               key={attachment.id}
               onClick={() => openViewer(index)}
-              className="aspect-square rounded-lg border border-stone-200 bg-stone-50 overflow-hidden hover:border-stone-300 transition-colors"
+              className="aspect-square rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] overflow-hidden hover:border-[var(--border)] transition-colors"
             >
               {isImage ? (
                 <img
@@ -220,8 +220,8 @@ export function AttachmentGrid({ attachments }: AttachmentGridProps) {
                 />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center p-2">
-                  <Icon className="w-8 h-8 text-stone-400 mb-1" />
-                  <span className="text-xs text-stone-500 truncate max-w-full">
+                  <Icon className="w-8 h-8 text-[var(--text-muted)] mb-1" />
+                  <span className="text-xs text-[var(--text-muted)] truncate max-w-full">
                     {attachment.name}
                   </span>
                 </div>

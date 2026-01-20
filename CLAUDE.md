@@ -6,7 +6,8 @@
 
 ## Project Context
 
-- **Stack:** Next.js 16 (App Router, Turbopack), Tailwind CSS, Lucide icons
+- **Stack:** Next.js 16 (App Router, Turbopack), Tailwind CSS, Lucide icons, Framer Motion, date-fns
+- **Integrations:** OpenAI (AI insights), Google APIs (Calendar/Gmail)
 - **Repo:** `github.com/amwoods44/daily.git` (main branch)
 - **Local:** `/Users/aaronwoods/Code/daily-pulse`
 
@@ -78,6 +79,8 @@ Before delivering, verify:
 - [ ] Works in dark mode
 - [ ] Has loading/error states for async stuff
 - [ ] Interactive elements have hover states
+- [ ] TypeScript compiles (`npm run build`)
+- [ ] ESLint passes (`npm run lint`)
 - [ ] Git committed and pushed
 
 ---
@@ -145,10 +148,10 @@ Before modifying shared code (components, hooks, utilities, styles), assess impa
 
 ```
 **Blast radius:** MEDIUM
-Modifying `useTimeFormat` hook — used in:
-- `TimelineBar.tsx`
-- `EventCard.tsx`
-- `MorningBriefing.tsx`
+Modifying `useTheme` hook — used in:
+- `VisualTimelineBar.tsx`
+- `UnifiedItem.tsx`
+- `AIBriefingCard.tsx`
 Return type unchanged, adding optional param. Safe to proceed.
 ```
 
@@ -160,7 +163,7 @@ Verify nothing broke:
 
 If blast radius was underestimated:
 ```
-**Blast radius update:** Found additional usage in `WeeklyView` — updated.
+**Blast radius update:** Found additional usage in `WeekInReview` — updated.
 ```
 
 ---
@@ -173,7 +176,7 @@ Before modifying a component, hook, or utility:
 3. Flag breaking changes before implementing
 
 ```
-**Ripple check:** `TimelineBar` is used in:
+**Ripple check:** `VisualTimelineBar` is used in:
 - `app/page.tsx` (main dashboard)
 - `app/morning/page.tsx` (morning view)
 Prop change will require updates to both. Proceeding.
@@ -245,4 +248,4 @@ If a style only works in one theme, flag it and propose a solution — don't del
 
 ---
 
-**Last Updated:** 2025-01-19
+**Last Updated:** 2026-01-19
