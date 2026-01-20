@@ -5,13 +5,10 @@ import {
   Phone,
   MessageSquare,
   Mail,
-  Video,
   Clock,
   Heart,
   Users,
   Briefcase,
-  AlertCircle,
-  CheckCircle,
   TrendingDown,
   TrendingUp,
   Cake,
@@ -283,10 +280,8 @@ function CompactPersonCard({
 
 function MinimalPersonCard({
   relationship,
-  health,
 }: {
   relationship: Relationship;
-  health: RelationshipHealth;
 }) {
   return (
     <div className="flex items-center gap-3 py-2">
@@ -315,7 +310,7 @@ export function PersonCard({
   const birthdayInfo = getBirthdayInfo(relationship.birthday);
 
   if (variant === 'minimal') {
-    return <MinimalPersonCard relationship={relationship} health={health} />;
+    return <MinimalPersonCard relationship={relationship} />;
   }
 
   if (variant === 'compact') {
