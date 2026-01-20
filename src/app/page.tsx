@@ -18,6 +18,7 @@ import { SkeletonBrief, SkeletonHero, SkeletonTimeline, SkeletonTaskList } from 
 import { LifePulseStrip, getDefaultPulseItems } from '@/components/life-pulse';
 import { VisualTimelineBar, getDefaultTimelineEvents, EventDetailModal, type TimelineEvent } from '@/components/timeline';
 import { ViewModeProvider, ViewModeToggle } from '@/components/ui/ViewModeToggle';
+import { ThemeSwitcher } from '@/components/theme';
 
 // ============================================================================
 // EDITORIAL COMPONENTS
