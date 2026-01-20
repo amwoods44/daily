@@ -27,7 +27,8 @@ A personal life dashboard that shows what your day looks like, what's pressing, 
 
    Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
    ```
-   Always include the timestamp in the first line using 12-hour format with AM/PM.
+   Always include the timestamp in Central Time (Chicago) using 12-hour format with AM/PM.
+   Note: System is UTC. Central = UTC-6 (CST, winter) or UTC-5 (CDT, summer).
 
 ### Repository Info
 - **Local folder**: `/Users/aaronwoods/Code/daily-pulse`
