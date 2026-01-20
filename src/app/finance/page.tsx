@@ -7,7 +7,7 @@ import { mockBriefing } from '@/lib/mock-data';
 import { buildExtendedFinanceData } from '@/lib/finance-data';
 import { NetWorthDashboard } from '@/components/finance/NetWorthDashboard';
 import { AgentActivityFeed } from '@/components/finance/AgentActivityFeed';
-import { SpendingInsights } from '@/components/finance/SpendingInsights';
+import { SpendingAnalysis } from '@/components/finance/SpendingAnalysis';
 
 export default function FinancePage() {
   // Build extended finance data from existing mock data
@@ -94,7 +94,11 @@ export default function FinancePage() {
             className="animate-slide-up stagger-2 opacity-0"
             style={{ animationFillMode: 'forwards' }}
           >
-            <SpendingInsights finance={data} />
+            <SpendingAnalysis
+              monthlySpent={data.monthlySpent}
+              monthlyBudget={data.monthlyBudget}
+              categories={data.spendingCategories}
+            />
           </section>
 
           {/* Right: Agent Activity */}
