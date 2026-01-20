@@ -847,6 +847,7 @@ export default function DailyPulse() {
           <VisualTimelineBar
             events={timelineEvents}
             onEventClick={handleEventClick}
+            onEventUpdate={handleEventUpdate}
           />
         </div>
       </div>

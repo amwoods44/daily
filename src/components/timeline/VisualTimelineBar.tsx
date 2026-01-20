@@ -1,6 +1,17 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  DragStartEvent,
+} from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 type EventType = 'meeting' | 'focus' | 'break' | 'task' | 'travel';
 
@@ -22,6 +33,7 @@ interface VisualTimelineBarProps {
   dayStart?: string; // HH:MM, defaults to "08:00"
   dayEnd?: string; // HH:MM, defaults to "22:00"
   onEventClick?: (eventId: string) => void;
+  onEventUpdate?: (eventId: string, updates: Partial<TimelineEvent>) => void;
 }
 
 const EVENT_COLORS: Record<EventType, { bg: string; border: string; text: string }> = {
@@ -70,15 +82,163 @@ function getCurrentTimeString(): string {
   return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 }
 
+// Draggable Event Component
+function DraggableEvent({
+  event,
+  left,
+  width,
+  isHovered,
+  isDragging,
+  onMouseEnter,
+  onMouseLeave,
+  onClick,
+}: {
+  event: TimelineEvent;
+  left: number;
+  width: number;
+  isHovered: boolean;
+  isDragging: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  onClick: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
+    id: event.id,
+  });
+
+  const colors = EVENT_COLORS[event.type];
+
+  const style = {
+    position: 'absolute' as const,
+    left: `${left}%`,
+    width: `${width}%`,
+    top: 6,
+    bottom: 6,
+    minHeight: 32,
+    backgroundColor: colors.bg,
+    borderLeft: `4px solid ${colors.border}`,
+    borderRadius: 'var(--radius-sm)',
+    cursor: isDragging ? 'grabbing' : 'grab',
+    transition: isDragging ? 'none' : 'all 0.2s ease',
+    transform: transform
+      ? `translate3d(${transform.x}px, 0, 0)`
+      : isHovered
+        ? 'scale(1.02)'
+        : 'scale(1)',
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 100 : isHovered ? 10 : 1,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    justifyContent: 'center',
+    paddingLeft: 10,
+    paddingRight: 6,
+    overflow: 'hidden',
+    boxShadow: isDragging ? 'var(--shadow-glow-brand)' : 'none',
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={(e) => {
+        if (!isDragging) {
+          e.stopPropagation();
+          onClick();
+        }
+      }}
+    >
+      {/* Event title - only show if width allows */}
+      {width > 8 && (
+        <span
+          className="text-body-sm"
+          style={{
+            fontWeight: 'var(--weight-medium)',
+            color: 'var(--text-primary)',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {event.title}
+        </span>
+      )}
+      {/* Time stamp - show if width allows */}
+      {width > 12 && (
+        <span
+          className="text-mono-sm"
+          style={{
+            color: 'var(--text-tertiary)',
+            marginTop: 2,
+          }}
+        >
+          {minutesToTime(timeToMinutes(event.startTime))}
+        </span>
+      )}
+
+      {/* Hover tooltip - hide during drag */}
+      {isHovered && !isDragging && (
+        <div
+          className="timeline-tooltip animate-fade-in"
+          style={{
+            position: 'absolute',
+            bottom: '100%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            marginBottom: 'var(--space-2)',
+            padding: 'var(--space-3) var(--space-4)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
+            borderRadius: 'var(--radius-lg)',
+            boxShadow: 'var(--shadow-xl)',
+            whiteSpace: 'nowrap',
+            zIndex: 100,
+          }}
+        >
+          <div
+            className="text-body"
+            style={{
+              fontWeight: 'var(--weight-semibold)',
+              color: 'var(--text-primary)',
+              marginBottom: 'var(--space-1)',
+            }}
+          >
+            {event.title}
+          </div>
+          <div className="text-mono-sm" style={{ color: 'var(--text-tertiary)' }}>
+            {minutesToTime(timeToMinutes(event.startTime))} –{' '}
+            {minutesToTime(timeToMinutes(event.endTime))}
+            {event.subtitle && ` · ${event.subtitle}`}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function VisualTimelineBar({
   events,
   dayStart = '08:00',
   dayEnd = '22:00',
   onEventClick,
+  onEventUpdate,
 }: VisualTimelineBarProps) {
   const [currentTime, setCurrentTime] = useState(getCurrentTimeString());
   const [hoveredEvent, setHoveredEvent] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+
+  // Drag sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Require 8px movement before dragging starts (allows clicks)
+      },
+    })
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -91,6 +251,59 @@ export function VisualTimelineBar({
   const dayEndMinutes = timeToMinutes(dayEnd);
   const totalMinutes = dayEndMinutes - dayStartMinutes;
   const currentMinutes = timeToMinutes(currentTime);
+
+  // Drag handlers
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(event.active.id as string);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, delta } = event;
+
+    if (!onEventUpdate || !timelineRef.current) {
+      setActiveId(null);
+      return;
+    }
+
+    // Calculate timeline track width
+    const trackWidth = timelineRef.current.offsetWidth;
+    const pixelsPerMinute = trackWidth / totalMinutes;
+
+    // Calculate minutes moved (snap to 15-minute increments)
+    const minutesMoved = Math.round((delta.x / pixelsPerMinute) / 15) * 15;
+
+    if (minutesMoved === 0) {
+      setActiveId(null);
+      return; // No movement
+    }
+
+    // Find the event being dragged
+    const draggedEvent = events.find((e) => e.id === active.id);
+    if (!draggedEvent) {
+      setActiveId(null);
+      return;
+    }
+
+    // Calculate new times
+    const oldStartMinutes = timeToMinutes(draggedEvent.startTime);
+    const oldEndMinutes = timeToMinutes(draggedEvent.endTime);
+    const newStartMinutes = oldStartMinutes + minutesMoved;
+    const newEndMinutes = oldEndMinutes + minutesMoved;
+
+    // Bounds check - don't allow dragging outside day range
+    if (newStartMinutes < dayStartMinutes || newEndMinutes > dayEndMinutes) {
+      setActiveId(null);
+      return;
+    }
+
+    // Update event
+    onEventUpdate(active.id as string, {
+      startTime: minutesToTime(newStartMinutes),
+      endTime: minutesToTime(newEndMinutes),
+    });
+
+    setActiveId(null);
+  }
 
   const getPosition = (time: string) => {
     const minutes = timeToMinutes(time);
@@ -114,36 +327,41 @@ export function VisualTimelineBar({
   }
 
   return (
-    <div className="visual-timeline-container">
-      {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 'var(--space-4)',
-        }}
-      >
-        <span className="text-label-md" style={{ color: 'var(--text-tertiary)' }}>
-          Your Day
-        </span>
-        <span className="text-mono-sm" style={{ color: 'var(--text-secondary)' }}>
-          {events.length} events · {Math.round((dayEndMinutes - currentMinutes) / 60)}h remaining
-        </span>
-      </div>
+    <DndContext
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="visual-timeline-container">
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 'var(--space-4)',
+          }}
+        >
+          <span className="text-label-md" style={{ color: 'var(--text-tertiary)' }}>
+            Your Day
+          </span>
+          <span className="text-mono-sm" style={{ color: 'var(--text-secondary)' }}>
+            {events.length} events · {Math.round((dayEndMinutes - currentMinutes) / 60)}h remaining
+          </span>
+        </div>
 
-      {/* Timeline Track */}
-      <div
-        ref={timelineRef}
-        className="timeline-track"
-        style={{
-          position: 'relative',
-          height: 64,
-          backgroundColor: 'var(--bg-muted)',
-          borderRadius: 'var(--radius-lg)',
-          overflow: 'visible',
-        }}
-      >
+        {/* Timeline Track */}
+        <div
+          ref={timelineRef}
+          className="timeline-track"
+          style={{
+            position: 'relative',
+            height: 64,
+            backgroundColor: 'var(--bg-muted)',
+            borderRadius: 'var(--radius-lg)',
+            overflow: 'visible',
+          }}
+        >
         {/* Hour markers */}
         {hourMarkers.map((marker, i) => (
           <div
@@ -185,106 +403,25 @@ export function VisualTimelineBar({
           </div>
         ))}
 
-        {/* Events */}
+        {/* Events - now draggable */}
         {events.map((event) => {
           const left = getPosition(event.startTime);
           const width = getWidth(event.startTime, event.endTime);
-          const colors = EVENT_COLORS[event.type];
           const isHovered = hoveredEvent === event.id;
+          const isDragging = activeId === event.id;
 
           return (
-            <div
+            <DraggableEvent
               key={event.id}
+              event={event}
+              left={left}
+              width={width}
+              isHovered={isHovered}
+              isDragging={isDragging}
               onMouseEnter={() => setHoveredEvent(event.id)}
               onMouseLeave={() => setHoveredEvent(null)}
               onClick={() => onEventClick?.(event.id)}
-              style={{
-                position: 'absolute',
-                left: `${left}%`,
-                width: `${width}%`,
-                top: 6,
-                bottom: 6,
-                minHeight: 32,
-                backgroundColor: colors.bg,
-                borderLeft: `4px solid ${colors.border}`,
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                transform: isHovered ? 'scale(1.02)' : 'scale(1)',
-                zIndex: isHovered ? 10 : 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                paddingLeft: 10,
-                paddingRight: 6,
-                overflow: 'hidden',
-              }}
-            >
-              {/* Event title - only show if width allows */}
-              {width > 8 && (
-                <span
-                  className="text-body-sm"
-                  style={{
-                    fontWeight: 'var(--weight-medium)',
-                    color: 'var(--text-primary)',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {event.title}
-                </span>
-              )}
-              {/* Time stamp - show if width allows */}
-              {width > 12 && (
-                <span
-                  className="text-mono-sm"
-                  style={{
-                    color: 'var(--text-tertiary)',
-                    marginTop: 2,
-                  }}
-                >
-                  {minutesToTime(timeToMinutes(event.startTime))}
-                </span>
-              )}
-
-              {/* Hover tooltip */}
-              {isHovered && (
-                <div
-                  className="timeline-tooltip animate-fade-in"
-                  style={{
-                    position: 'absolute',
-                    bottom: '100%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    marginBottom: 'var(--space-2)',
-                    padding: 'var(--space-3) var(--space-4)',
-                    backgroundColor: 'var(--bg-surface)',
-                    border: '1px solid var(--border-default)',
-                    borderRadius: 'var(--radius-lg)',
-                    boxShadow: 'var(--shadow-xl)',
-                    whiteSpace: 'nowrap',
-                    zIndex: 100,
-                  }}
-                >
-                  <div
-                    className="text-body"
-                    style={{
-                      fontWeight: 'var(--weight-semibold)',
-                      color: 'var(--text-primary)',
-                      marginBottom: 'var(--space-1)',
-                    }}
-                  >
-                    {event.title}
-                  </div>
-                  <div className="text-mono-sm" style={{ color: 'var(--text-tertiary)' }}>
-                    {minutesToTime(timeToMinutes(event.startTime))} –{' '}
-                    {minutesToTime(timeToMinutes(event.endTime))}
-                    {event.subtitle && ` · ${event.subtitle}`}
-                  </div>
-                </div>
-              )}
-            </div>
+            />
           );
         })}
 
@@ -374,6 +511,7 @@ export function VisualTimelineBar({
         ))}
       </div>
     </div>
+    </DndContext>
   );
 }
 
