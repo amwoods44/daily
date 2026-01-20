@@ -21,30 +21,30 @@ interface SleepInsightsProps {
 function getQualityColor(quality: string): string {
   switch (quality) {
     case 'excellent':
-      return 'text-emerald-600';
+      return 'text-[var(--semantic-success)]';
     case 'good':
-      return 'text-green-600';
+      return 'text-[var(--semantic-success-vivid)]';
     case 'fair':
-      return 'text-amber-600';
+      return 'text-[var(--semantic-warning)]';
     case 'poor':
-      return 'text-red-600';
+      return 'text-[var(--semantic-error)]';
     default:
-      return 'text-stone-600';
+      return 'text-[var(--text-secondary)]';
   }
 }
 
 function getQualityBg(quality: string): string {
   switch (quality) {
     case 'excellent':
-      return 'bg-emerald-100';
+      return 'bg-[var(--semantic-success-subtle)]';
     case 'good':
-      return 'bg-green-100';
+      return 'bg-[var(--semantic-success-subtle)]';
     case 'fair':
-      return 'bg-amber-100';
+      return 'bg-[var(--semantic-warning-subtle)]';
     case 'poor':
-      return 'bg-red-100';
+      return 'bg-[var(--semantic-error-subtle)]';
     default:
-      return 'bg-stone-100';
+      return 'bg-[var(--bg-muted)]';
   }
 }
 
@@ -63,11 +63,11 @@ function TrendIndicator({ trend, className }: { trend: 'improving' | 'stable' | 
 function getTrendColor(trend: 'improving' | 'stable' | 'declining'): string {
   switch (trend) {
     case 'improving':
-      return 'text-emerald-600';
+      return 'text-[var(--semantic-success)]';
     case 'declining':
-      return 'text-red-600';
+      return 'text-[var(--semantic-error)]';
     default:
-      return 'text-stone-500';
+      return 'text-[var(--text-tertiary)]';
   }
 }
 
@@ -91,8 +91,8 @@ function FullSleepInsights({
             <Moon className={`w-6 h-6 ${getQualityColor(health.sleep.quality)}`} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-stone-900">Sleep Insights</h3>
-            <div className="flex items-center gap-2 text-sm text-stone-500">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)]">Sleep Insights</h3>
+            <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)]">
               <TrendIndicator trend={analysis.trend} className={`w-4 h-4 ${getTrendColor(analysis.trend)}`} />
               <span className="capitalize">{analysis.trend}</span>
             </div>
@@ -102,14 +102,14 @@ function FullSleepInsights({
           <div className={`text-3xl font-light ${getQualityColor(health.sleep.quality)}`}>
             {analysis.hoursSlept}h
           </div>
-          <div className="text-sm text-stone-500">Last night</div>
+          <div className="text-sm text-[var(--text-tertiary)]">Last night</div>
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white rounded-xl border border-stone-200 p-4">
-          <div className="flex items-center gap-2 text-sm text-stone-500 mb-1">
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] mb-1">
             <Moon className="w-4 h-4" />
             <span>Quality</span>
           </div>
@@ -118,44 +118,44 @@ function FullSleepInsights({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-stone-200 p-4">
-          <div className="flex items-center gap-2 text-sm text-stone-500 mb-1">
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] mb-1">
             <Clock className="w-4 h-4" />
             <span>Weekly Avg</span>
           </div>
-          <div className="text-xl font-semibold text-stone-900">
+          <div className="text-xl font-semibold text-[var(--text-primary)]">
             {analysis.weeklyAverage.toFixed(1)}h
           </div>
         </div>
       </div>
 
       {/* Sleep Times */}
-      <div className="bg-white rounded-xl border border-stone-200 p-4">
-        <h4 className="text-sm font-medium text-stone-700 mb-3">Sleep Schedule</h4>
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
+        <h4 className="text-sm font-medium text-[var(--text-secondary)] mb-3">Sleep Schedule</h4>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Moon className="w-4 h-4 text-indigo-500" />
-            <span className="text-sm text-stone-600">Bedtime</span>
+            <Moon className="w-4 h-4 text-[var(--semantic-info)]" />
+            <span className="text-sm text-[var(--text-secondary)]">Bedtime</span>
           </div>
-          <span className="font-medium text-stone-900">{health.sleep.bedtime}</span>
+          <span className="font-medium text-[var(--text-primary)]">{health.sleep.bedtime}</span>
         </div>
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center gap-2">
-            <Sun className="w-4 h-4 text-amber-500" />
-            <span className="text-sm text-stone-600">Wake time</span>
+            <Sun className="w-4 h-4 text-[var(--semantic-warning)]" />
+            <span className="text-sm text-[var(--text-secondary)]">Wake time</span>
           </div>
-          <span className="font-medium text-stone-900">{health.sleep.wakeTime}</span>
+          <span className="font-medium text-[var(--text-primary)]">{health.sleep.wakeTime}</span>
         </div>
       </div>
 
       {/* Deficit Warning */}
       {analysis.deficit > 0 && (
-        <div className="bg-amber-50 rounded-xl border border-amber-200 p-4">
+        <div className="bg-[var(--semantic-warning-subtle)] rounded-xl border border-[var(--semantic-warning)] p-4">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-[var(--semantic-warning)] flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-sm font-medium text-amber-900">Sleep Deficit</h4>
-              <p className="text-sm text-amber-700 mt-1">
+              <h4 className="text-sm font-medium text-[var(--text-primary)]">Sleep Deficit</h4>
+              <p className="text-sm text-[var(--semantic-warning)] mt-1">
                 You&apos;re {analysis.deficit.toFixed(1)} hours behind your target.
               </p>
             </div>
@@ -165,12 +165,12 @@ function FullSleepInsights({
 
       {/* Recommendations */}
       {analysis.recommendations.length > 0 && (
-        <div className="bg-stone-50 rounded-xl p-4">
-          <h4 className="text-sm font-medium text-stone-700 mb-2">Recommendations</h4>
+        <div className="bg-[var(--bg-muted)] rounded-xl p-4">
+          <h4 className="text-sm font-medium text-[var(--text-secondary)] mb-2">Recommendations</h4>
           <ul className="space-y-2">
             {analysis.recommendations.map((rec, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-stone-600">
-                <Moon className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                <Moon className="w-4 h-4 text-[var(--semantic-info)] flex-shrink-0 mt-0.5" />
                 <span>{typeof rec === 'string' ? rec : rec.message}</span>
               </li>
             ))}
@@ -193,19 +193,19 @@ function CompactSleepInsights({
   analysis: SleepAnalysis;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-4">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 rounded-xl ${getQualityBg(health.sleep.quality)} flex items-center justify-center`}>
           <Moon className={`w-6 h-6 ${getQualityColor(health.sleep.quality)}`} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <span className="font-medium text-stone-900">Sleep</span>
+            <span className="font-medium text-[var(--text-primary)]">Sleep</span>
             <span className={`text-lg font-semibold ${getQualityColor(health.sleep.quality)}`}>
               {analysis.hoursSlept}h
             </span>
           </div>
-          <div className="flex items-center justify-between mt-1 text-sm text-stone-500">
+          <div className="flex items-center justify-between mt-1 text-sm text-[var(--text-tertiary)]">
             <span className="capitalize">{health.sleep.quality} quality</span>
             <span>Avg: {analysis.weeklyAverage.toFixed(1)}h</span>
           </div>
@@ -230,7 +230,7 @@ function MinimalSleepInsights({
     <div className="flex items-center gap-3">
       <Moon className={`w-5 h-5 ${getQualityColor(health.sleep.quality)}`} />
       <div className="flex-1">
-        <div className="text-sm font-medium text-stone-700">Sleep</div>
+        <div className="text-sm font-medium text-[var(--text-secondary)]">Sleep</div>
       </div>
       <div className={`text-lg font-medium ${getQualityColor(health.sleep.quality)}`}>
         {analysis.hoursSlept}h
