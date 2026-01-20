@@ -72,6 +72,14 @@ If genuinely unclear → ask one focused question, then execute
 
 ---
 
+## Plan Mode
+
+- Keep plans scannable: bullets, clear structure, no fluff
+- Lead with the approach, then key decisions/trade-offs
+- End with unresolved questions requiring your input
+
+---
+
 ## Quality Check
 
 Before delivering, verify:
