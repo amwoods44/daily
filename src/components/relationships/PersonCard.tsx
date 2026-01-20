@@ -50,17 +50,17 @@ function getRelationshipIcon(type: Relationship['type']) {
 function getStatusColor(status: RelationshipHealth['status']) {
   switch (status) {
     case 'thriving':
-      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      return 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)] border-[var(--semantic-success)]';
     case 'healthy':
-      return 'bg-green-100 text-green-700 border-green-200';
+      return 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)] border-[var(--semantic-success)]';
     case 'needs_attention':
-      return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+      return 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)] border-[var(--semantic-warning)]';
     case 'at_risk':
-      return 'bg-orange-100 text-orange-700 border-orange-200';
+      return 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)] border-[var(--semantic-warning)]';
     case 'critical':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'bg-[var(--semantic-error-subtle)] text-[var(--semantic-error)] border-[var(--semantic-error)]';
     default:
-      return 'bg-stone-100 text-stone-700 border-stone-200';
+      return 'bg-[var(--bg-muted)] text-[var(--text-primary)] border-[var(--border-default)]';
   }
 }
 
@@ -134,21 +134,21 @@ function FullPersonCard({
   onAction?: (action: string, personId: string) => void;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-5 hover:shadow-md transition">
       {/* Header */}
       <div className="flex items-start gap-4 mb-4">
         {/* Avatar */}
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center text-stone-500 font-medium text-lg">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--bg-muted)] to-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] font-medium text-lg">
           {relationship.name.charAt(0)}
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-stone-900 truncate">
+            <h3 className="font-semibold text-[var(--text-primary)] truncate">
               {relationship.name}
             </h3>
-            <span className="text-stone-400">{getRelationshipIcon(relationship.type)}</span>
+            <span className="text-[var(--text-tertiary)]">{getRelationshipIcon(relationship.type)}</span>
           </div>
           <div className="flex items-center gap-2 mt-1">
             <span
@@ -157,7 +157,7 @@ function FullPersonCard({
               {getStatusLabel(health.status)}
             </span>
             {birthdayInfo && (
-              <span className={`text-xs flex items-center gap-1 ${birthdayInfo.isToday ? 'text-pink-600' : 'text-stone-500'}`}>
+              <span className={`text-xs flex items-center gap-1 ${birthdayInfo.isToday ? 'text-[var(--brand-primary)]' : 'text-[var(--text-secondary)]'}`}>
                 <Cake className="w-3 h-3" />
                 {birthdayInfo.text}
               </span>
@@ -167,23 +167,23 @@ function FullPersonCard({
 
         {/* Score */}
         <div className="text-right">
-          <div className={`text-2xl font-light ${health.score >= 70 ? 'text-emerald-600' : health.score >= 50 ? 'text-amber-600' : 'text-red-600'}`}>
+          <div className={`text-2xl font-light ${health.score >= 70 ? 'text-[var(--semantic-success)]' : health.score >= 50 ? 'text-[var(--semantic-warning)]' : 'text-[var(--semantic-error)]'}`}>
             {health.score}
           </div>
-          <div className="text-xs text-stone-400 flex items-center justify-end gap-1">
-            {health.trend === 'improving' && <TrendingUp className="w-3 h-3 text-emerald-500" />}
-            {health.trend === 'declining' && <TrendingDown className="w-3 h-3 text-red-500" />}
+          <div className="text-xs text-[var(--text-tertiary)] flex items-center justify-end gap-1">
+            {health.trend === 'improving' && <TrendingUp className="w-3 h-3 text-[var(--semantic-success)]" />}
+            {health.trend === 'declining' && <TrendingDown className="w-3 h-3 text-[var(--semantic-error)]" />}
             score
           </div>
         </div>
       </div>
 
       {/* Last contact */}
-      <div className="flex items-center gap-2 text-sm text-stone-500 mb-4">
+      <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-4">
         <Clock className="w-4 h-4" />
         <span>Last contact: {formatDaysAgo(relationship.daysSinceContact)}</span>
         {health.overdueBy > 0 && (
-          <span className="text-amber-600">
+          <span className="text-[var(--semantic-warning)]">
             ({health.overdueBy} days overdue)
           </span>
         )}
@@ -191,7 +191,7 @@ function FullPersonCard({
 
       {/* Notes */}
       {relationship.notes && (
-        <p className="text-sm text-stone-600 mb-4 bg-stone-50 p-3 rounded-lg">
+        <p className="text-sm text-[var(--text-secondary)] mb-4 bg-[var(--bg-muted)] p-3 rounded-lg">
           {relationship.notes}
         </p>
       )}
@@ -200,21 +200,21 @@ function FullPersonCard({
       <div className="flex gap-2">
         <button
           onClick={() => onAction?.('call', relationship.id)}
-          className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition"
+          className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-[var(--text-primary)] text-[var(--text-inverse)] rounded-lg text-sm font-medium hover:opacity-90 transition"
         >
           <Phone className="w-4 h-4" />
           Call
         </button>
         <button
           onClick={() => onAction?.('text', relationship.id)}
-          className="flex-1 flex items-center justify-center gap-2 py-2 px-3 border border-stone-200 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-50 transition"
+          className="flex-1 flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-default)] text-[var(--text-primary)] rounded-lg text-sm font-medium hover:bg-[var(--bg-muted)] transition"
         >
           <MessageSquare className="w-4 h-4" />
           Text
         </button>
         <button
           onClick={() => onAction?.('email', relationship.id)}
-          className="py-2 px-3 border border-stone-200 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-50 transition"
+          className="py-2 px-3 border border-[var(--border-default)] text-[var(--text-primary)] rounded-lg text-sm font-medium hover:bg-[var(--bg-muted)] transition"
         >
           <Mail className="w-4 h-4" />
         </button>
@@ -239,37 +239,37 @@ function CompactPersonCard({
   onAction?: (action: string, personId: string) => void;
 }) {
   return (
-    <div className="flex items-center gap-4 p-3 bg-white rounded-lg border border-stone-200 hover:shadow-sm transition">
+    <div className="flex items-center gap-4 p-3 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-default)] hover:shadow-sm transition">
       {/* Avatar */}
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center text-stone-500 font-medium flex-shrink-0">
+      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--bg-muted)] to-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] font-medium flex-shrink-0">
         {relationship.name.charAt(0)}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-medium text-stone-900 truncate">{relationship.name}</span>
-          {birthdayInfo?.isToday && <span className="text-pink-500">🎂</span>}
+          <span className="font-medium text-[var(--text-primary)] truncate">{relationship.name}</span>
+          {birthdayInfo?.isToday && <span className="text-[var(--brand-primary)]">🎂</span>}
         </div>
-        <div className="text-xs text-stone-500">
+        <div className="text-xs text-[var(--text-secondary)]">
           {formatDaysAgo(relationship.daysSinceContact)}
           {health.overdueBy > 0 && (
-            <span className="text-amber-600 ml-1">• {health.overdueBy}d overdue</span>
+            <span className="text-[var(--semantic-warning)] ml-1">• {health.overdueBy}d overdue</span>
           )}
         </div>
       </div>
 
       {/* Status indicator */}
       <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
-        health.status === 'thriving' || health.status === 'healthy' ? 'bg-emerald-500' :
-        health.status === 'needs_attention' ? 'bg-yellow-500' :
-        health.status === 'at_risk' ? 'bg-orange-500' : 'bg-red-500'
+        health.status === 'thriving' || health.status === 'healthy' ? 'bg-[var(--semantic-success)]' :
+        health.status === 'needs_attention' ? 'bg-[var(--semantic-warning)]' :
+        health.status === 'at_risk' ? 'bg-[var(--semantic-warning)]' : 'bg-[var(--semantic-error)]'
       }`} />
 
       {/* Quick action */}
       <button
         onClick={() => onAction?.('text', relationship.id)}
-        className="p-2 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded-lg transition"
+        className="p-2 text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-muted)] rounded-lg transition"
       >
         <MessageSquare className="w-4 h-4" />
       </button>
@@ -290,11 +290,11 @@ function MinimalPersonCard({
 }) {
   return (
     <div className="flex items-center gap-3 py-2">
-      <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 text-sm font-medium">
+      <div className="w-8 h-8 rounded-full bg-[var(--bg-muted)] flex items-center justify-center text-[var(--text-secondary)] text-sm font-medium">
         {relationship.name.charAt(0)}
       </div>
-      <span className="text-sm text-stone-700">{relationship.name}</span>
-      <span className="text-xs text-stone-400 ml-auto">
+      <span className="text-sm text-[var(--text-primary)]">{relationship.name}</span>
+      <span className="text-xs text-[var(--text-tertiary)] ml-auto">
         {formatDaysAgo(relationship.daysSinceContact)}
       </span>
     </div>
@@ -372,11 +372,11 @@ export function PersonList({
     <div>
       {title && (
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium text-stone-700">{title}</h3>
+          <h3 className="text-sm font-medium text-[var(--text-primary)]">{title}</h3>
           {showViewAll && hasMore && (
             <button
               onClick={onViewAll}
-              className="text-xs text-stone-500 hover:text-stone-700"
+              className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             >
               View all ({relationships.length})
             </button>

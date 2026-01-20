@@ -713,16 +713,64 @@ export default function DailyPulse() {
   }, [completedCount, totalTasks, showCelebration]);
 
   const handleAction = useCallback((actionId: string, item?: UnifiedItem) => {
-    console.log('Action:', actionId, item?.id);
+    console.log('Action:', actionId, item);
 
-    // Track completed tasks
-    if (actionId === 'complete' && item?.id) {
-      setCompletedTaskIds(prev => {
-        const next = new Set(prev);
-        next.add(item.id);
-        return next;
-      });
+    // Complete task/item
+    if (actionId === 'complete' || actionId === 'complete_task') {
+      if (item?.id) {
+        setCompletedTaskIds(prev => {
+          const next = new Set(prev);
+          next.add(item.id);
+          return next;
+        });
+      }
+      return;
     }
+
+    // Open/start actions - show placeholder
+    if (actionId === 'open_risk' || actionId === 'open_task' || actionId === 'open_document') {
+      alert('This would open the document/task in your preferred app');
+      return;
+    }
+
+    // Draft response actions
+    if (actionId === 'draft_response' || actionId === 'quick_reply' || actionId === 'full_reply') {
+      alert('This would open a draft email/message composer');
+      return;
+    }
+
+    // Snooze actions
+    if (actionId === 'snooze_risk' || actionId === 'snooze_task' || actionId === 'snooze_email') {
+      alert('This item has been snoozed for 1 hour');
+      return;
+    }
+
+    // Join meeting
+    if (actionId === 'join_meeting') {
+      const meetLink = (item as any)?.meetLink || (item as any)?.originalData?.meetLink;
+      if (meetLink) {
+        window.open(meetLink, '_blank');
+      } else {
+        alert('No meeting link available');
+      }
+      return;
+    }
+
+    // Prep meeting
+    if (actionId === 'prep_meeting') {
+      alert('This would show meeting prep notes and agenda');
+      return;
+    }
+
+    // Later/schedule actions
+    if (actionId === 'later' || actionId === 'schedule_later') {
+      alert('This item has been moved to "Later" bucket');
+      return;
+    }
+
+    // Default fallback
+    console.warn('Unhandled action:', actionId);
+    alert(`Action: ${actionId} - Implementation coming soon`);
   }, []);
 
   const handleEventClick = useCallback((eventId: string) => {
