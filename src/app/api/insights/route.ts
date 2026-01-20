@@ -112,7 +112,7 @@ function generateRuleBasedInsights(meetings: Meeting[], emails: Email[]): string
   });
 
   const frequentAttendees = Object.entries(attendeeCounts)
-    .filter(([_, count]) => count > 1)
+    .filter(([, count]) => count > 1)
     .map(([name]) => name);
 
   if (frequentAttendees.length > 0) {

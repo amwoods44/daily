@@ -95,7 +95,8 @@ export function detectProductivityPatterns(
 
   // Analyze task completion by hour
   const completionsByHour: number[] = new Array(24).fill(0);
-  const tasksByHour: number[] = new Array(24).fill(0);
+  // Reserved for task density analysis
+  const _tasksByHour: number[] = new Array(24).fill(0);
 
   for (const task of tasks) {
     if (task.completed && task.time) {
@@ -129,7 +130,7 @@ export function detectProductivityPatterns(
     .filter(t => t.completed && t.time)
     .sort((a, b) => new Date(a.time!).getTime() - new Date(b.time!).getTime());
 
-  let focusSessions: number[] = [];
+  const focusSessions: number[] = [];
   let currentSession = 0;
 
   for (let i = 0; i < completedTasks.length - 1; i++) {
@@ -178,7 +179,7 @@ export function detectProductivityPatterns(
 
 export function detectSpendingPatterns(
   transactions: Transaction[],
-  daysOfHistory: number = 90
+  _daysOfHistory: number = 90
 ): SpendingPattern[] {
   const patterns: SpendingPattern[] = [];
 

@@ -143,18 +143,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Default theme for SSR/fallback
-const defaultTheme = {
-  theme: {
-    id: 'ink-paper',
-    name: 'Ink & Paper',
-    description: 'Warm editorial, like a premium letterpress publication',
-    isDark: false,
-    colors: {} as any,
-    fonts: {} as any,
-  },
+// Default theme for SSR/fallback - use actual theme from themes object
+const defaultTheme: ThemeContextType = {
+  theme: themes['ink-paper'],
   themeId: 'ink-paper',
-  mode: 'system' as const,
+  mode: 'system',
   setThemeId: () => {},
   setMode: () => {},
   availableThemes: themes,

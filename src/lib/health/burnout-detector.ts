@@ -11,7 +11,7 @@
  * Provides early warnings and intervention suggestions.
  */
 
-import type { HealthSnapshot, BurnoutSignals, Nudge, Prediction } from '../types';
+import type { HealthSnapshot, Nudge, Prediction } from '../types';
 import type { HealthMetrics, Meeting, Relationship, FinanceOverview } from '../mock-data';
 
 // ============================================================================

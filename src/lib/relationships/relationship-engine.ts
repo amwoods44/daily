@@ -9,12 +9,9 @@
  */
 
 import type {
-  Person,
   RelationshipType,
   CommunicationChannel,
   Nudge,
-  NudgeType,
-  NudgeColor,
 } from '../types';
 import type { Relationship, PersonWaiting } from '../mock-data';
 
@@ -63,7 +60,8 @@ export interface RelationshipInsight {
 // ============================================================================
 
 // Default contact frequency by relationship type (in days)
-const DEFAULT_FREQUENCY: Record<RelationshipType, number> = {
+// Reserved for customizable frequency thresholds
+const _DEFAULT_FREQUENCY: Record<RelationshipType, number> = {
   partner: 1,
   family: 7,
   close_friend: 14,
@@ -73,7 +71,8 @@ const DEFAULT_FREQUENCY: Record<RelationshipType, number> = {
 };
 
 // Importance multipliers for scoring
-const IMPORTANCE_MULTIPLIER: Record<number, number> = {
+// Reserved for weighted relationship calculations
+const _IMPORTANCE_MULTIPLIER: Record<number, number> = {
   1: 0.5,
   2: 0.75,
   3: 1.0,
@@ -368,7 +367,7 @@ export function generateRelationshipNudges(
  */
 export function generateRelationshipInsights(
   relationships: Relationship[],
-  communications?: CommunicationEvent[]
+  _communications?: CommunicationEvent[]
 ): RelationshipInsight[] {
   const insights: RelationshipInsight[] = [];
 
@@ -511,5 +510,5 @@ export function getTodaysPriorities(
       return b.health.overdueBy - a.health.overdueBy;
     })
     .slice(0, maxCount)
-    .map(({ health, ...r }) => r);
+    .map(({ health: _health, ...r }) => r);
 }

@@ -359,7 +359,7 @@ export function NextWeekPlanning({
             </div>
             <div className="flex-1">
               <p className="font-medium text-emerald-900">Great planning!</p>
-              <p className="text-sm text-emerald-700">You're set for a productive week ahead.</p>
+              <p className="text-sm text-emerald-700">You&apos;re set for a productive week ahead.</p>
             </div>
             <ArrowRight className="w-5 h-5 text-emerald-400" />
           </div>

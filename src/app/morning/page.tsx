@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sun,
   Moon,
-  Cloud,
-  CloudRain,
   Sparkles,
   ChevronRight,
   Check,
@@ -222,7 +220,7 @@ function DayOverviewStep({
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 mb-8">
         <div className="flex items-center gap-2 text-sm text-stone-500 mb-4">
           <Calendar className="w-4 h-4" />
-          <span>Today's Schedule</span>
+          <span>Today&apos;s Schedule</span>
         </div>
 
         <div className="space-y-3">
@@ -372,8 +370,13 @@ function QuickWinsStep({
 
   useEffect(() => {
     if (completedCount > 0 && completedCount === wins.length) {
-      setShowCelebration(true);
-      setTimeout(() => setShowCelebration(false), 2000);
+      // Use timeout to avoid synchronous setState in effect
+      const showTimer = setTimeout(() => setShowCelebration(true), 0);
+      const hideTimer = setTimeout(() => setShowCelebration(false), 2000);
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, [completedCount, wins.length]);
 
@@ -394,7 +397,7 @@ function QuickWinsStep({
           onClick={onNext}
           className="px-8 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition"
         >
-          Let's go
+          Let&apos;s go
         </button>
       </motion.div>
     );
@@ -516,7 +519,7 @@ function ReadyStep({ onComplete }: { onComplete: () => void }) {
         <Heart className="w-10 h-10 text-emerald-600" />
       </motion.div>
 
-      <h2 className="text-3xl font-light text-stone-900 mb-4">You're set</h2>
+      <h2 className="text-3xl font-light text-stone-900 mb-4">You&apos;re set</h2>
       <p className="text-lg text-stone-500 mb-8">Have a great day.</p>
 
       <button
@@ -536,12 +539,8 @@ function ReadyStep({ onComplete }: { onComplete: () => void }) {
 export default function MorningRitualPage() {
   const router = useRouter();
   const [step, setStep] = useState<RitualStep>('greeting');
-  const [data, setData] = useState<DailyBriefing | null>(null);
-
-  useEffect(() => {
-    // Load data
-    setData(mockBriefing);
-  }, []);
+  // Use lazy initializer instead of effect for static data
+  const [data] = useState<DailyBriefing | null>(() => mockBriefing);
 
   const handleComplete = useCallback(() => {
     router.push('/');

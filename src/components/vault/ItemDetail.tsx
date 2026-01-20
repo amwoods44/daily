@@ -9,8 +9,6 @@ import {
   Archive,
   Trash2,
   AlertTriangle,
-  Calendar,
-  DollarSign,
   Tag,
   Clock,
   FileText,
@@ -233,7 +231,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
 
         {/* Details section */}
         <Section title="DETAILS" icon={FileText}>
-          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] divide-y divide-[var(--border)]">
+          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] divide-y divide-[var(--border-subtle)]">
             {item.purchasePrice !== undefined && (
               <div className="flex justify-between px-4 py-3">
                 <span className="text-[var(--text-muted)]">Purchase Price</span>

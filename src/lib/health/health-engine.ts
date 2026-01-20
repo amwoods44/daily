@@ -61,8 +61,9 @@ export interface EnergyPrediction {
 // ============================================================================
 
 const SLEEP_TARGET_HOURS = 7.5;
-const STEPS_GOAL = 10000;
-const WATER_GOAL = 8;
+// Reserved for future goal-based features
+const _STEPS_GOAL = 10000;
+const _WATER_GOAL = 8;
 
 // Weights for overall health score
 const HEALTH_WEIGHTS = {
@@ -246,7 +247,7 @@ function calculateHydrationScore(
   return { score, status, insight };
 }
 
-function calculateRecoveryScore(hrv: number, restingHR: number): { score: number; status: string; insight?: string } {
+function calculateRecoveryScore(hrv: number, _restingHR: number): { score: number; status: string; insight?: string } {
   // Recovery is primarily based on HRV
   let score: number;
   if (hrv >= 55) score = 90;
@@ -346,7 +347,7 @@ export function predictEnergy(metrics: HealthMetrics): EnergyPrediction {
   const factors: string[] = [];
   const recommendations: string[] = [];
 
-  let predictedPeakTime = '10:00 AM';
+  const predictedPeakTime = '10:00 AM';
   let predictedDipTime = '2:00 PM';
 
   if (metrics.sleep.hours < 6) {

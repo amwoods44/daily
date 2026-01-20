@@ -9,7 +9,6 @@
  */
 
 import type { Bill, Transaction, CashFlowPrediction } from '../types';
-import type { FinanceOverview } from '../mock-data';
 
 // ============================================================================
 // TYPES
@@ -146,7 +145,7 @@ export function patternsToBills(patterns: RecurringPattern[]): Bill[] {
   return patterns.map((pattern) => {
     // Predict next occurrence
     const lastDate = new Date(pattern.lastOccurrence);
-    let nextDate = new Date(lastDate);
+    const nextDate = new Date(lastDate);
 
     switch (pattern.frequency) {
       case 'weekly':
@@ -341,7 +340,6 @@ export function generateBillWarnings(
   checkingBalance: number
 ): BillWarning[] {
   const warnings: BillWarning[] = [];
-  const now = new Date();
 
   bills.forEach((bill) => {
     // Check for insufficient funds

@@ -7,7 +7,7 @@
  * 3. What else should I know? (waiting, watch out)
  */
 
-import type { DailyBriefing as DailyData, Meeting, Email, Task, Risk, PersonWaiting } from './mock-data';
+import type { DailyBriefing as DailyData, Meeting, Email, PersonWaiting } from './mock-data';
 
 // ============================================================================
 // TYPES

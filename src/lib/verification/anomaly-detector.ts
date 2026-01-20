@@ -313,7 +313,7 @@ export function detectHealthAnomalies(
 export function detectScheduleAnomalies(
   calendar: TemporalItem[],
   tasks: TemporalItem[],
-  config: AnomalyDetectionConfig = DEFAULT_CONFIG
+  _config: AnomalyDetectionConfig = DEFAULT_CONFIG
 ): Anomaly[] {
   const anomalies: Anomaly[] = [];
 

@@ -215,7 +215,7 @@ export function shouldShowMockIndicators(): boolean {
  */
 export function getMockSources(): string[] {
   return Object.entries(DATA_SOURCES)
-    .filter(([_, source]) => source.status === 'mock')
+    .filter(([, source]) => source.status === 'mock')
     .map(([key]) => key);
 }
 
@@ -224,7 +224,7 @@ export function getMockSources(): string[] {
  */
 export function getRealSources(): string[] {
   return Object.entries(DATA_SOURCES)
-    .filter(([_, source]) => source.status === 'real')
+    .filter(([, source]) => source.status === 'real')
     .map(([key]) => key);
 }
 

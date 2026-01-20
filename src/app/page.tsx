@@ -15,14 +15,24 @@ import { FocusModeProvider, FocusModeToggle, FocusModeSection } from '@/componen
 import { DayProgressCompact } from '@/components/ui/DayProgress';
 import { Celebration } from '@/components/ui/Confetti';
 import { SkeletonBrief, SkeletonHero, SkeletonTimeline, SkeletonTaskList } from '@/components/ui/Skeleton';
-import { CollapsibleSection } from '@/components/ui/CollapsibleSection';
 import { LifePulseStrip, getDefaultPulseItems } from '@/components/life-pulse';
 import { VisualTimelineBar, getDefaultTimelineEvents } from '@/components/timeline';
-import { ViewModeProvider, ViewModeToggle, useViewModeVisibility } from '@/components/ui/ViewModeToggle';
+import { ViewModeProvider, ViewModeToggle } from '@/components/ui/ViewModeToggle';
 
 // ============================================================================
 // EDITORIAL COMPONENTS
 // ============================================================================
+
+// WeatherIcon must be defined outside of Masthead to avoid re-creation on each render
+function WeatherIcon({ condition }: { condition: string }) {
+  const iconClass = "w-4 h-4";
+  switch (condition) {
+    case 'sunny': return <Sun className={iconClass} />;
+    case 'cloudy': return <Cloud className={iconClass} />;
+    case 'rainy': return <CloudRain className={iconClass} />;
+    default: return <Sun className={iconClass} />;
+  }
+}
 
 function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTasks, totalTasks }: {
   greeting: string;
@@ -33,16 +43,6 @@ function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTas
   completedTasks: number;
   totalTasks: number;
 }) {
-  const WeatherIcon = ({ condition }: { condition: string }) => {
-    const iconClass = "w-4 h-4";
-    switch (condition) {
-      case 'sunny': return <Sun className={iconClass} />;
-      case 'cloudy': return <Cloud className={iconClass} />;
-      case 'rainy': return <CloudRain className={iconClass} />;
-      default: return <Sun className={iconClass} />;
-    }
-  };
-
   return (
     <header className="masthead">
       <div className="masthead-inner">
@@ -100,7 +100,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
       <div className="premium-card-lg h-full">
         {/* Section header */}
         <div className="section-header" style={{ marginBottom: 'var(--space-6)' }}>
-          <span className="section-header-label">Today's Outlook</span>
+          <span className="section-header-label">Today&apos;s Outlook</span>
           <div className="section-header-line" />
         </div>
 

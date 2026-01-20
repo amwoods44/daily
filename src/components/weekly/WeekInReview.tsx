@@ -36,7 +36,8 @@ function getScoreColor(score: number): string {
   return 'text-red-600';
 }
 
-function getScoreGradient(score: number): string {
+// getScoreGradient reserved for future use with gradient backgrounds
+function _getScoreGradient(score: number): string {
   if (score >= 80) return 'from-emerald-500 to-green-500';
   if (score >= 60) return 'from-green-500 to-lime-500';
   if (score >= 40) return 'from-amber-500 to-yellow-500';
@@ -196,7 +197,7 @@ function WinsSection({ wins }: { wins: WeeklyReview['wins'] }) {
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <Trophy className="w-5 h-5 text-amber-500" />
-        <h3 className="font-medium text-stone-900">This Week's Wins</h3>
+        <h3 className="font-medium text-stone-900">This Week&apos;s Wins</h3>
       </div>
       <div className="grid gap-2">
         {wins.map((win, i) => {
@@ -259,7 +260,7 @@ function FocusSection({ focus }: { focus: string[] }) {
 
   return (
     <div className="space-y-3">
-      <h3 className="font-medium text-stone-900">Next Week's Focus</h3>
+      <h3 className="font-medium text-stone-900">Next Week&apos;s Focus</h3>
       <div className="space-y-2">
         {focus.map((item, i) => (
           <div

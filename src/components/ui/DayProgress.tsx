@@ -22,7 +22,7 @@ export function DayProgress({
       <div className="space-y-2">
         {showLabel && (
           <div className="flex items-center justify-between text-sm">
-            <span style={{ color: 'var(--text-muted)' }}>Today's Progress</span>
+            <span style={{ color: 'var(--text-muted)' }}>Today&apos;s Progress</span>
             <span style={{ color: 'var(--text-secondary)' }} className="font-medium">
               {completed}/{total}
             </span>

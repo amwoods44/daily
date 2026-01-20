@@ -273,7 +273,7 @@ async function executeQuery(
 
 async function executeCreate(
   intent: ParsedIntent,
-  context: ActionContext
+  _context: ActionContext
 ): Promise<ActionResult> {
   const target = intent.entities.target;
 

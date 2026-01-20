@@ -15,7 +15,6 @@
 import type {
   Collision,
   TemporalItem,
-  HealthSnapshot,
   Account,
   Bill,
   Person,
@@ -38,7 +37,8 @@ interface CollisionContext {
   now: Date;
 }
 
-interface ScheduleBlock {
+// ScheduleBlock reserved for advanced schedule analysis
+interface _ScheduleBlock {
   start: Date;
   end: Date;
   title: string;
@@ -50,7 +50,8 @@ interface ScheduleBlock {
 // CONSTANTS
 // ============================================================================
 
-const COLLISION_WEIGHTS = {
+// Reserved for weighted collision scoring
+const _COLLISION_WEIGHTS = {
   schedule_conflict: 100,
   energy_mismatch: 70,
   financial_timing: 90,
@@ -62,7 +63,7 @@ const COLLISION_WEIGHTS = {
 
 const LOOKAHEAD_DAYS = 7;
 const MIN_BUFFER_MINUTES = 15;
-const HIGH_ENERGY_THRESHOLD = 70;
+const _HIGH_ENERGY_THRESHOLD = 70; // Reserved for energy-based scheduling
 const LOW_ENERGY_THRESHOLD = 40;
 
 // ============================================================================

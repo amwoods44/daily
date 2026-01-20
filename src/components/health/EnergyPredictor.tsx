@@ -50,11 +50,12 @@ function getEnergyGradient(level: number): string {
   return 'from-red-500 to-orange-500';
 }
 
-function getBatteryIcon(level: number) {
-  if (level >= 75) return BatteryFull;
-  if (level >= 50) return BatteryMedium;
-  if (level >= 25) return BatteryLow;
-  return Battery;
+// Battery icon as a pure component to avoid lint false positive
+function BatteryIndicator({ level, className }: { level: number; className?: string }) {
+  if (level >= 75) return <BatteryFull className={className} />;
+  if (level >= 50) return <BatteryMedium className={className} />;
+  if (level >= 25) return <BatteryLow className={className} />;
+  return <Battery className={className} />;
 }
 
 // ============================================================================
@@ -168,13 +169,12 @@ function CompactEnergyPredictor({
   prediction: EnergyPrediction;
 }) {
   const levelPercent = prediction.currentLevel * 20;
-  const BatteryIcon = getBatteryIcon(levelPercent);
 
   return (
     <div className="bg-white rounded-xl border border-stone-200 p-4">
       <div className="flex items-center gap-4">
         <div className={`w-12 h-12 rounded-xl ${getEnergyBackground(levelPercent)} flex items-center justify-center`}>
-          <BatteryIcon className={`w-6 h-6 ${getEnergyColor(levelPercent)}`} />
+          <BatteryIndicator level={levelPercent} className={`w-6 h-6 ${getEnergyColor(levelPercent)}`} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
@@ -216,11 +216,10 @@ function MinimalEnergyPredictor({
   prediction: EnergyPrediction;
 }) {
   const levelPercent = prediction.currentLevel * 20;
-  const BatteryIcon = getBatteryIcon(levelPercent);
 
   return (
     <div className="flex items-center gap-3">
-      <BatteryIcon className={`w-5 h-5 ${getEnergyColor(levelPercent)}`} />
+      <BatteryIndicator level={levelPercent} className={`w-5 h-5 ${getEnergyColor(levelPercent)}`} />
       <div className="flex-1">
         <div className="text-sm font-medium text-stone-700">Energy</div>
       </div>

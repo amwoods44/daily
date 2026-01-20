@@ -175,7 +175,7 @@ function CompletionScreen({
         transition={{ delay: 0.3 }}
         className="text-2xl font-semibold text-stone-900 mb-2"
       >
-        You're All Set!
+        You&apos;re All Set!
       </motion.h2>
 
       <motion.p

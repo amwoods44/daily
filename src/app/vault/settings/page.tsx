@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Bell, Save, RotateCcw, Lock } from 'lucide-react';
 import {
@@ -17,19 +17,13 @@ import { VaultUnlock } from '@/components/vault';
 
 export default function VaultSettingsPage() {
   const router = useRouter();
-  const [unlocked, setUnlocked] = useState<boolean | null>(null);
-  const [config, setConfig] = useState<ReminderConfig>(DEFAULT_REMINDER_CONFIG);
+  // Use lazy initializers - safe for client components
+  const [unlocked, setUnlocked] = useState<boolean>(() => isUnlocked());
+  const [config, setConfig] = useState<ReminderConfig>(() =>
+    isUnlocked() ? loadReminderConfig() : DEFAULT_REMINDER_CONFIG
+  );
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    const currentlyUnlocked = isUnlocked();
-    setUnlocked(currentlyUnlocked);
-
-    if (currentlyUnlocked) {
-      setConfig(loadReminderConfig());
-    }
-  }, []);
 
   const handleSave = () => {
     setSaving(true);

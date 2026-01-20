@@ -11,7 +11,8 @@ export default function ItemDetailPage() {
   const router = useRouter();
   const id = params.id as string;
 
-  const [unlocked, setUnlocked] = useState<boolean | null>(null);
+  // Use lazy initializer for unlock status
+  const [unlocked, setUnlocked] = useState<boolean>(() => isUnlocked());
   const [item, setItem] = useState<VaultItem | null>(null);
   const [reminders, setReminders] = useState<VaultReminder[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,15 +32,14 @@ export default function ItemDetailPage() {
   }, [id, router]);
 
   useEffect(() => {
-    const currentlyUnlocked = isUnlocked();
-    setUnlocked(currentlyUnlocked);
-
-    if (currentlyUnlocked) {
+    // Load data if already unlocked
+    if (unlocked) {
       loadData();
     } else {
       setLoading(false);
     }
 
+    // Subscribe to changes (callback-based setState is valid)
     const unsubscribe = subscribe(() => {
       const nowUnlocked = isUnlocked();
       setUnlocked(nowUnlocked);
@@ -49,10 +49,10 @@ export default function ItemDetailPage() {
     });
 
     return unsubscribe;
-  }, [loadData]);
+  }, [loadData, unlocked]);
 
-  // Still checking
-  if (unlocked === null || loading) {
+  // Still loading data
+  if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-stone-900 border-t-transparent rounded-full animate-spin" />

@@ -300,7 +300,7 @@ function ConnectingStep({
   onComplete: () => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [connected, setConnected] = useState<string[]>([]);
+  const [_connected, setConnected] = useState<string[]>([]);
 
   const currentService = SERVICES.find((s) => s.id === services[currentIndex]);
 

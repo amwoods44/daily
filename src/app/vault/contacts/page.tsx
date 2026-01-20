@@ -146,7 +146,8 @@ function ContactForm({ contact, onSave, onCancel }: ContactFormProps) {
 
 export default function ContactsPage() {
   const router = useRouter();
-  const [unlocked, setUnlocked] = useState<boolean | null>(null);
+  // Use lazy initializer for unlock status
+  const [unlocked, setUnlocked] = useState<boolean>(() => isUnlocked());
   const [contacts, setContacts] = useState<ServiceContact[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -158,13 +159,12 @@ export default function ContactsPage() {
   }, []);
 
   useEffect(() => {
-    const currentlyUnlocked = isUnlocked();
-    setUnlocked(currentlyUnlocked);
-
-    if (currentlyUnlocked) {
+    // Load data if already unlocked
+    if (unlocked) {
       loadData();
     }
 
+    // Subscribe to changes (callback-based setState is valid)
     const unsubscribe = subscribe(() => {
       const nowUnlocked = isUnlocked();
       setUnlocked(nowUnlocked);
@@ -174,7 +174,7 @@ export default function ContactsPage() {
     });
 
     return unsubscribe;
-  }, [loadData]);
+  }, [loadData, unlocked]);
 
   const handleAdd = async (data: ServiceContactInput) => {
     await addContact(data);

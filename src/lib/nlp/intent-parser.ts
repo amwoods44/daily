@@ -185,7 +185,8 @@ function extractPerson(input: string): { name: string } | undefined {
   return undefined;
 }
 
-function extractAmount(input: string): number | undefined {
+// Reserved for payment/financial intent parsing
+function _extractAmount(input: string): number | undefined {
   // "$X" or "X dollars"
   const amountMatch = input.match(/\$?\s*(\d+(?:,\d{3})*(?:\.\d{2})?)\s*(?:dollars?)?/i);
   if (amountMatch) {
@@ -374,7 +375,7 @@ const INTENT_PATTERNS: IntentPattern[] = [
       /when\s+(?:is\s+)?(.+?)(?:'s)?\s+birthday/i,
     ],
     intent: 'query',
-    extractEntities: (match, input) => ({
+    extractEntities: (match, _input) => ({
       target: 'relationships',
       person: match[1]?.trim(),
     }),
@@ -518,7 +519,7 @@ const INTENT_PATTERNS: IntentPattern[] = [
 export function parseIntent(
   input: string,
   context?: { recentQueries?: string[]; currentPage?: string },
-  config: ParserConfig = DEFAULT_CONFIG
+  _config: ParserConfig = DEFAULT_CONFIG
 ): ParsedIntent {
   const normalizedInput = input.trim();
 
@@ -616,7 +617,8 @@ export function getCommandSuggestions(
   context?: { recentQueries?: string[]; currentPage?: string }
 ): string[] {
   const lowerInput = partialInput.toLowerCase();
-  const suggestions: string[] = [];
+  // Reserved for future suggestion building
+  const _suggestions: string[] = [];
 
   const allCommands = [
     'What\'s on my schedule today?',

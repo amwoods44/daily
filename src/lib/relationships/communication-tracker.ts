@@ -9,7 +9,7 @@
  * Provides unified view of communication history per person.
  */
 
-import type { CommunicationChannel, Person } from '../types';
+import type { CommunicationChannel } from '../types';
 import type { Meeting, Email, PersonWaiting } from '../mock-data';
 
 // ============================================================================
@@ -186,7 +186,7 @@ export function getCommunicationSummary(
  */
 export function analyzeResponseTimes(
   personName: string,
-  emails: Email[]
+  _emails: Email[]
 ): ResponseTimeAnalysis | null {
   const personId = personName.toLowerCase().replace(/\s+/g, '-');
 
@@ -212,7 +212,7 @@ export function analyzeResponseTimes(
  */
 export function detectPeopleWaiting(
   emails: Email[],
-  existingPeople?: string[]
+  _existingPeople?: string[]
 ): PersonWaiting[] {
   const waiting: PersonWaiting[] = [];
   const now = new Date();

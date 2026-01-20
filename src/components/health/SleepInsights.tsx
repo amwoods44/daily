@@ -48,14 +48,15 @@ function getQualityBg(quality: string): string {
   }
 }
 
-function getTrendIcon(trend: 'improving' | 'stable' | 'declining') {
+// TrendIndicator as a pure component to avoid lint false positive
+function TrendIndicator({ trend, className }: { trend: 'improving' | 'stable' | 'declining'; className?: string }) {
   switch (trend) {
     case 'improving':
-      return TrendingUp;
+      return <TrendingUp className={className} />;
     case 'declining':
-      return TrendingDown;
+      return <TrendingDown className={className} />;
     default:
-      return Minus;
+      return <Minus className={className} />;
   }
 }
 
@@ -81,8 +82,6 @@ function FullSleepInsights({
   health: HealthMetrics;
   analysis: SleepAnalysis;
 }) {
-  const TrendIcon = getTrendIcon(analysis.trend);
-
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -94,7 +93,7 @@ function FullSleepInsights({
           <div>
             <h3 className="text-lg font-semibold text-stone-900">Sleep Insights</h3>
             <div className="flex items-center gap-2 text-sm text-stone-500">
-              <TrendIcon className={`w-4 h-4 ${getTrendColor(analysis.trend)}`} />
+              <TrendIndicator trend={analysis.trend} className={`w-4 h-4 ${getTrendColor(analysis.trend)}`} />
               <span className="capitalize">{analysis.trend}</span>
             </div>
           </div>

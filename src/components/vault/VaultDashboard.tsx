@@ -2,13 +2,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Lock, Settings, RefreshCw, ArrowLeft } from 'lucide-react';
+import { Plus, Settings, RefreshCw, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import {
   isUnlocked,
-  isInitialized,
   getItems,
-  getReminders,
   syncReminders,
   subscribe,
 } from '@/lib/vault';
@@ -20,8 +18,8 @@ import { AssetsSummary } from './AssetsSummary';
 
 export function VaultDashboard() {
   const router = useRouter();
-  const [unlocked, setUnlocked] = useState(false);
-  const [initialized, setInitialized] = useState(false);
+  // Use lazy initializers for initial state
+  const [unlocked, setUnlocked] = useState(() => isUnlocked());
   const [items, setItems] = useState<VaultItem[]>([]);
   const [reminders, setReminders] = useState<VaultReminder[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,18 +40,14 @@ export function VaultDashboard() {
   }, []);
 
   useEffect(() => {
-    // Check initial state
-    setInitialized(isInitialized());
-    const currentlyUnlocked = isUnlocked();
-    setUnlocked(currentlyUnlocked);
-
-    if (currentlyUnlocked) {
+    // Load data if already unlocked
+    if (unlocked) {
       loadData().finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
 
-    // Subscribe to changes
+    // Subscribe to changes (callback-based setState is valid)
     const unsubscribe = subscribe(() => {
       const nowUnlocked = isUnlocked();
       setUnlocked(nowUnlocked);
@@ -63,7 +57,7 @@ export function VaultDashboard() {
     });
 
     return unsubscribe;
-  }, [loadData]);
+  }, [loadData, unlocked]);
 
   const handleUnlock = () => {
     setUnlocked(true);

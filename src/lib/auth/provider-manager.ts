@@ -8,7 +8,7 @@
  * - Provider-agnostic interface
  */
 
-import type { Provider, TokenSet, IntegrationConnection, ConnectionStatus } from '../types';
+import type { Provider, IntegrationConnection } from '../types';
 
 // ============================================================================
 // TYPES

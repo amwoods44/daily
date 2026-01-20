@@ -30,7 +30,8 @@ interface PlaidLinkToken {
   expiration: string;
 }
 
-interface PlaidPublicToken {
+// PlaidPublicToken reserved for OAuth flow integration
+interface _PlaidPublicToken {
   public_token: string;
   institution: {
     name: string;
@@ -281,7 +282,7 @@ function getMockTransactions(): Transaction[] {
 /**
  * Detect recurring bills from transaction history
  */
-export async function detectRecurringBills(transactions: Transaction[]): Promise<Bill[]> {
+export async function detectRecurringBills(_transactions: Transaction[]): Promise<Bill[]> {
   // In production, this would use AI to detect patterns
   // For now, use mock bills
   return mockFinance.upcomingBills.map((bill) => ({
@@ -329,7 +330,7 @@ export function calculateSpendingByCategory(
   const totalSpending = Object.values(spending).reduce((a, b) => a + b, 0);
 
   return Object.entries(spending)
-    .filter(([_, amount]) => amount > 0)
+    .filter(([, amount]) => amount > 0)
     .map(([category, amount]) => ({
       category: category as TransactionCategory,
       amount,

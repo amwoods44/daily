@@ -161,7 +161,7 @@ export default function SettingsPage() {
                 <li>Add <code className="bg-gray-100 px-1 rounded">http://localhost:3000/api/auth/callback</code> as redirect URI</li>
                 <li>Enable Calendar API and Gmail API</li>
                 <li>Copy Client ID and Secret to <code className="bg-gray-100 px-1 rounded">.env.local</code></li>
-                <li>Click "Connect" above to authorize</li>
+                <li>Click &quot;Connect&quot; above to authorize</li>
               </ol>
             </div>
 
@@ -189,7 +189,7 @@ export default function SettingsPage() {
         <section className="mt-8 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6">
           <h2 className="font-semibold text-indigo-900 mb-2">Works without setup!</h2>
           <p className="text-sm text-indigo-800">
-            Daily Pulse works out of the box with demo data. Connect your accounts whenever you're ready to see real calendar events, emails, and AI-powered insights.
+            Daily Pulse works out of the box with demo data. Connect your accounts whenever you&apos;re ready to see real calendar events, emails, and AI-powered insights.
           </p>
         </section>
       </main>
