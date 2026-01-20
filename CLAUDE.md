@@ -21,12 +21,13 @@ A personal life dashboard that shows what your day looks like, what's pressing, 
 
 3. **Commit message format**:
    ```
-   Short description of what changed
+   Short description of what changed -- 1/19/2026 at 2:31 PM
 
    - Bullet points for details if needed
 
    Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
    ```
+   Always include the timestamp in the first line using 12-hour format with AM/PM.
 
 ### Repository Info
 - **Local folder**: `/Users/aaronwoods/Code/daily-pulse`
