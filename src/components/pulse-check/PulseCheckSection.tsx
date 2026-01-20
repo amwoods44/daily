@@ -228,91 +228,95 @@ export function PulseCheckSection({
           <div style={{ borderTop: '1px solid var(--border-subtle)' }} className="pt-2">
             {/* Health */}
             <SubSection title="Health" icon={Heart}>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Sleep</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    {health.sleep.hours}h ({health.sleep.quality})
-                  </p>
+              <Link href="/health" className="block">
+                <div className="grid grid-cols-2 gap-4 text-sm card-interactive" style={{ padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)' }}>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Sleep</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      {health.sleep.hours}h ({health.sleep.quality})
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>HRV</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.hrv} ms</p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Steps</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      {health.steps.toLocaleString()} / {health.stepsGoal.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Resting HR</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.restingHR} bpm</p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Water</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      {health.waterGlasses} / {health.waterGoal} glasses
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Active Minutes</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.activeMinutes} min</p>
+                  </div>
                 </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>HRV</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.hrv} ms</p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Steps</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    {health.steps.toLocaleString()} / {health.stepsGoal.toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Resting HR</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.restingHR} bpm</p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Water</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    {health.waterGlasses} / {health.waterGoal} glasses
-                  </p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Active Minutes</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>{health.activeMinutes} min</p>
-                </div>
-              </div>
+              </Link>
             </SubSection>
 
             {/* Finance */}
             <SubSection title="Finance" icon={DollarSign}>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Checking</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    ${finance.checking.toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Savings</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    ${finance.savings.toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Credit Card</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    ${finance.creditCardBalance.toLocaleString()} / ${finance.creditCardLimit.toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <span style={{ color: 'var(--text-tertiary)' }}>Investments</span>
-                  <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    ${finance.investmentValue.toLocaleString()}
-                    <span style={{ color: finance.investmentChange >= 0 ? 'var(--semantic-success)' : 'var(--semantic-error)' }}>
-                      {' '}({finance.investmentChange >= 0 ? '+' : ''}{finance.investmentChange}%)
-                    </span>
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <span style={{ color: 'var(--text-tertiary)' }}>Monthly Spending</span>
-                  <div className="flex items-center gap-3 mt-2">
-                    <div
-                      className="flex-1 h-1.5 rounded-full overflow-hidden"
-                      style={{ backgroundColor: 'var(--bg-muted)' }}
-                    >
+              <Link href="/finance" className="block">
+                <div className="grid grid-cols-2 gap-4 text-sm card-interactive" style={{ padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)' }}>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Checking</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      ${finance.checking.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Savings</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      ${finance.savings.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Credit Card</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      ${finance.creditCardBalance.toLocaleString()} / ${finance.creditCardLimit.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ color: 'var(--text-tertiary)' }}>Investments</span>
+                    <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      ${finance.investmentValue.toLocaleString()}
+                      <span style={{ color: finance.investmentChange >= 0 ? 'var(--semantic-success)' : 'var(--semantic-error)' }}>
+                        {' '}({finance.investmentChange >= 0 ? '+' : ''}{finance.investmentChange}%)
+                      </span>
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <span style={{ color: 'var(--text-tertiary)' }}>Monthly Spending</span>
+                    <div className="flex items-center gap-3 mt-2">
                       <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${(finance.monthlySpent / finance.monthlyBudget) * 100}%`,
-                          backgroundColor: 'var(--brand-primary)',
-                        }}
-                      />
+                        className="flex-1 h-1.5 rounded-full overflow-hidden"
+                        style={{ backgroundColor: 'var(--bg-muted)' }}
+                      >
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${(finance.monthlySpent / finance.monthlyBudget) * 100}%`,
+                            backgroundColor: 'var(--brand-primary)',
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                        ${finance.monthlySpent.toLocaleString()} / ${finance.monthlyBudget.toLocaleString()}
+                      </span>
                     </div>
-                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                      ${finance.monthlySpent.toLocaleString()} / ${finance.monthlyBudget.toLocaleString()}
-                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             </SubSection>
 
             {/* Relationships */}

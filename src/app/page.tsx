@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Sun, Cloud, CloudRain, RefreshCw, Settings, Coffee, Command, Calendar, Shield, ChevronRight, Clock } from 'lucide-react';
+import { Sun, Cloud, CloudRain, RefreshCw, Settings, Coffee, Command, Calendar, Shield, ChevronRight, Clock, TrendingUp, Heart } from 'lucide-react';
 import Link from 'next/link';
 import { bucketItems, type UnifiedItem } from '@/lib/temporal-buckets';
 import { mockBriefing, type DailyBriefing } from '@/lib/mock-data';
@@ -981,6 +981,8 @@ export default function DailyPulse() {
       >
         {[
           { href: '/morning', icon: Coffee, label: 'Morning' },
+          { href: '/health', icon: Heart, label: 'Health' },
+          { href: '/finance', icon: TrendingUp, label: 'Finance' },
           { href: '/weekly', icon: Calendar, label: 'Weekly' },
           { href: '/vault', icon: Shield, label: 'Vault' },
         ].map(({ href, icon: Icon, label }) => (
