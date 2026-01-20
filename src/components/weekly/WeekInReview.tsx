@@ -30,18 +30,18 @@ interface WeekInReviewProps {
 // ============================================================================
 
 function getScoreColor(score: number): string {
-  if (score >= 80) return 'text-emerald-600';
-  if (score >= 60) return 'text-green-600';
-  if (score >= 40) return 'text-amber-600';
-  return 'text-red-600';
+  if (score >= 80) return 'text-[var(--semantic-success)]';
+  if (score >= 60) return 'text-[var(--semantic-success)]';
+  if (score >= 40) return 'text-[var(--semantic-warning)]';
+  return 'text-[var(--semantic-error)]';
 }
 
 // getScoreGradient reserved for future use with gradient backgrounds
 function _getScoreGradient(score: number): string {
-  if (score >= 80) return 'from-emerald-500 to-green-500';
-  if (score >= 60) return 'from-green-500 to-lime-500';
-  if (score >= 40) return 'from-amber-500 to-yellow-500';
-  return 'from-red-500 to-orange-500';
+  if (score >= 80) return 'bg-[var(--semantic-success)]';
+  if (score >= 60) return 'bg-[var(--semantic-success)]';
+  if (score >= 40) return 'bg-[var(--semantic-warning)]';
+  return 'bg-[var(--semantic-error)]';
 }
 
 function getTrendIcon(current: number, previous: number, higherIsBetter: boolean = true) {
@@ -50,15 +50,15 @@ function getTrendIcon(current: number, previous: number, higherIsBetter: boolean
   const declined = higherIsBetter ? diff < 0 : diff > 0;
 
   if (Math.abs(diff) < 0.01) {
-    return <Minus className="w-4 h-4 text-stone-400" />;
+    return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
   }
   if (improved) {
-    return <TrendingUp className="w-4 h-4 text-emerald-500" />;
+    return <TrendingUp className="w-4 h-4 text-[var(--semantic-success)]" />;
   }
   if (declined) {
-    return <TrendingDown className="w-4 h-4 text-red-500" />;
+    return <TrendingDown className="w-4 h-4 text-[var(--semantic-error)]" />;
   }
-  return <Minus className="w-4 h-4 text-stone-400" />;
+  return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
 }
 
 function formatDateRange(start: Date | string, end: Date | string): string {
@@ -93,7 +93,7 @@ function ScoreRing({ score }: { score: number }) {
           fill="none"
           stroke="currentColor"
           strokeWidth="8"
-          className="text-stone-100"
+          className="text-[var(--bg-muted)]"
         />
         <circle
           cx="50"
@@ -109,14 +109,14 @@ function ScoreRing({ score }: { score: number }) {
         />
         <defs>
           <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={score >= 60 ? '#10B981' : '#F59E0B'} />
-            <stop offset="100%" stopColor={score >= 80 ? '#22C55E' : score >= 60 ? '#84CC16' : '#EF4444'} />
+            <stop offset="0%" stopColor={score >= 60 ? 'var(--semantic-success)' : 'var(--semantic-warning)'} />
+            <stop offset="100%" stopColor={score >= 80 ? 'var(--semantic-success-vivid)' : score >= 60 ? 'var(--semantic-success)' : 'var(--semantic-error)'} />
           </linearGradient>
         </defs>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-3xl font-light ${getScoreColor(score)}`}>{score}</span>
-        <span className="text-xs text-stone-400">Weekly Score</span>
+        <span className="text-xs text-[var(--text-tertiary)]">Weekly Score</span>
       </div>
     </div>
   );
@@ -142,10 +142,10 @@ function StatCard({
   higherIsBetter?: boolean;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-4">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
       <div className="flex items-start justify-between mb-2">
-        <div className="w-8 h-8 rounded-lg bg-stone-100 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-stone-600" />
+        <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
+          <Icon className="w-4 h-4 text-[var(--text-secondary)]" />
         </div>
         {previousValue !== undefined && (
           <div className="flex items-center gap-1">
@@ -153,11 +153,11 @@ function StatCard({
           </div>
         )}
       </div>
-      <div className="text-2xl font-light text-stone-900">
+      <div className="text-2xl font-light text-[var(--text-primary)]">
         {typeof value === 'number' && value % 1 !== 0 ? value.toFixed(1) : value.toLocaleString()}
-        {unit && <span className="text-sm text-stone-400 ml-1">{unit}</span>}
+        {unit && <span className="text-sm text-[var(--text-tertiary)] ml-1">{unit}</span>}
       </div>
-      <div className="text-xs text-stone-500 mt-1">{label}</div>
+      <div className="text-xs text-[var(--text-secondary)] mt-1">{label}</div>
     </div>
   );
 }
@@ -169,10 +169,10 @@ function StatCard({
 function WinsSection({ wins }: { wins: WeeklyReview['wins'] }) {
   if (wins.length === 0) {
     return (
-      <div className="bg-stone-50 rounded-xl p-6 text-center">
-        <Trophy className="w-8 h-8 text-stone-300 mx-auto mb-2" />
-        <p className="text-stone-500 text-sm">No major wins recorded this week.</p>
-        <p className="text-stone-400 text-xs mt-1">Every week has potential!</p>
+      <div className="bg-[var(--bg-muted)] rounded-xl p-6 text-center">
+        <Trophy className="w-8 h-8 text-[var(--text-quaternary)] mx-auto mb-2" />
+        <p className="text-[var(--text-secondary)] text-sm">No major wins recorded this week.</p>
+        <p className="text-[var(--text-tertiary)] text-xs mt-1">Every week has potential!</p>
       </div>
     );
   }
@@ -186,35 +186,35 @@ function WinsSection({ wins }: { wins: WeeklyReview['wins'] }) {
   };
 
   const categoryColors: Record<string, string> = {
-    productivity: 'bg-blue-100 text-blue-600',
-    health: 'bg-emerald-100 text-emerald-600',
-    financial: 'bg-amber-100 text-amber-600',
-    relationships: 'bg-purple-100 text-purple-600',
-    personal: 'bg-pink-100 text-pink-600',
+    productivity: 'bg-[var(--semantic-info-subtle)] text-[var(--semantic-info)]',
+    health: 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)]',
+    financial: 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)]',
+    relationships: 'bg-[var(--brand-primary-subtle)] text-[var(--brand-primary)]',
+    personal: 'bg-[var(--bg-accent-subtle)] text-[var(--brand-primary-vivid)]',
   };
 
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <Trophy className="w-5 h-5 text-amber-500" />
-        <h3 className="font-medium text-stone-900">This Week&apos;s Wins</h3>
+        <Trophy className="w-5 h-5 text-[var(--semantic-warning)]" />
+        <h3 className="font-medium text-[var(--text-primary)]">This Week&apos;s Wins</h3>
       </div>
       <div className="grid gap-2">
         {wins.map((win, i) => {
           const Icon = categoryIcons[win.category] || Sparkles;
-          const colors = categoryColors[win.category] || 'bg-stone-100 text-stone-600';
+          const colors = categoryColors[win.category] || 'bg-[var(--bg-muted)] text-[var(--text-secondary)]';
 
           return (
             <div
               key={i}
-              className="flex items-center gap-3 p-3 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-100"
+              className="flex items-center gap-3 p-3 bg-[var(--semantic-warning-subtle)] rounded-lg border border-[var(--semantic-warning)]"
             >
               <div className={`w-8 h-8 rounded-lg ${colors} flex items-center justify-center`}>
                 <Icon className="w-4 h-4" />
               </div>
               <div className="flex-1">
-                <div className="font-medium text-stone-900">{win.title}</div>
-                <div className="text-xs text-stone-500 capitalize">{win.category}</div>
+                <div className="font-medium text-[var(--text-primary)]">{win.title}</div>
+                <div className="text-xs text-[var(--text-secondary)] capitalize">{win.category}</div>
               </div>
             </div>
           );
@@ -233,17 +233,17 @@ function LessonsSection({ lessons }: { lessons: string[] }) {
 
   return (
     <div className="space-y-3">
-      <h3 className="font-medium text-stone-900">Lessons for Next Week</h3>
+      <h3 className="font-medium text-[var(--text-primary)]">Lessons for Next Week</h3>
       <div className="space-y-2">
         {lessons.map((lesson, i) => (
           <div
             key={i}
-            className="flex items-start gap-3 p-3 bg-stone-50 rounded-lg"
+            className="flex items-start gap-3 p-3 bg-[var(--bg-muted)] rounded-lg"
           >
-            <div className="w-6 h-6 rounded-full bg-stone-200 flex items-center justify-center text-xs text-stone-600 flex-shrink-0">
+            <div className="w-6 h-6 rounded-full bg-[var(--border-default)] flex items-center justify-center text-xs text-[var(--text-secondary)] flex-shrink-0">
               {i + 1}
             </div>
-            <p className="text-sm text-stone-700">{lesson}</p>
+            <p className="text-sm text-[var(--text-secondary)]">{lesson}</p>
           </div>
         ))}
       </div>
@@ -260,17 +260,17 @@ function FocusSection({ focus }: { focus: string[] }) {
 
   return (
     <div className="space-y-3">
-      <h3 className="font-medium text-stone-900">Next Week&apos;s Focus</h3>
+      <h3 className="font-medium text-[var(--text-primary)]">Next Week&apos;s Focus</h3>
       <div className="space-y-2">
         {focus.map((item, i) => (
           <div
             key={i}
-            className="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-100"
+            className="flex items-center gap-3 p-3 bg-[var(--semantic-info-subtle)] rounded-lg border border-[var(--semantic-info)]"
           >
-            <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs flex-shrink-0">
+            <div className="w-6 h-6 rounded-full bg-[var(--semantic-info)] text-[var(--text-on-accent)] flex items-center justify-center text-xs flex-shrink-0">
               {i + 1}
             </div>
-            <span className="text-sm text-stone-700">{item}</span>
+            <span className="text-sm text-[var(--text-secondary)]">{item}</span>
           </div>
         ))}
       </div>
@@ -287,8 +287,8 @@ export function WeekInReview({ review, previousReview }: WeekInReviewProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-2xl font-light text-stone-900 mb-1">Week in Review</h2>
-        <p className="text-stone-500">
+        <h2 className="text-2xl font-light text-[var(--text-primary)] mb-1">Week in Review</h2>
+        <p className="text-[var(--text-secondary)]">
           {formatDateRange(review.weekStart, review.weekEnd)}
         </p>
       </div>
