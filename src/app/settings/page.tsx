@@ -67,28 +67,63 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-2xl mx-auto px-6 py-6">
+    <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
+      <header className="masthead">
+        <div
+          className="masthead-inner"
+          style={{
+            maxWidth: '896px',
+            margin: '0 auto',
+          }}
+        >
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-4"
+            className="btn btn-ghost btn-sm inline-flex items-center"
+            style={{
+              gap: 'var(--space-2)',
+              marginBottom: 'var(--space-6)',
+            }}
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Daily Pulse
           </Link>
-          <div className="flex items-center gap-3">
-            <Settings className="w-8 h-8 text-gray-400" />
-            <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+          <div className="flex items-center" style={{ gap: 'var(--space-4)' }}>
+            <Settings className="w-8 h-8" style={{ color: 'var(--brand-primary)' }} />
+            <h1 className="text-display-md" style={{ color: 'var(--text-primary)' }}>
+              Settings
+            </h1>
           </div>
-          <p className="text-gray-600 mt-2">Connect your accounts to see real data</p>
+          <p
+            className="text-body-lg"
+            style={{
+              color: 'var(--text-secondary)',
+              marginTop: 'var(--space-3)',
+            }}
+          >
+            Connect your accounts to see real data
+          </p>
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-8">
-        <section className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
-          <div className="px-6 py-4">
-            <h2 className="font-semibold text-gray-900">Connected Services</h2>
+      <main
+        style={{
+          maxWidth: '896px',
+          margin: '0 auto',
+          padding: 'var(--space-8) var(--space-6)',
+        }}
+      >
+        <section
+          className="card stack-xs"
+          style={{
+            borderRadius: 'var(--radius-2xl)',
+            padding: 0,
+            overflow: 'hidden',
+          }}
+        >
+          <div style={{ padding: 'var(--space-6)' }}>
+            <h2 className="text-heading-lg" style={{ color: 'var(--text-primary)' }}>
+              Connected Services
+            </h2>
           </div>
 
           {connections.map(conn => (

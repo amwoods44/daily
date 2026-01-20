@@ -158,31 +158,49 @@ function CompletionScreen({
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
+      className="flex flex-col items-center justify-center text-center"
+      style={{
+        minHeight: '60vh',
+        padding: 'var(--space-6)',
+      }}
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-        className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mb-6"
+        className="stat-icon"
+        style={{
+          width: '80px',
+          height: '80px',
+          background: `linear-gradient(135deg, var(--semantic-success) 0%, var(--semantic-success-vivid) 100%)`,
+          marginBottom: 'var(--space-8)',
+        }}
       >
-        <Sparkles className="w-10 h-10 text-white" />
+        <Sparkles className="w-10 h-10" style={{ color: 'var(--text-on-accent)' }} />
       </motion.div>
 
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="text-2xl font-semibold text-stone-900 mb-2"
+        className="text-display-sm"
+        style={{
+          color: 'var(--text-primary)',
+          marginBottom: 'var(--space-3)',
+        }}
       >
-        You&apos;re All Set!
+        You're All Set!
       </motion.h2>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-stone-500 mb-6"
+        className="text-body-lg"
+        style={{
+          color: 'var(--text-secondary)',
+          marginBottom: 'var(--space-8)',
+        }}
       >
         {goalsCount > 0
           ? `${goalsCount} goal${goalsCount > 1 ? 's' : ''} ready for next week`
@@ -194,16 +212,17 @@ function CompletionScreen({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="space-y-3"
+        className="stack-sm"
       >
         <button
           onClick={onFinish}
-          className="px-8 py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-xl font-medium transition flex items-center gap-2"
+          className="btn btn-primary btn-lg flex items-center"
+          style={{ gap: 'var(--space-2)' }}
         >
           Return Home
           <ArrowRight className="w-4 h-4" />
         </button>
-        <p className="text-xs text-stone-400">
+        <p className="text-mono-sm" style={{ color: 'var(--text-quaternary)' }}>
           Your review has been saved
         </p>
       </motion.div>
@@ -247,29 +266,45 @@ export default function WeeklyPage() {
 
   if (isComplete) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-stone-50 to-stone-100">
+      <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
         <CompletionScreen goalsCount={goals.length} onFinish={handleFinish} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-stone-100">
+    <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-stone-50/80 backdrop-blur-sm border-b border-stone-200">
-        <div className="max-w-xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between mb-4">
+      <header
+        className="sticky top-0 z-10 glass"
+        style={{
+          borderBottom: '1px solid var(--border-subtle)',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '672px',
+            margin: '0 auto',
+            padding: 'var(--space-4)',
+          }}
+        >
+          <div
+            className="flex items-center justify-between"
+            style={{ marginBottom: 'var(--space-4)' }}
+          >
             <button
               onClick={() => window.history.back()}
-              className="p-2 -ml-2 text-stone-500 hover:text-stone-900 transition"
+              className="btn-icon-sm btn-ghost"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-stone-500" />
-              <span className="font-medium text-stone-900">Weekly Reset</span>
+            <div className="flex items-center" style={{ gap: 'var(--space-2)' }}>
+              <Calendar className="w-5 h-5" style={{ color: 'var(--brand-primary)' }} />
+              <span className="text-label-md" style={{ color: 'var(--text-primary)' }}>
+                Weekly Reset
+              </span>
             </div>
-            <div className="w-9" /> {/* Spacer */}
+            <div style={{ width: '36px' }} /> {/* Spacer */}
           </div>
           <StepIndicator
             steps={steps}
@@ -315,8 +350,20 @@ export default function WeeklyPage() {
       </main>
 
       {/* Navigation */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200">
-        <div className="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
+      <footer
+        className="fixed bottom-0 left-0 right-0 glass"
+        style={{
+          borderTop: '1px solid var(--border-subtle)',
+        }}
+      >
+        <div
+          className="flex items-center justify-between"
+          style={{
+            maxWidth: '672px',
+            margin: '0 auto',
+            padding: 'var(--space-4)',
+          }}
+        >
           <button
             onClick={handlePrev}
             disabled={currentStep === 0}
