@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Palette, X, Check, Sun, Moon, Monitor } from 'lucide-react';
+import { X, Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import { themes, themeOrder } from '@/lib/themes';
 
 export function ThemeSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { themeId, setThemeId, mode, setMode } = useTheme();
+  const { mode, setMode } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -22,15 +21,12 @@ export function ThemeSwitcher() {
       {/* Floating trigger button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
-        style={{
-          backgroundColor: 'var(--bg-accent)',
-          color: 'var(--text-on-accent)',
-          boxShadow: 'var(--shadow-lg)',
-        }}
+        className="btn btn-ghost btn-icon"
         aria-label="Change theme"
       >
-        <Palette className="w-5 h-5" />
+        {mode === 'light' && <Sun className="w-5 h-5" />}
+        {mode === 'dark' && <Moon className="w-5 h-5" />}
+        {mode === 'system' && <Monitor className="w-5 h-5" />}
       </button>
 
       {/* Modal overlay */}
@@ -47,173 +43,68 @@ export function ThemeSwitcher() {
 
           {/* Panel */}
           <div
-            className="relative w-full max-w-md rounded-2xl p-6 overflow-hidden"
-            style={{
-              backgroundColor: 'var(--bg-card)',
-              boxShadow: 'var(--shadow-lg)',
-            }}
+            className="card relative w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2
-                  className="text-xl font-semibold"
-                  style={{
-                    fontFamily: 'var(--font-heading)',
-                    color: 'var(--text-primary)',
-                  }}
-                >
-                  Choose Theme
+                <h2 className="text-heading-lg">
+                  Theme Mode
                 </h2>
-                <p
-                  className="text-sm mt-1"
-                  style={{ color: 'var(--text-tertiary)' }}
-                >
-                  Select a visual style that suits you
+                <p className="text-body-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  Choose light or dark appearance
                 </p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 rounded-lg transition-colors"
-                style={{ color: 'var(--text-tertiary)' }}
+                className="btn btn-icon btn-ghost"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Mode selector */}
-            <div
-              className="flex rounded-xl p-1 mb-6"
-              style={{ backgroundColor: 'var(--bg-secondary)' }}
-            >
+            <div className="space-y-3">
               {[
-                { id: 'light', icon: Sun, label: 'Light' },
-                { id: 'dark', icon: Moon, label: 'Dark' },
-                { id: 'system', icon: Monitor, label: 'System' },
-              ].map(({ id, icon: Icon, label }) => (
+                { id: 'light', icon: Sun, label: 'Light', description: 'Clean, bright interface' },
+                { id: 'dark', icon: Moon, label: 'Dark', description: 'Easy on the eyes' },
+                { id: 'system', icon: Monitor, label: 'System', description: 'Match your OS preference' },
+              ].map(({ id, icon: Icon, label, description }) => (
                 <button
                   key={id}
-                  onClick={() => setMode(id as 'light' | 'dark' | 'system')}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-sm font-medium transition-all"
+                  onClick={() => {
+                    setMode(id as 'light' | 'dark' | 'system');
+                    setIsOpen(false);
+                  }}
+                  className="w-full flex items-center gap-4 p-4 rounded-xl transition-all text-left"
                   style={{
-                    backgroundColor: mode === id ? 'var(--bg-card)' : 'transparent',
-                    color: mode === id ? 'var(--text-primary)' : 'var(--text-tertiary)',
-                    boxShadow: mode === id ? 'var(--shadow-sm)' : 'none',
+                    backgroundColor: mode === id ? 'var(--brand-primary-subtle)' : 'var(--bg-muted)',
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: mode === id ? 'var(--brand-primary)' : 'transparent',
                   }}
                 >
-                  <Icon className="w-4 h-4" />
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            {/* Theme grid */}
-            <div className="space-y-3">
-              {themeOrder.map((id) => {
-                const theme = themes[id];
-                const isSelected = themeId === id;
-
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setThemeId(id)}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl transition-all text-left"
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{
-                      backgroundColor: isSelected ? 'var(--bg-accent-subtle)' : 'var(--bg-secondary)',
-                      borderWidth: '2px',
-                      borderStyle: 'solid',
-                      borderColor: isSelected ? 'var(--accent)' : 'transparent',
+                      backgroundColor: mode === id ? 'var(--brand-primary)' : 'var(--bg-surface)',
+                      color: mode === id ? 'var(--text-inverse)' : 'var(--text-tertiary)',
                     }}
                   >
-                    {/* Color preview */}
-                    <div
-                      className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 relative"
-                      style={{
-                        backgroundColor: theme.colors.bgPrimary,
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      {/* Mini preview of theme */}
-                      <div
-                        className="absolute top-2 left-2 right-2 h-2 rounded-full"
-                        style={{ backgroundColor: theme.colors.textPrimary, opacity: 0.8 }}
-                      />
-                      <div
-                        className="absolute top-5 left-2 w-6 h-1 rounded-full"
-                        style={{ backgroundColor: theme.colors.textTertiary }}
-                      />
-                      <div
-                        className="absolute bottom-2 right-2 w-4 h-4 rounded-md"
-                        style={{ backgroundColor: theme.colors.accent }}
-                      />
-                    </div>
+                    <Icon className="w-6 h-6" />
+                  </div>
 
-                    {/* Theme info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="font-semibold"
-                          style={{
-                            fontFamily: 'var(--font-heading)',
-                            color: 'var(--text-primary)',
-                          }}
-                        >
-                          {theme.name}
-                        </span>
-                        {theme.isDark && (
-                          <span
-                            className="text-xs px-2 py-0.5 rounded-full"
-                            style={{
-                              backgroundColor: 'var(--bg-tertiary)',
-                              color: 'var(--text-tertiary)',
-                            }}
-                          >
-                            Dark
-                          </span>
-                        )}
-                      </div>
-                      <p
-                        className="text-sm mt-0.5 truncate"
-                        style={{ color: 'var(--text-tertiary)' }}
-                      >
-                        {theme.description}
-                      </p>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {label}
                     </div>
-
-                    {/* Color swatches */}
-                    <div className="flex gap-1 flex-shrink-0">
-                      {[
-                        theme.colors.bgPrimary,
-                        theme.colors.textPrimary,
-                        theme.colors.accent,
-                      ].map((color, i) => (
-                        <div
-                          key={i}
-                          className="w-5 h-5 rounded-full"
-                          style={{
-                            backgroundColor: color,
-                            boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.1)',
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Selected indicator */}
-                    {isSelected && (
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                        style={{
-                          backgroundColor: 'var(--accent)',
-                          color: 'var(--text-on-accent)',
-                        }}
-                      >
-                        <Check className="w-4 h-4" />
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
+                    <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                      {description}
+                    </p>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>

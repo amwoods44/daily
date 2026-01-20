@@ -52,7 +52,7 @@ function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTas
           <div className="masthead-actions">
             {/* Day Progress */}
             <DayProgressCompact completed={completedTasks} total={totalTasks} />
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border)' }} />
+            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
             <div
               className="flex items-center gap-2 text-sm"
               style={{ color: 'var(--text-tertiary)' }}
@@ -60,10 +60,10 @@ function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTas
               <WeatherIcon condition={weather.condition} />
               <span className="font-medium">{weather.temp}°</span>
             </div>
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border)' }} />
+            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
             {/* View Mode Toggle */}
             <ViewModeToggle compact />
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border)' }} />
+            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
             {/* Focus Mode */}
             <FocusModeToggle />
             <button
@@ -82,7 +82,7 @@ function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTas
         {/* Main masthead */}
         <div className="masthead-center">
           <p className="masthead-date">{date}</p>
-          <h1 className="masthead-greeting">{greeting}</h1>
+          <h1 className="text-display-lg">{greeting.replace(/\.$/, '')}</h1>
         </div>
       </div>
     </header>
@@ -99,9 +99,8 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
     >
       <div className="premium-card-lg h-full">
         {/* Section header */}
-        <div className="section-header" style={{ marginBottom: 'var(--space-6)' }}>
-          <span className="section-header-label">Today&apos;s Outlook</span>
-          <div className="section-header-line" />
+        <div style={{ marginBottom: 'var(--space-8)' }}>
+          <h2 className="text-display-md">Today's Outlook</h2>
         </div>
 
         {/* Verdict - the lead */}
@@ -111,7 +110,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
             style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)', letterSpacing: '-0.01em' }}
           >
             <span style={{
-              color: verdict.rating === 'Needs attention' || verdict.rating === 'Heavy' ? 'var(--accent)' : 'var(--text-primary)',
+              color: verdict.rating === 'Needs attention' || verdict.rating === 'Heavy' ? 'var(--brand-primary)' : 'var(--text-primary)',
               fontWeight: 600
             }}>{verdict.rating}</span>
             {verdict.summary && (
@@ -141,7 +140,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
                   className="flex items-start"
                   style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-2)', gap: 'var(--space-2)' }}
                 >
-                  <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-muted)', marginTop: '2px' }} />
+                  <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)', marginTop: '2px' }} />
                   {firstMove.action}
                 </p>
               </div>
@@ -150,17 +149,17 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
             {freeTime && (
               <div
                 style={{
-                  backgroundColor: 'var(--bg-secondary)',
+                  backgroundColor: 'var(--bg-muted)',
                   padding: 'var(--space-4)',
                   borderRadius: 'var(--radius-lg)',
                 }}
               >
                 <div className="flex items-center" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
-                  <Clock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                  <Clock className="w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
                   <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '14px' }}>
                     {freeTime.duration} min free
                   </span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
+                  <span style={{ color: 'var(--text-tertiary)', fontSize: '13px' }}>
                     {freeTime.startTime}–{freeTime.endTime}
                   </span>
                 </div>
@@ -189,7 +188,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
                         className="flex items-start"
                         style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-1)', gap: 'var(--space-2)' }}
                       >
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-muted)', marginTop: '2px' }} />
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)', marginTop: '2px' }} />
                         {item.action}
                       </p>
                     </div>
@@ -200,7 +199,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
 
             {watchOut.length > 0 && (
               <div>
-                <h3 className="section-header-label" style={{ marginBottom: 'var(--space-3)', color: 'var(--warning)' }}>
+                <h3 className="section-header-label" style={{ marginBottom: 'var(--space-3)', color: 'var(--semantic-warning)' }}>
                   Watch Out
                 </h3>
                 <div className="stack-sm">
@@ -208,7 +207,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
                     <p key={i} style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
                       {item.warning}
                       {item.action && (
-                        <span style={{ color: 'var(--text-muted)' }}> → {item.action}</span>
+                        <span style={{ color: 'var(--text-tertiary)' }}> → {item.action}</span>
                       )}
                     </p>
                   ))}
@@ -247,8 +246,8 @@ function HeroPriority({ oneThing, onAction }: {
               padding: '6px 14px',
               borderRadius: 'var(--radius-full)',
               backgroundColor: 'transparent',
-              border: '1px solid var(--accent)',
-              color: 'var(--accent)',
+              border: '1px solid var(--brand-primary)',
+              color: 'var(--brand-primary)',
               fontSize: 11,
               fontWeight: 700,
               textTransform: 'uppercase',
@@ -259,7 +258,7 @@ function HeroPriority({ oneThing, onAction }: {
               width: 6,
               height: 6,
               borderRadius: '50%',
-              backgroundColor: 'var(--accent)',
+              backgroundColor: 'var(--brand-primary)',
               animation: 'pulse 2s infinite',
             }} />
             Focus Now
@@ -282,7 +281,7 @@ function HeroPriority({ oneThing, onAction }: {
             </span>
             <span style={{
               fontSize: 11,
-              color: 'var(--text-muted)',
+              color: 'var(--text-tertiary)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}>
@@ -336,7 +335,7 @@ function HeroPriority({ oneThing, onAction }: {
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 border: 'none',
-                backgroundColor: i === 0 ? 'var(--accent)' : 'var(--bg-tertiary)',
+                backgroundColor: i === 0 ? 'var(--brand-primary)' : 'var(--bg-muted)',
                 color: i === 0 ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               }}
             >
@@ -349,7 +348,7 @@ function HeroPriority({ oneThing, onAction }: {
               style={{
                 padding: '14px 16px',
                 fontSize: 13,
-                color: 'var(--text-muted)',
+                color: 'var(--text-tertiary)',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
@@ -374,7 +373,7 @@ function HeroPriority({ oneThing, onAction }: {
               cursor: 'pointer',
               fontSize: 12,
               fontWeight: 500,
-              color: 'var(--text-muted)',
+              color: 'var(--text-tertiary)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}
@@ -396,7 +395,7 @@ function HeroPriority({ oneThing, onAction }: {
                 padding: '12px 16px',
                 marginTop: 8,
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-secondary)',
+                backgroundColor: 'var(--bg-muted)',
                 fontSize: 13,
                 color: 'var(--text-secondary)',
                 lineHeight: 1.6,
@@ -578,11 +577,11 @@ export default function DailyPulse() {
 
   if (loading) {
     return (
-      <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
         {/* Skeleton Masthead */}
         <header
           className="border-b"
-          style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
+          style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}
         >
           <div className="max-w-6xl mx-auto px-6 py-10">
             <div className="flex items-center justify-between mb-8">
@@ -614,7 +613,7 @@ export default function DailyPulse() {
   return (
     <ViewModeProvider>
     <FocusModeProvider>
-    <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
       {/* Celebration Modal */}
       <Celebration
         show={showCelebration}
@@ -735,7 +734,7 @@ export default function DailyPulse() {
       {/* Footer */}
       <footer className="container-premium" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-20)' }}>
         <div className="divider-subtle" />
-        <p className="text-center" style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 'var(--space-6)' }}>
+        <p className="text-center" style={{ fontSize: '12px', color: 'var(--text-tertiary)', marginTop: 'var(--space-6)' }}>
           Updated {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
         </p>
       </footer>
@@ -773,7 +772,7 @@ export default function DailyPulse() {
         ))}
         <button
           onClick={() => setCommandBarOpen(true)}
-          className="btn btn-primary"
+          className="btn btn-ghost"
           style={{ borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)' }}
         >
           <Command className="w-4 h-4" />

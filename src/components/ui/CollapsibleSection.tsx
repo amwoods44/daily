@@ -63,7 +63,7 @@ export function CollapsibleSection({
           {typeof title === 'string' ? (
             <span
               className="text-xs font-semibold uppercase tracking-[0.15em]"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-tertiary)' }}
             >
               {title}
             </span>
@@ -74,7 +74,7 @@ export function CollapsibleSection({
         </div>
         <ChevronDown
           className={`w-4 h-4 chevron-rotate ${expanded ? 'expanded' : ''}`}
-          style={{ color: 'var(--text-muted)' }}
+          style={{ color: 'var(--text-tertiary)' }}
         />
       </button>
 

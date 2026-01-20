@@ -86,13 +86,13 @@ export function VaultDashboard() {
   });
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
       {/* Header */}
       <header
         className="sticky top-0 z-10"
         style={{
-          backgroundColor: 'var(--bg-card)',
-          borderBottom: '1px solid var(--border)',
+          backgroundColor: 'var(--bg-surface)',
+          borderBottom: '1px solid var(--border-default)',
         }}
       >
         <div className="flex items-center justify-between px-4 py-4 max-w-2xl mx-auto">
@@ -100,7 +100,7 @@ export function VaultDashboard() {
             <Link
               href="/"
               className="p-2 -ml-2 transition-colors"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-tertiary)' }}
             >
               <ArrowLeft className="w-5 h-5" />
             </Link>
@@ -108,7 +108,7 @@ export function VaultDashboard() {
               <h1 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
                 Life Vault
               </h1>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
                 {items.length} items • {activeReminders.length} needs attention
               </p>
             </div>
@@ -118,14 +118,14 @@ export function VaultDashboard() {
               onClick={handleRefresh}
               disabled={loading}
               className="p-2 transition-colors disabled:opacity-50"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-tertiary)' }}
             >
               <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={() => router.push('/vault/settings')}
               className="p-2 transition-colors"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-tertiary)' }}
             >
               <Settings className="w-5 h-5" />
             </button>
@@ -164,7 +164,7 @@ export function VaultDashboard() {
         onClick={() => router.push('/vault/add')}
         className="fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg active:scale-95 transition-all flex items-center justify-center"
         style={{
-          backgroundColor: 'var(--accent)',
+          backgroundColor: 'var(--brand-primary)',
           color: 'var(--text-on-accent)',
           boxShadow: 'var(--shadow-lg)',
         }}

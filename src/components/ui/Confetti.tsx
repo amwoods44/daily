@@ -20,9 +20,9 @@ interface ConfettiProps {
 }
 
 const DEFAULT_COLORS = [
-  'var(--accent)',
-  'var(--success)',
-  'var(--warning)',
+  'var(--brand-primary)',
+  'var(--semantic-success)',
+  'var(--semantic-warning)',
   '#E879F9', // pink
   '#60A5FA', // blue
   '#34D399', // green
@@ -122,7 +122,7 @@ export function Celebration({
         <div
           className="rounded-2xl p-8 text-center animate-slide-up max-w-sm mx-4"
           style={{
-            backgroundColor: 'var(--bg-card)',
+            backgroundColor: 'var(--bg-surface)',
             boxShadow: 'var(--shadow-lg)',
           }}
           onClick={(e) => e.stopPropagation()}
@@ -134,7 +134,7 @@ export function Celebration({
           >
             {message}
           </h2>
-          <p className="mb-6" style={{ color: 'var(--text-muted)' }}>
+          <p className="mb-6" style={{ color: 'var(--text-tertiary)' }}>
             Take a moment to celebrate your productivity.
           </p>
           <button
@@ -144,7 +144,7 @@ export function Celebration({
             }}
             className="px-6 py-3 rounded-xl font-medium btn-press"
             style={{
-              backgroundColor: 'var(--accent)',
+              backgroundColor: 'var(--brand-primary)',
               color: 'var(--text-on-accent)',
             }}
           >

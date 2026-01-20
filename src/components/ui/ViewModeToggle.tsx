@@ -52,8 +52,8 @@ export function ViewModeToggle({ compact = false }: ViewModeToggleProps) {
         gap: 2,
         padding: 3,
         borderRadius: 'var(--radius-lg)',
-        backgroundColor: 'var(--bg-tertiary)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-muted)',
+        border: '1px solid var(--border-default)',
       }}
     >
       {modes.map(({ id, icon: Icon, label, shortLabel }) => {
@@ -75,8 +75,8 @@ export function ViewModeToggle({ compact = false }: ViewModeToggleProps) {
               fontSize: 12,
               fontWeight: 500,
               transition: 'all 0.2s ease',
-              backgroundColor: isActive ? 'var(--bg-card)' : 'transparent',
-              color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
+              backgroundColor: isActive ? 'var(--bg-surface)' : 'transparent',
+              color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)',
               boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
             }}
           >

@@ -64,18 +64,18 @@ function ReminderCard({
     switch (priority) {
       case 'high':
         return {
-          border: '1px solid var(--error)',
-          backgroundColor: isExpanded ? 'var(--error-subtle)' : 'var(--bg-card)',
+          border: '1px solid var(--semantic-error)',
+          backgroundColor: isExpanded ? 'var(--semantic-error-subtle)' : 'var(--bg-surface)',
         };
       case 'medium':
         return {
-          border: '1px solid var(--warning)',
-          backgroundColor: isExpanded ? 'var(--warning-subtle)' : 'var(--bg-card)',
+          border: '1px solid var(--semantic-warning)',
+          backgroundColor: isExpanded ? 'var(--semantic-warning-subtle)' : 'var(--bg-surface)',
         };
       default:
         return {
-          border: '1px solid var(--border)',
-          backgroundColor: 'var(--bg-card)',
+          border: '1px solid var(--border-default)',
+          backgroundColor: 'var(--bg-surface)',
         };
     }
   };
@@ -84,17 +84,17 @@ function ReminderCard({
     switch (priority) {
       case 'high':
         return {
-          backgroundColor: 'var(--error-subtle)',
-          color: 'var(--error)',
+          backgroundColor: 'var(--semantic-error-subtle)',
+          color: 'var(--semantic-error)',
         };
       case 'medium':
         return {
-          backgroundColor: 'var(--warning-subtle)',
-          color: 'var(--warning)',
+          backgroundColor: 'var(--semantic-warning-subtle)',
+          color: 'var(--semantic-warning)',
         };
       default:
         return {
-          backgroundColor: 'var(--bg-tertiary)',
+          backgroundColor: 'var(--bg-muted)',
           color: 'var(--text-secondary)',
         };
     }
@@ -117,7 +117,7 @@ function ReminderCard({
         {/* Icon */}
         <div className="shrink-0 mt-0.5">
           {reminder.priority === 'high' ? (
-            <AlertTriangle className="w-5 h-5" style={{ color: 'var(--error)' }} />
+            <AlertTriangle className="w-5 h-5" style={{ color: 'var(--semantic-error)' }} />
           ) : (
             <span className="text-xl">{meta?.emoji || '📌'}</span>
           )}
@@ -131,7 +131,7 @@ function ReminderCard({
                 {reminder.title}
               </h4>
               {!isExpanded && (
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-tertiary)' }}>
                   {reminder.message}
                 </p>
               )}
@@ -148,9 +148,9 @@ function ReminderCard({
                     : `${days}d left`}
               </span>
               {isExpanded ? (
-                <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
               ) : (
-                <ChevronRight className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                <ChevronRight className="w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
               )}
             </div>
           </div>
@@ -177,7 +177,7 @@ function ReminderCard({
           {/* Item details */}
           <div
             className="p-3 rounded-lg mb-4"
-            style={{ backgroundColor: 'var(--bg-secondary)' }}
+            style={{ backgroundColor: 'var(--bg-muted)' }}
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">{meta?.emoji || '📌'}</span>
@@ -186,12 +186,12 @@ function ReminderCard({
               </span>
               <span
                 className="text-xs px-2 py-0.5 rounded"
-                style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-muted)' }}
+                style={{ backgroundColor: 'var(--bg-muted)', color: 'var(--text-tertiary)' }}
               >
                 {meta?.label || item.category}
               </span>
             </div>
-            <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--text-muted)' }}>
+            <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--text-tertiary)' }}>
               <span className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 Due: {formatDate(reminder.dueDate)}
@@ -211,7 +211,7 @@ function ReminderCard({
               }}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium"
               style={{
-                backgroundColor: 'var(--success)',
+                backgroundColor: 'var(--semantic-success)',
                 color: 'var(--text-on-accent)',
                 border: 'none',
                 cursor: 'pointer',
@@ -229,7 +229,7 @@ function ReminderCard({
                 }}
                 className="flex items-center gap-1 px-2.5 py-2 rounded-lg text-xs font-medium"
                 style={{
-                  backgroundColor: 'var(--bg-tertiary)',
+                  backgroundColor: 'var(--bg-muted)',
                   color: 'var(--text-secondary)',
                   border: 'none',
                   cursor: 'pointer',
@@ -245,7 +245,7 @@ function ReminderCard({
                 }}
                 className="flex items-center gap-1 px-2.5 py-2 rounded-lg text-xs font-medium"
                 style={{
-                  backgroundColor: 'var(--bg-tertiary)',
+                  backgroundColor: 'var(--bg-muted)',
                   color: 'var(--text-secondary)',
                   border: 'none',
                   cursor: 'pointer',
@@ -260,7 +260,7 @@ function ReminderCard({
                 }}
                 className="flex items-center gap-1 px-2.5 py-2 rounded-lg text-xs font-medium"
                 style={{
-                  backgroundColor: 'var(--bg-tertiary)',
+                  backgroundColor: 'var(--bg-muted)',
                   color: 'var(--text-secondary)',
                   border: 'none',
                   cursor: 'pointer',
@@ -278,7 +278,7 @@ function ReminderCard({
               className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium ml-auto"
               style={{
                 backgroundColor: 'transparent',
-                color: 'var(--accent)',
+                color: 'var(--brand-primary)',
                 border: 'none',
                 cursor: 'pointer',
               }}
@@ -295,7 +295,7 @@ function ReminderCard({
               className="flex items-center gap-1 px-2 py-2 rounded-lg text-xs"
               style={{
                 backgroundColor: 'transparent',
-                color: 'var(--text-muted)',
+                color: 'var(--text-tertiary)',
                 border: 'none',
                 cursor: 'pointer',
               }}
@@ -370,11 +370,11 @@ export function NeedsAttentionList({ reminders, items, onUpdate }: NeedsAttentio
           className="text-xs font-medium px-2 py-1 rounded-full"
           style={{
             backgroundColor: activeReminders.some((r) => r.priority === 'high')
-              ? 'var(--error-subtle)'
-              : 'var(--bg-tertiary)',
+              ? 'var(--semantic-error-subtle)'
+              : 'var(--bg-muted)',
             color: activeReminders.some((r) => r.priority === 'high')
-              ? 'var(--error)'
-              : 'var(--text-muted)',
+              ? 'var(--semantic-error)'
+              : 'var(--text-tertiary)',
           }}
         >
           {activeReminders.length} {activeReminders.length === 1 ? 'item' : 'items'}

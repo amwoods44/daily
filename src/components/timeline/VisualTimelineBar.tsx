@@ -22,17 +22,17 @@ interface VisualTimelineBarProps {
 const EVENT_COLORS: Record<EventType, { bg: string; border: string; text: string }> = {
   meeting: {
     bg: 'rgba(194, 65, 12, 0.1)',
-    border: 'var(--accent)',
+    border: 'var(--brand-primary)',
     text: '#FFFFFF',
   },
   focus: {
     bg: 'rgba(34, 197, 94, 0.1)',
-    border: 'var(--success)',
+    border: 'var(--semantic-success)',
     text: '#FFFFFF',
   },
   break: {
     bg: 'rgba(120, 113, 108, 0.1)',
-    border: 'var(--text-muted)',
+    border: 'var(--text-tertiary)',
     text: 'var(--text-secondary)',
   },
   task: {
@@ -124,7 +124,7 @@ export function VisualTimelineBar({
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
-            color: 'var(--text-muted)',
+            color: 'var(--text-tertiary)',
           }}
         >
           Your Day
@@ -146,7 +146,7 @@ export function VisualTimelineBar({
         style={{
           position: 'relative',
           height: 64,
-          backgroundColor: 'var(--bg-secondary)',
+          backgroundColor: 'var(--bg-muted)',
           borderRadius: 'var(--radius-lg)',
           overflow: 'visible',
         }}
@@ -172,7 +172,7 @@ export function VisualTimelineBar({
               style={{
                 width: 1,
                 height: 6,
-                backgroundColor: 'var(--border)',
+                backgroundColor: 'var(--border-default)',
               }}
             />
             {/* Label - show only even hours */}
@@ -182,7 +182,7 @@ export function VisualTimelineBar({
                   position: 'absolute',
                   top: -18,
                   fontSize: 10,
-                  color: 'var(--text-muted)',
+                  color: 'var(--text-tertiary)',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -246,7 +246,7 @@ export function VisualTimelineBar({
                 <span
                   style={{
                     fontSize: 10,
-                    color: 'var(--text-muted)',
+                    color: 'var(--text-tertiary)',
                     marginTop: 2,
                   }}
                 >
@@ -265,8 +265,8 @@ export function VisualTimelineBar({
                     transform: 'translateX(-50%)',
                     marginBottom: 8,
                     padding: '8px 12px',
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border)',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
                     borderRadius: 'var(--radius-md)',
                     boxShadow: 'var(--shadow-lg)',
                     whiteSpace: 'nowrap',
@@ -284,7 +284,7 @@ export function VisualTimelineBar({
                   >
                     {event.title}
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>
                     {minutesToTime(timeToMinutes(event.startTime))} –{' '}
                     {minutesToTime(timeToMinutes(event.endTime))}
                     {event.subtitle && ` · ${event.subtitle}`}
@@ -305,7 +305,7 @@ export function VisualTimelineBar({
               top: -4,
               bottom: -4,
               width: 2,
-              backgroundColor: 'var(--error)',
+              backgroundColor: 'var(--semantic-error)',
               borderRadius: 1,
               zIndex: 20,
               boxShadow: '0 0 8px rgba(239, 68, 68, 0.5)',
@@ -318,7 +318,7 @@ export function VisualTimelineBar({
                 top: -20,
                 left: '50%',
                 transform: 'translateX(-50%)',
-                backgroundColor: 'var(--error)',
+                backgroundColor: 'var(--semantic-error)',
                 color: 'white',
                 fontSize: 10,
                 fontWeight: 600,
@@ -339,7 +339,7 @@ export function VisualTimelineBar({
                 width: 8,
                 height: 8,
                 borderRadius: '50%',
-                backgroundColor: 'var(--error)',
+                backgroundColor: 'var(--semantic-error)',
                 animation: 'pulse 2s infinite',
               }}
             />
@@ -377,7 +377,7 @@ export function VisualTimelineBar({
             <span
               style={{
                 fontSize: 11,
-                color: 'var(--text-muted)',
+                color: 'var(--text-tertiary)',
                 textTransform: 'capitalize',
               }}
             >

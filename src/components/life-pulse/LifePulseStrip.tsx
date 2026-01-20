@@ -26,15 +26,15 @@ interface LifePulseStripProps {
 function PulseOrb({ status, isExpanded }: { status: PulseStatus; isExpanded: boolean }) {
   const statusColors = {
     good: {
-      bg: 'var(--success)',
+      bg: 'var(--semantic-success)',
       glow: 'rgba(34, 197, 94, 0.4)',
     },
     attention: {
-      bg: 'var(--warning)',
+      bg: 'var(--semantic-warning)',
       glow: 'rgba(251, 191, 36, 0.4)',
     },
     urgent: {
-      bg: 'var(--error)',
+      bg: 'var(--semantic-error)',
       glow: 'rgba(239, 68, 68, 0.4)',
     },
   };
@@ -80,7 +80,7 @@ function PulseItemCard({
           gap: 8,
           padding: '8px 12px',
           borderRadius: 'var(--radius-lg)',
-          background: isExpanded ? 'var(--bg-tertiary)' : 'transparent',
+          background: isExpanded ? 'var(--bg-muted)' : 'transparent',
           border: 'none',
           cursor: 'pointer',
           transition: 'all 0.2s ease',
@@ -100,7 +100,7 @@ function PulseItemCard({
         <span
           style={{
             fontSize: 12,
-            color: 'var(--text-muted)',
+            color: 'var(--text-tertiary)',
             whiteSpace: 'nowrap',
           }}
         >
@@ -120,8 +120,8 @@ function PulseItemCard({
             marginTop: 8,
             padding: 16,
             borderRadius: 'var(--radius-xl)',
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
             boxShadow: 'var(--shadow-lg)',
             minWidth: 240,
             zIndex: 100,
@@ -134,7 +134,7 @@ function PulseItemCard({
                 width: 36,
                 height: 36,
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-tertiary)',
+                backgroundColor: 'var(--bg-muted)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -146,7 +146,7 @@ function PulseItemCard({
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>
                 {item.detail.headline}
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
                 {item.detail.subtext}
               </div>
             </div>
@@ -158,7 +158,7 @@ function PulseItemCard({
                 style={{
                   height: 6,
                   borderRadius: 3,
-                  backgroundColor: 'var(--bg-tertiary)',
+                  backgroundColor: 'var(--bg-muted)',
                   overflow: 'hidden',
                 }}
               >
@@ -169,15 +169,15 @@ function PulseItemCard({
                     borderRadius: 3,
                     backgroundColor:
                       item.status === 'good'
-                        ? 'var(--success)'
+                        ? 'var(--semantic-success)'
                         : item.status === 'attention'
-                          ? 'var(--warning)'
-                          : 'var(--error)',
+                          ? 'var(--semantic-warning)'
+                          : 'var(--semantic-error)',
                     transition: 'width 0.5s ease',
                   }}
                 />
               </div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
+              <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 4 }}>
                 {item.detail.progress}% of target
               </div>
             </div>
@@ -188,7 +188,7 @@ function PulseItemCard({
               style={{
                 padding: 10,
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-secondary)',
+                backgroundColor: 'var(--bg-muted)',
                 fontSize: 12,
                 color: 'var(--text-secondary)',
                 lineHeight: 1.5,
@@ -221,8 +221,8 @@ export function LifePulseStrip({ items }: LifePulseStripProps) {
         gap: 4,
         padding: '12px 16px',
         borderRadius: 'var(--radius-full)',
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
         boxShadow: 'var(--shadow-sm)',
         position: 'relative',
       }}
@@ -239,7 +239,7 @@ export function LifePulseStrip({ items }: LifePulseStripProps) {
               style={{
                 width: 1,
                 height: 16,
-                backgroundColor: 'var(--border)',
+                backgroundColor: 'var(--border-default)',
                 margin: '0 4px',
               }}
             />

@@ -78,23 +78,23 @@ function ActionButton({
     switch (variant) {
       case 'primary':
         return {
-          backgroundColor: 'var(--accent)',
+          backgroundColor: 'var(--brand-primary)',
           color: 'var(--text-on-accent)',
         };
       case 'secondary':
         return {
-          backgroundColor: 'var(--bg-card)',
+          backgroundColor: 'var(--bg-surface)',
           color: 'var(--text-secondary)',
-          border: '1px solid var(--border)',
+          border: '1px solid var(--border-default)',
         };
       case 'ghost':
         return {
           backgroundColor: 'transparent',
-          color: 'var(--text-muted)',
+          color: 'var(--text-tertiary)',
         };
       case 'danger':
         return {
-          backgroundColor: 'var(--error)',
+          backgroundColor: 'var(--semantic-error)',
           color: 'white',
         };
       default:
@@ -134,21 +134,21 @@ export function UnifiedItemCard({
   // Compute dynamic styles based on priority
   const getCardStyle = () => {
     const baseStyle = {
-      backgroundColor: 'var(--bg-card)',
+      backgroundColor: 'var(--bg-surface)',
       border: 'none',
     };
 
     if (isHighPriority) {
       return {
         ...baseStyle,
-        boxShadow: '0 0 0 1px var(--error), 0 4px 12px rgba(185, 28, 28, 0.15)',
+        boxShadow: '0 0 0 1px var(--semantic-error), 0 4px 12px rgba(185, 28, 28, 0.15)',
         minHeight: '80px',
       };
     }
     if (isMediumPriority) {
       return {
         ...baseStyle,
-        boxShadow: '0 0 0 1px var(--warning), 0 4px 12px rgba(180, 83, 9, 0.1)',
+        boxShadow: '0 0 0 1px var(--semantic-warning), 0 4px 12px rgba(180, 83, 9, 0.1)',
         minHeight: '60px',
       };
     }
@@ -174,7 +174,7 @@ export function UnifiedItemCard({
           ) : (
             <TypeIcon
               className="w-4 h-4"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-tertiary)' }}
             />
           )}
         </div>
@@ -193,8 +193,8 @@ export function UnifiedItemCard({
               <span
                 className="text-xs px-1.5 py-0.5 rounded shrink-0"
                 style={{
-                  color: 'var(--text-muted)',
-                  backgroundColor: 'var(--bg-tertiary)',
+                  color: 'var(--text-tertiary)',
+                  backgroundColor: 'var(--bg-muted)',
                 }}
               >
                 {item.time || item.urgencyReason}
@@ -204,7 +204,7 @@ export function UnifiedItemCard({
 
           {/* Subtitle */}
           {item.subtitle && (
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-tertiary)' }}>
               {item.subtitle}
               {item.relationshipNote && (
                 <span style={{ color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
@@ -229,13 +229,13 @@ export function UnifiedItemCard({
             <div
               className="mt-3 p-3 rounded-lg"
               style={{
-                backgroundColor: 'var(--bg-secondary)',
+                backgroundColor: 'var(--bg-muted)',
                 border: '1px solid var(--border-subtle)',
               }}
             >
               <p
                 className="text-xs font-medium uppercase tracking-wide mb-1"
-                style={{ color: 'var(--text-muted)' }}
+                style={{ color: 'var(--text-tertiary)' }}
               >
                 Suggested Action
               </p>
@@ -253,15 +253,15 @@ export function UnifiedItemCard({
                 style={{
                   backgroundColor:
                     item.severity === 'high'
-                      ? 'var(--error-subtle)'
+                      ? 'var(--semantic-error-subtle)'
                       : item.severity === 'medium'
-                        ? 'var(--warning-subtle)'
-                        : 'var(--bg-tertiary)',
+                        ? 'var(--semantic-warning-subtle)'
+                        : 'var(--bg-muted)',
                   color:
                     item.severity === 'high'
-                      ? 'var(--error)'
+                      ? 'var(--semantic-error)'
                       : item.severity === 'medium'
-                        ? 'var(--warning)'
+                        ? 'var(--semantic-warning)'
                         : 'var(--text-secondary)',
                 }}
               >
@@ -301,7 +301,7 @@ export function UnifiedItemList({
   if (items.length === 0) {
     if (emptyMessage) {
       return (
-        <div className="text-center py-8" style={{ color: 'var(--text-muted)' }}>
+        <div className="text-center py-8" style={{ color: 'var(--text-tertiary)' }}>
           <p className="text-sm">{emptyMessage}</p>
         </div>
       );

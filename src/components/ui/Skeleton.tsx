@@ -58,8 +58,8 @@ export function SkeletonCard() {
     <div
       className="rounded-xl p-5 space-y-4"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
       }}
     >
       <div className="flex items-start gap-4">
@@ -82,8 +82,8 @@ export function SkeletonBrief() {
     <div
       className="rounded-2xl p-8 space-y-6"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
       }}
     >
       <Skeleton variant="heading" width="40%" />
@@ -111,8 +111,8 @@ export function SkeletonHero() {
     <div
       className="rounded-2xl p-8 space-y-4"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
       }}
     >
       <Skeleton variant="custom" width={100} height={24} className="rounded-full" />

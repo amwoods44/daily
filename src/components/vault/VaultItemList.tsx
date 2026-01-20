@@ -64,7 +64,7 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
         <div className="relative flex-1">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--text-tertiary)' }}
           />
           <input
             type="text"
@@ -73,8 +73,8 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
             placeholder="Search items..."
             className="w-full pl-10 pr-4 py-2.5 rounded-xl transition-all text-sm"
             style={{
-              backgroundColor: 'var(--bg-card)',
-              border: '1px solid var(--border)',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
               color: 'var(--text-primary)',
             }}
           />
@@ -83,9 +83,9 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
           onClick={() => setShowFilters(!showFilters)}
           className="p-2.5 rounded-xl transition-all"
           style={{
-            backgroundColor: showFilters ? 'var(--accent)' : 'var(--bg-card)',
+            backgroundColor: showFilters ? 'var(--brand-primary)' : 'var(--bg-surface)',
             color: showFilters ? 'var(--text-on-accent)' : 'var(--text-secondary)',
-            border: showFilters ? '1px solid var(--accent)' : '1px solid var(--border)',
+            border: showFilters ? '1px solid var(--brand-primary)' : '1px solid var(--border-default)',
           }}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -105,7 +105,7 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
               onClick={() => setActiveType(tab.value)}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"
               style={{
-                backgroundColor: isActive ? 'var(--accent)' : 'var(--bg-tertiary)',
+                backgroundColor: isActive ? 'var(--brand-primary)' : 'var(--bg-muted)',
                 color: isActive ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               }}
             >
@@ -114,7 +114,7 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
               <span
                 className="text-xs px-1.5 py-0.5 rounded-full"
                 style={{
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : 'var(--bg-secondary)',
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : 'var(--bg-muted)',
                 }}
               >
                 {count}
@@ -128,7 +128,7 @@ export function VaultItemList({ items, emptyMessage = 'No items found' }: VaultI
       {filteredItems.length === 0 ? (
         <div className="text-center py-12">
           <Package className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--text-tertiary)' }} />
-          <p style={{ color: 'var(--text-muted)' }}>{emptyMessage}</p>
+          <p style={{ color: 'var(--text-tertiary)' }}>{emptyMessage}</p>
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}

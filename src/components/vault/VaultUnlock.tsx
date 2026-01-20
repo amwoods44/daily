@@ -55,13 +55,13 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
       {/* Back button */}
       <div className="p-4">
         <Link
           href="/"
           className="inline-flex items-center gap-2 transition-colors"
-          style={{ color: 'var(--text-muted)' }}
+          style={{ color: 'var(--text-tertiary)' }}
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-sm">Back to Dashboard</span>
@@ -74,14 +74,14 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
           <div className="text-center mb-8">
             <div
               className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
-              style={{ backgroundColor: 'var(--bg-tertiary)' }}
+              style={{ backgroundColor: 'var(--bg-muted)' }}
             >
               <Shield className="w-8 h-8" style={{ color: 'var(--text-secondary)' }} />
             </div>
             <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
               {isNewVault ? 'Create Your Vault' : 'Unlock Vault'}
             </h1>
-            <p style={{ color: 'var(--text-muted)' }}>
+            <p style={{ color: 'var(--text-tertiary)' }}>
               {isNewVault
                 ? "Set a passphrase to encrypt your vault. You'll need this to access your data."
                 : 'Enter your passphrase to access your vault.'}
@@ -108,8 +108,8 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
                   placeholder={isNewVault ? 'Create a strong passphrase' : 'Enter your passphrase'}
                   className="w-full px-4 py-3 pr-12 rounded-xl transition-all"
                   style={{
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border)',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
                     color: 'var(--text-primary)',
                   }}
                   autoFocus
@@ -119,7 +119,7 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
                   type="button"
                   onClick={() => setShowPassphrase(!showPassphrase)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-1 transition-colors"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{ color: 'var(--text-tertiary)' }}
                 >
                   {showPassphrase ? (
                     <EyeOff className="w-5 h-5" />
@@ -148,8 +148,8 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
                   placeholder="Confirm your passphrase"
                   className="w-full px-4 py-3 rounded-xl transition-all"
                   style={{
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border)',
+                    backgroundColor: 'var(--bg-surface)',
+                    border: '1px solid var(--border-default)',
                     color: 'var(--text-primary)',
                   }}
                   autoComplete="new-password"
@@ -162,8 +162,8 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
               <div
                 className="flex items-center gap-2 p-3 rounded-lg"
                 style={{
-                  backgroundColor: 'var(--error-subtle)',
-                  color: 'var(--error)',
+                  backgroundColor: 'var(--semantic-error-subtle)',
+                  color: 'var(--semantic-error)',
                 }}
               >
                 <AlertCircle className="w-4 h-4 shrink-0" />
@@ -177,7 +177,7 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
               disabled={loading || !passphrase}
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               style={{
-                backgroundColor: 'var(--accent)',
+                backgroundColor: 'var(--brand-primary)',
                 color: 'var(--text-on-accent)',
               }}
             >
@@ -196,7 +196,7 @@ export function VaultUnlock({ onUnlock }: VaultUnlockProps) {
 
             {/* Security note */}
             {isNewVault && (
-              <p className="text-xs text-center mt-4" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-xs text-center mt-4" style={{ color: 'var(--text-tertiary)' }}>
                 Your passphrase is never stored. If you forget it, your data cannot be recovered.
               </p>
             )}

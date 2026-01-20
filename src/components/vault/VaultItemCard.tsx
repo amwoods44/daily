@@ -57,9 +57,9 @@ export function VaultItemCard({
   };
 
   const getDaysColor = (d: number) => {
-    if (d <= 7) return 'var(--error)';
-    if (d <= 30) return 'var(--warning)';
-    return 'var(--text-muted)';
+    if (d <= 7) return 'var(--semantic-error)';
+    if (d <= 30) return 'var(--semantic-warning)';
+    return 'var(--text-tertiary)';
   };
 
   if (compact) {
@@ -68,8 +68,8 @@ export function VaultItemCard({
         onClick={handleClick}
         className="w-full text-left p-3 rounded-lg transition-all"
         style={{
-          backgroundColor: 'var(--bg-card)',
-          border: '1px solid var(--border)',
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border-default)',
         }}
       >
         <div className="flex items-center gap-3">
@@ -89,7 +89,7 @@ export function VaultItemCard({
             )}
           </div>
           {item.currentValue && (
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
               {formatCurrency(item.currentValue)}
             </span>
           )}
@@ -103,8 +103,8 @@ export function VaultItemCard({
       onClick={handleClick}
       className="w-full text-left p-4 rounded-xl transition-all"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
         boxShadow: 'var(--shadow-sm)',
       }}
     >
@@ -113,8 +113,8 @@ export function VaultItemCard({
         <div
           className="flex items-center gap-2 mb-3 p-2 rounded-lg"
           style={{
-            backgroundColor: 'var(--warning-subtle)',
-            color: 'var(--warning)',
+            backgroundColor: 'var(--semantic-warning-subtle)',
+            color: 'var(--semantic-warning)',
           }}
         >
           <AlertTriangle className="w-4 h-4 shrink-0" />
@@ -135,7 +135,7 @@ export function VaultItemCard({
               <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>
                 {item.name}
               </h3>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
                 {meta?.label || item.category}
               </p>
             </div>
@@ -143,8 +143,8 @@ export function VaultItemCard({
             <span
               className="text-xs px-2 py-1 rounded-md shrink-0 capitalize"
               style={{
-                backgroundColor: 'var(--bg-tertiary)',
-                color: 'var(--text-muted)',
+                backgroundColor: 'var(--bg-muted)',
+                color: 'var(--text-tertiary)',
               }}
             >
               {item.type}
@@ -163,7 +163,7 @@ export function VaultItemCard({
           {/* Meta row */}
           <div
             className="flex flex-wrap items-center gap-4 mt-3 text-xs"
-            style={{ color: 'var(--text-muted)' }}
+            style={{ color: 'var(--text-tertiary)' }}
           >
             {relevantDate && (
               <span className="flex items-center gap-1">
@@ -206,7 +206,7 @@ export function VaultItemCard({
                   key={tag}
                   className="text-xs px-2 py-0.5 rounded-full"
                   style={{
-                    backgroundColor: 'var(--bg-tertiary)',
+                    backgroundColor: 'var(--bg-muted)',
                     color: 'var(--text-secondary)',
                   }}
                 >
@@ -214,7 +214,7 @@ export function VaultItemCard({
                 </span>
               ))}
               {item.tags.length > 3 && (
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                   +{item.tags.length - 3}
                 </span>
               )}

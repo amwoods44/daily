@@ -71,7 +71,7 @@ export function AssetsSummary({ items }: AssetsSummaryProps) {
         <div
           className="p-5 rounded-xl"
           style={{
-            background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)',
+            background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
             color: 'var(--text-on-accent)',
           }}
         >
@@ -93,41 +93,41 @@ export function AssetsSummary({ items }: AssetsSummaryProps) {
         <div
           className="p-4 rounded-xl"
           style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
           }}
         >
-          <Package className="w-5 h-5 mb-2" style={{ color: 'var(--text-muted)' }} />
+          <Package className="w-5 h-5 mb-2" style={{ color: 'var(--text-tertiary)' }} />
           <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {stats.assetCount}
           </p>
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Assets</p>
+          <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Assets</p>
         </div>
         <div
           className="p-4 rounded-xl"
           style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
           }}
         >
-          <FileText className="w-5 h-5 mb-2" style={{ color: 'var(--text-muted)' }} />
+          <FileText className="w-5 h-5 mb-2" style={{ color: 'var(--text-tertiary)' }} />
           <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {stats.documentCount}
           </p>
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Documents</p>
+          <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Documents</p>
         </div>
         <div
           className="p-4 rounded-xl"
           style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
           }}
         >
-          <Wallet className="w-5 h-5 mb-2" style={{ color: 'var(--text-muted)' }} />
+          <Wallet className="w-5 h-5 mb-2" style={{ color: 'var(--text-tertiary)' }} />
           <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {stats.accountCount}
           </p>
-          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Accounts</p>
+          <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>Accounts</p>
         </div>
       </div>
 
@@ -136,8 +136,8 @@ export function AssetsSummary({ items }: AssetsSummaryProps) {
         <div
           className="p-4 rounded-xl"
           style={{
-            backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
           }}
         >
           <p className="text-sm font-medium mb-3" style={{ color: 'var(--text-secondary)' }}>
@@ -167,13 +167,13 @@ export function AssetsSummary({ items }: AssetsSummaryProps) {
                   </div>
                   <div
                     className="h-2 rounded-full overflow-hidden"
-                    style={{ backgroundColor: 'var(--bg-tertiary)' }}
+                    style={{ backgroundColor: 'var(--bg-muted)' }}
                   >
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
                         width: `${percentage}%`,
-                        backgroundColor: 'var(--accent)',
+                        backgroundColor: 'var(--brand-primary)',
                       }}
                     />
                   </div>

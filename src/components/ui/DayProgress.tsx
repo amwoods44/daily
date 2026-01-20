@@ -22,7 +22,7 @@ export function DayProgress({
       <div className="space-y-2">
         {showLabel && (
           <div className="flex items-center justify-between text-sm">
-            <span style={{ color: 'var(--text-muted)' }}>Today&apos;s Progress</span>
+            <span style={{ color: 'var(--text-tertiary)' }}>Today&apos;s Progress</span>
             <span style={{ color: 'var(--text-secondary)' }} className="font-medium">
               {completed}/{total}
             </span>
@@ -105,16 +105,16 @@ export function DayProgressCompact({
     <div
       className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium"
       style={{
-        backgroundColor: isComplete ? 'var(--success-subtle)' : 'var(--bg-tertiary)',
-        color: isComplete ? 'var(--success)' : 'var(--text-secondary)',
+        backgroundColor: isComplete ? 'var(--semantic-success-subtle)' : 'var(--bg-muted)',
+        color: isComplete ? 'var(--semantic-success)' : 'var(--text-secondary)',
       }}
     >
-      <div className="w-16 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+      <div className="w-16 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-muted)' }}>
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{
             width: `${percentage}%`,
-            backgroundColor: isComplete ? 'var(--success)' : 'var(--accent)',
+            backgroundColor: isComplete ? 'var(--semantic-success)' : 'var(--brand-primary)',
           }}
         />
       </div>

@@ -67,7 +67,7 @@ function TypeStep({
     <div className="space-y-4">
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold text-[var(--text-primary)]">What are you adding?</h2>
-        <p className="text-[var(--text-muted)] mt-1">Choose the type of item</p>
+        <p className="text-[var(--text-tertiary)] mt-1">Choose the type of item</p>
       </div>
 
       <div className="space-y-3">
@@ -81,21 +81,21 @@ function TypeStep({
               onClick={() => onChange(type.value)}
               className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                 isSelected
-                  ? 'border-[var(--accent)] bg-[var(--bg-secondary)]'
-                  : 'border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--border)]'
+                  ? 'border-[var(--brand-primary)] bg-[var(--bg-muted)]'
+                  : 'border-[var(--border-default)] bg-[var(--bg-surface)] hover:border-[var(--border-default)]'
               }`}
             >
               <div className="flex items-center gap-4">
                 <div
                   className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    isSelected ? 'bg-[var(--accent)] text-[var(--text-on-accent)]' : 'bg-[var(--bg-tertiary)] text-[var(--text-muted)]'
+                    isSelected ? 'bg-[var(--brand-primary)] text-[var(--text-on-accent)]' : 'bg-[var(--bg-muted)] text-[var(--text-tertiary)]'
                   }`}
                 >
                   <Icon className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-[var(--text-primary)]">{type.label}</h3>
-                  <p className="text-sm text-[var(--text-muted)]">{type.description}</p>
+                  <p className="text-sm text-[var(--text-tertiary)]">{type.description}</p>
                 </div>
                 {isSelected && (
                   <Check className="w-5 h-5 text-[var(--text-primary)] ml-auto" />
@@ -125,7 +125,7 @@ function CategoryStep({
     <div className="space-y-4">
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold text-[var(--text-primary)]">What kind of {type}?</h2>
-        <p className="text-[var(--text-muted)] mt-1">Select a category</p>
+        <p className="text-[var(--text-tertiary)] mt-1">Select a category</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -139,8 +139,8 @@ function CategoryStep({
               onClick={() => onChange(category)}
               className={`p-4 rounded-xl border-2 text-center transition-all ${
                 isSelected
-                  ? 'border-[var(--accent)] bg-[var(--bg-secondary)]'
-                  : 'border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--border)]'
+                  ? 'border-[var(--brand-primary)] bg-[var(--bg-muted)]'
+                  : 'border-[var(--border-default)] bg-[var(--bg-surface)] hover:border-[var(--border-default)]'
               }`}
             >
               <span className="text-2xl block mb-2">{meta.emoji}</span>
@@ -174,21 +174,21 @@ function DetailsStep({
       <div className="text-center mb-6">
         <span className="text-3xl">{meta.emoji}</span>
         <h2 className="text-xl font-bold text-[var(--text-primary)] mt-2">Add {meta.label}</h2>
-        <p className="text-[var(--text-muted)] mt-1">Enter the details</p>
+        <p className="text-[var(--text-tertiary)] mt-1">Enter the details</p>
       </div>
 
       <div className="space-y-4">
         {/* Name - always required */}
         <div>
           <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1.5">
-            Name <span className="text-[var(--error)]">*</span>
+            Name <span className="text-[var(--semantic-error)]">*</span>
           </label>
           <input
             type="text"
             value={data.name || ''}
             onChange={(e) => onChange({ name: e.target.value })}
             placeholder={`e.g., ${category === 'vehicles' ? '2021 Honda Accord' : category === 'jewelry' ? 'Engagement Ring' : category === 'subscription' ? 'Netflix' : 'My Item'}`}
-            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
           />
         </div>
 
@@ -202,7 +202,7 @@ function DetailsStep({
             onChange={(e) => onChange({ description: e.target.value })}
             placeholder="Optional notes or details"
             rows={3}
-            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent resize-none"
           />
         </div>
 
@@ -214,13 +214,13 @@ function DetailsStep({
                 Purchase Price
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
                 <input
                   type="number"
                   value={data.purchasePrice || ''}
                   onChange={(e) => onChange({ purchasePrice: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="0"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
                 />
               </div>
             </div>
@@ -229,13 +229,13 @@ function DetailsStep({
                 Current Value
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
                 <input
                   type="number"
                   value={data.currentValue || ''}
                   onChange={(e) => onChange({ currentValue: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="0"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
                 />
               </div>
             </div>
@@ -249,13 +249,13 @@ function DetailsStep({
               Monthly Payment
             </label>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
               <input
                 type="number"
                 value={data.monthlyPayment || ''}
                 onChange={(e) => onChange({ monthlyPayment: e.target.value ? Number(e.target.value) : undefined })}
                 placeholder="0"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
               />
             </div>
           </div>
@@ -271,9 +271,9 @@ function DetailsStep({
             value={data.tags?.join(', ') || ''}
             onChange={(e) => onChange({ tags: e.target.value.split(',').map((t) => t.trim()).filter(Boolean) })}
             placeholder="e.g., important, insured, work"
-            className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+            className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
           />
-          <p className="text-xs text-[var(--text-muted)] mt-1">Separate with commas</p>
+          <p className="text-xs text-[var(--text-tertiary)] mt-1">Separate with commas</p>
         </div>
       </div>
     </div>
@@ -301,9 +301,9 @@ function DatesStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <Calendar className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+        <Calendar className="w-8 h-8 text-[var(--text-tertiary)] mx-auto mb-2" />
         <h2 className="text-xl font-bold text-[var(--text-primary)]">Important Dates</h2>
-        <p className="text-[var(--text-muted)] mt-1">Add dates to track</p>
+        <p className="text-[var(--text-tertiary)] mt-1">Add dates to track</p>
       </div>
 
       <div className="space-y-4">
@@ -316,7 +316,7 @@ function DatesStep({
               type="date"
               value={data.purchaseDate || ''}
               onChange={(e) => onChange({ purchaseDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
             />
           </div>
         )}
@@ -330,7 +330,7 @@ function DatesStep({
               type="date"
               value={data.expirationDate || ''}
               onChange={(e) => onChange({ expirationDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
             />
           </div>
         )}
@@ -344,7 +344,7 @@ function DatesStep({
               type="date"
               value={data.renewalDate || ''}
               onChange={(e) => onChange({ renewalDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
             />
           </div>
         )}
@@ -358,17 +358,17 @@ function DatesStep({
               type="date"
               value={data.nextActionDate || ''}
               onChange={(e) => onChange({ nextActionDate: e.target.value || undefined })}
-              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
             />
-            <p className="text-xs text-[var(--text-muted)] mt-1">e.g., next service, checkup, review</p>
+            <p className="text-xs text-[var(--text-tertiary)] mt-1">e.g., next service, checkup, review</p>
           </div>
         )}
 
         {/* Reminder settings */}
-        <div className="p-4 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)]">
+        <div className="p-4 rounded-xl bg-[var(--bg-muted)] border border-[var(--border-default)]">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-[var(--text-muted)]" />
+              <Bell className="w-4 h-4 text-[var(--text-tertiary)]" />
               <span className="font-medium text-[var(--text-secondary)]">Reminders</span>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -378,7 +378,7 @@ function DatesStep({
                 onChange={(e) => onChange({ reminderEnabled: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-[var(--bg-tertiary)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--accent)] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[var(--bg-card)] after:border-[var(--border)] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent)]"></div>
+              <div className="w-11 h-6 bg-[var(--bg-muted)] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--brand-primary)] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[var(--bg-surface)] after:border-[var(--border-default)] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--brand-primary)]"></div>
             </label>
           </div>
 
@@ -393,9 +393,9 @@ function DatesStep({
                 onChange={(e) => onChange({ reminderDays: Number(e.target.value) })}
                 min={1}
                 max={365}
-                className="w-full px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
+                className="w-full px-4 py-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
               />
-              <p className="text-xs text-[var(--text-muted)] mt-1">
+              <p className="text-xs text-[var(--text-tertiary)] mt-1">
                 Default for {CATEGORY_META[category].label}: {categoryConfig.reminderDays} days
               </p>
             </div>
@@ -447,13 +447,13 @@ function AttachmentsStep({
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <Upload className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+        <Upload className="w-8 h-8 text-[var(--text-tertiary)] mx-auto mb-2" />
         <h2 className="text-xl font-bold text-[var(--text-primary)]">Attachments</h2>
-        <p className="text-[var(--text-muted)] mt-1">Add photos, receipts, or documents</p>
+        <p className="text-[var(--text-tertiary)] mt-1">Add photos, receipts, or documents</p>
       </div>
 
       {/* Upload area */}
-      <label className="block p-8 border-2 border-dashed border-[var(--border)] rounded-xl text-center cursor-pointer hover:border-[var(--border)] transition-colors">
+      <label className="block p-8 border-2 border-dashed border-[var(--border-default)] rounded-xl text-center cursor-pointer hover:border-[var(--border-default)] transition-colors">
         <input
           type="file"
           multiple
@@ -463,12 +463,12 @@ function AttachmentsStep({
           disabled={uploading}
         />
         {uploading ? (
-          <Loader2 className="w-8 h-8 text-[var(--text-muted)] mx-auto animate-spin" />
+          <Loader2 className="w-8 h-8 text-[var(--text-tertiary)] mx-auto animate-spin" />
         ) : (
           <>
-            <Upload className="w-8 h-8 text-[var(--text-muted)] mx-auto mb-2" />
+            <Upload className="w-8 h-8 text-[var(--text-tertiary)] mx-auto mb-2" />
             <p className="text-[var(--text-secondary)] font-medium">Click to upload</p>
-            <p className="text-sm text-[var(--text-muted)] mt-1">or drag and drop</p>
+            <p className="text-sm text-[var(--text-tertiary)] mt-1">or drag and drop</p>
           </>
         )}
       </label>
@@ -479,7 +479,7 @@ function AttachmentsStep({
           {attachments.map((attachment) => (
             <div
               key={attachment.id}
-              className="flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border)]"
+              className="flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-muted)] border border-[var(--border-default)]"
             >
               {attachment.type.startsWith('image/') ? (
                 <img
@@ -488,21 +488,21 @@ function AttachmentsStep({
                   className="w-12 h-12 rounded object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded bg-[var(--bg-tertiary)] flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-[var(--text-muted)]" />
+                <div className="w-12 h-12 rounded bg-[var(--bg-muted)] flex items-center justify-center">
+                  <FileText className="w-6 h-6 text-[var(--text-tertiary)]" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-[var(--text-primary)] text-sm truncate">
                   {attachment.name}
                 </p>
-                <p className="text-xs text-[var(--text-muted)]">
+                <p className="text-xs text-[var(--text-tertiary)]">
                   {(attachment.size / 1024).toFixed(1)} KB
                 </p>
               </div>
               <button
                 onClick={() => onRemove(attachment.id)}
-                className="p-2 text-[var(--text-muted)] hover:text-[var(--error)] transition-colors"
+                className="p-2 text-[var(--text-tertiary)] hover:text-[var(--semantic-error)] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -511,7 +511,7 @@ function AttachmentsStep({
         </div>
       )}
 
-      <p className="text-xs text-[var(--text-muted)] text-center">
+      <p className="text-xs text-[var(--text-tertiary)] text-center">
         This step is optional. You can add attachments later.
       </p>
     </div>
@@ -678,9 +678,9 @@ export function AddItemFlow({
   const isLastStep = currentStep === STEPS.length - 1;
 
   return (
-    <div className="min-h-screen bg-[var(--bg-secondary)] flex flex-col">
+    <div className="min-h-screen bg-[var(--bg-muted)] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[var(--bg-card)] border-b border-[var(--border)] px-4 py-3">
+      <header className="sticky top-0 z-10 bg-[var(--bg-surface)] border-b border-[var(--border-default)] px-4 py-3">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <button
             onClick={handleBack}
@@ -688,7 +688,7 @@ export function AddItemFlow({
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <span className="text-sm text-[var(--text-muted)]">
+          <span className="text-sm text-[var(--text-tertiary)]">
             Step {currentStep + 1} of {STEPS.length}
           </span>
           <div className="w-9" /> {/* Spacer */}
@@ -696,9 +696,9 @@ export function AddItemFlow({
 
         {/* Progress bar */}
         <div className="max-w-lg mx-auto mt-3">
-          <div className="h-1 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+          <div className="h-1 bg-[var(--bg-muted)] rounded-full overflow-hidden">
             <div
-              className="h-full bg-[var(--accent)] transition-all duration-300"
+              className="h-full bg-[var(--brand-primary)] transition-all duration-300"
               style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -711,7 +711,7 @@ export function AddItemFlow({
       </main>
 
       {/* Footer */}
-      <footer className="sticky bottom-0 bg-[var(--bg-card)] border-t border-[var(--border)] px-4 py-4">
+      <footer className="sticky bottom-0 bg-[var(--bg-surface)] border-t border-[var(--border-default)] px-4 py-4">
         <div className="max-w-lg mx-auto flex gap-3">
           {isLastStep ? (
             <>
@@ -720,14 +720,14 @@ export function AddItemFlow({
                   onComplete?.();
                   router.push('/vault');
                 }}
-                className="flex-1 px-4 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
+                className="flex-1 px-4 py-3 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-muted)] transition-colors"
               >
                 Skip
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || !canProceed()}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--brand-primary)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {saving ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -743,7 +743,7 @@ export function AddItemFlow({
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--brand-primary)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Continue
               <ArrowRight className="w-5 h-5" />

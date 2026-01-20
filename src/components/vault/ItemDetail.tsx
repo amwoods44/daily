@@ -71,7 +71,7 @@ interface SectionProps {
 function Section({ title, icon: Icon, children }: SectionProps) {
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)]">
+      <div className="flex items-center gap-2 text-sm font-medium text-[var(--text-tertiary)]">
         <Icon className="w-4 h-4" />
         {title}
       </div>
@@ -123,9 +123,9 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-secondary)]">
+    <div className="min-h-screen bg-[var(--bg-muted)]">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[var(--bg-card)] border-b border-[var(--border)]">
+      <header className="sticky top-0 z-10 bg-[var(--bg-surface)] border-b border-[var(--border-default)]">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => router.push('/vault')}
@@ -148,13 +148,13 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                   className="fixed inset-0 z-10"
                   onClick={() => setMenuOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-1 z-20 w-48 bg-[var(--bg-card)] rounded-xl border border-[var(--border)] shadow-lg overflow-hidden">
+                <div className="absolute right-0 top-full mt-1 z-20 w-48 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] shadow-lg overflow-hidden">
                   <button
                     onClick={() => {
                       setMenuOpen(false);
                       handleEdit();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-muted)] transition-colors"
                   >
                     <Edit className="w-4 h-4" />
                     Edit
@@ -164,7 +164,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                       setMenuOpen(false);
                       handleArchive();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--text-secondary)] hover:bg-[var(--bg-muted)] transition-colors"
                   >
                     <Archive className="w-4 h-4" />
                     Archive
@@ -174,7 +174,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                       setMenuOpen(false);
                       setConfirmDelete(true);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--error)] hover:bg-[var(--error-subtle)] transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left text-[var(--semantic-error)] hover:bg-[var(--semantic-error-subtle)] transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                     Delete
@@ -192,10 +192,10 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         <div className="text-center">
           <span className="text-4xl">{meta?.emoji || '📦'}</span>
           <h1 className="text-2xl font-bold text-[var(--text-primary)] mt-3">{item.name}</h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <p className="text-[var(--text-tertiary)] mt-1">
             {meta?.label || item.category} • {item.type}
           </p>
-          <p className="text-xs text-[var(--text-muted)] mt-2">
+          <p className="text-xs text-[var(--text-tertiary)] mt-2">
             Updated {formatRelativeDate(item.updatedAt)} ago
           </p>
         </div>
@@ -205,8 +205,8 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
           <div
             className={`flex items-center gap-3 p-4 rounded-xl ${
               alertSeverity === 'high'
-                ? 'bg-[var(--error-subtle)] border border-[var(--error)] text-[var(--error)]'
-                : 'bg-[var(--warning-subtle)] border border-[var(--warning)] text-[var(--warning)]'
+                ? 'bg-[var(--semantic-error-subtle)] border border-[var(--semantic-error)] text-[var(--semantic-error)]'
+                : 'bg-[var(--semantic-warning-subtle)] border border-[var(--semantic-warning)] text-[var(--semantic-warning)]'
             }`}
           >
             <AlertTriangle className="w-5 h-5 shrink-0" />
@@ -231,10 +231,10 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
 
         {/* Details section */}
         <Section title="DETAILS" icon={FileText}>
-          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] divide-y divide-[var(--border-subtle)]">
+          <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] divide-y divide-[var(--border-subtle)]">
             {item.purchasePrice !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Purchase Price</span>
+                <span className="text-[var(--text-tertiary)]">Purchase Price</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.purchasePrice)}
                 </span>
@@ -242,7 +242,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.currentValue !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Current Value</span>
+                <span className="text-[var(--text-tertiary)]">Current Value</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.currentValue)}
                 </span>
@@ -250,7 +250,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.monthlyPayment !== undefined && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Monthly Payment</span>
+                <span className="text-[var(--text-tertiary)]">Monthly Payment</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatCurrency(item.monthlyPayment)}
                 </span>
@@ -258,7 +258,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.purchaseDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Purchased</span>
+                <span className="text-[var(--text-tertiary)]">Purchased</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.purchaseDate)}
                 </span>
@@ -266,7 +266,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.expirationDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Expires</span>
+                <span className="text-[var(--text-tertiary)]">Expires</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.expirationDate)}
                 </span>
@@ -274,7 +274,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.renewalDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Renews</span>
+                <span className="text-[var(--text-tertiary)]">Renews</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.renewalDate)}
                 </span>
@@ -282,7 +282,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             )}
             {item.nextActionDate && (
               <div className="flex justify-between px-4 py-3">
-                <span className="text-[var(--text-muted)]">Next Action</span>
+                <span className="text-[var(--text-tertiary)]">Next Action</span>
                 <span className="font-medium text-[var(--text-primary)]">
                   {formatDate(item.nextActionDate)}
                 </span>
@@ -315,14 +315,14 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
                   <button
                     key={relatedItem.id}
                     onClick={() => router.push(`/vault/${relatedItem.id}`)}
-                    className="w-full flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-card)] border border-[var(--border)] hover:border-[var(--border)] transition-colors text-left"
+                    className="w-full flex items-center gap-3 p-3 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--border-default)] transition-colors text-left"
                   >
                     <span className="text-lg">{relatedMeta?.emoji || '📦'}</span>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-[var(--text-primary)] text-sm truncate">
                         {relatedItem.name}
                       </p>
-                      <p className="text-xs text-[var(--text-muted)]">
+                      <p className="text-xs text-[var(--text-tertiary)]">
                         {relatedMeta?.label || relatedItem.category}
                       </p>
                     </div>
@@ -336,7 +336,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         {/* Notes */}
         {item.notes && (
           <Section title="NOTES" icon={FileText}>
-            <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] p-4">
+            <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
               <p className="text-[var(--text-secondary)] whitespace-pre-wrap">{item.notes}</p>
             </div>
           </Section>
@@ -349,7 +349,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
               {item.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] text-sm"
+                  className="px-3 py-1 rounded-full bg-[var(--bg-muted)] text-[var(--text-secondary)] text-sm"
                 >
                   {tag}
                 </span>
@@ -360,17 +360,17 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
 
         {/* Reminder status */}
         <Section title="REMINDERS" icon={Clock}>
-          <div className="bg-[var(--bg-card)] rounded-xl border border-[var(--border)] p-4">
+          <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
             {item.reminderEnabled ? (
               <p className="text-[var(--text-secondary)]">
                 Reminders enabled • {item.reminderDays} days before due dates
               </p>
             ) : (
-              <p className="text-[var(--text-muted)]">Reminders disabled</p>
+              <p className="text-[var(--text-tertiary)]">Reminders disabled</p>
             )}
             {itemReminders.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-[var(--border)]">
-                <p className="text-sm text-[var(--text-muted)] mb-2">
+              <div className="mt-3 pt-3 border-t border-[var(--border-default)]">
+                <p className="text-sm text-[var(--text-tertiary)] mb-2">
                   {itemReminders.length} active reminder{itemReminders.length > 1 ? 's' : ''}
                 </p>
               </div>
@@ -382,20 +382,20 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
         <div className="flex gap-3 pt-4">
           <button
             onClick={handleEdit}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--accent)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--accent-hover)] transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--brand-primary)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--brand-primary-hover)] transition-colors"
           >
             <Edit className="w-4 h-4" />
             Edit
           </button>
           <button
             onClick={handleArchive}
-            className="px-4 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
+            className="px-4 py-3 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-muted)] transition-colors"
           >
             <Archive className="w-4 h-4" />
           </button>
           <button
             onClick={() => setConfirmDelete(true)}
-            className="px-4 py-3 rounded-xl border border-[var(--error)] text-[var(--error)] font-medium hover:bg-[var(--error-subtle)] transition-colors"
+            className="px-4 py-3 rounded-xl border border-[var(--semantic-error)] text-[var(--semantic-error)] font-medium hover:bg-[var(--semantic-error-subtle)] transition-colors"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -405,7 +405,7 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
       {/* Delete confirmation modal */}
       {confirmDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="w-full max-w-sm bg-[var(--bg-card)] rounded-2xl p-6">
+          <div className="w-full max-w-sm bg-[var(--bg-surface)] rounded-2xl p-6">
             <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">Delete Item?</h3>
             <p className="text-[var(--text-secondary)] mb-6">
               This will permanently delete &quot;{item.name}&quot; and all its attachments. This
@@ -414,13 +414,13 @@ export function ItemDetail({ item, reminders = [], onUpdate }: ItemDetailProps) 
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(false)}
-                className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-secondary)] transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-muted)] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--error)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--error)] transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--semantic-error)] text-[var(--text-on-accent)] font-medium hover:bg-[var(--semantic-error)] transition-colors"
               >
                 Delete
               </button>

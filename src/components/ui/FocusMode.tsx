@@ -72,7 +72,7 @@ export function FocusModeToggle() {
       onClick={toggle}
       className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all btn-press"
       style={{
-        backgroundColor: isActive ? 'var(--accent)' : 'var(--bg-tertiary)',
+        backgroundColor: isActive ? 'var(--brand-primary)' : 'var(--bg-muted)',
         color: isActive ? 'var(--text-on-accent)' : 'var(--text-secondary)',
       }}
       title={isActive ? 'Exit Focus Mode' : 'Enter Focus Mode'}
