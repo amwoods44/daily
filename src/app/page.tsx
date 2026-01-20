@@ -46,43 +46,82 @@ function Masthead({ greeting, date, weather, onRefresh, refreshing, completedTas
   return (
     <header className="masthead">
       <div className="masthead-inner">
-        {/* Top bar */}
+        {/* Top bar - refined spacing */}
         <div className="masthead-top">
-          <div className="masthead-brand">Your Daily Briefing</div>
+          <div className="masthead-brand">Daily Pulse</div>
           <div className="masthead-actions">
             {/* Day Progress */}
             <DayProgressCompact completed={completedTasks} total={totalTasks} />
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
             <div
-              className="flex items-center gap-2 text-sm"
-              style={{ color: 'var(--text-tertiary)' }}
+              style={{
+                width: '1px',
+                height: '20px',
+                backgroundColor: 'var(--border-default)'
+              }}
+            />
+            <div
+              className="flex items-center"
+              style={{
+                gap: 'var(--space-2)',
+                color: 'var(--text-tertiary)',
+                fontSize: 'var(--text-sm)',
+                fontFamily: 'var(--font-mono)'
+              }}
             >
               <WeatherIcon condition={weather.condition} />
-              <span className="font-medium">{weather.temp}°</span>
+              <span style={{ fontWeight: 'var(--weight-medium)' }}>{weather.temp}°</span>
             </div>
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
-            {/* View Mode Toggle */}
+            <div
+              style={{
+                width: '1px',
+                height: '20px',
+                backgroundColor: 'var(--border-default)'
+              }}
+            />
             <ViewModeToggle compact />
-            <div className="w-px h-5" style={{ backgroundColor: 'var(--border-default)' }} />
-            {/* Focus Mode */}
+            <div
+              style={{
+                width: '1px',
+                height: '20px',
+                backgroundColor: 'var(--border-default)'
+              }}
+            />
             <FocusModeToggle />
             <button
               onClick={onRefresh}
               disabled={refreshing}
               className="btn btn-ghost btn-sm"
+              aria-label="Refresh"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
             </button>
-            <Link href="/settings" className="btn btn-ghost btn-sm">
+            <Link href="/settings" className="btn btn-ghost btn-sm" aria-label="Settings">
               <Settings className="w-4 h-4" />
             </Link>
           </div>
         </div>
 
-        {/* Main masthead */}
+        {/* Main masthead - DRAMATIC typography */}
         <div className="masthead-center">
           <p className="masthead-date">{date}</p>
-          <h1 className="text-display-lg">{greeting.replace(/\.$/, '')}</h1>
+          {/* Architectural accent line */}
+          <div
+            className="accent-line"
+            style={{
+              margin: 'var(--space-4) auto var(--space-8)',
+              opacity: 0.6
+            }}
+          />
+          <h1
+            className="text-display-2xl text-balance"
+            style={{
+              color: 'var(--text-primary)',
+              maxWidth: '800px',
+              margin: '0 auto'
+            }}
+          >
+            {greeting.replace(/\.$/, '')}
+          </h1>
         </div>
       </div>
     </header>
@@ -97,50 +136,97 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
       className="animate-slide-up stagger-1 opacity-0 h-full"
       style={{ animationFillMode: 'forwards' }}
     >
-      <div className="premium-card-lg h-full">
-        {/* Section header */}
-        <div style={{ marginBottom: 'var(--space-8)' }}>
-          <h2 className="text-display-md">Today's Outlook</h2>
-        </div>
-
-        {/* Verdict - the lead */}
-        <div style={{ marginBottom: 'var(--space-8)' }}>
-          <p
-            className="text-xl leading-relaxed"
-            style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-heading)', letterSpacing: '-0.01em' }}
+      <div className="card-accent h-full" style={{ display: 'flex', flexDirection: 'column' }}>
+        {/* Section header with label */}
+        <div style={{ marginBottom: 'var(--space-10)' }}>
+          <span
+            className="text-label-md"
+            style={{
+              color: 'var(--brand-primary)',
+              marginBottom: 'var(--space-4)',
+              display: 'block'
+            }}
           >
-            <span style={{
-              color: verdict.rating === 'Needs attention' || verdict.rating === 'Heavy' ? 'var(--brand-primary)' : 'var(--text-primary)',
-              fontWeight: 600
-            }}>{verdict.rating}</span>
-            {verdict.summary && (
-              <span style={{ color: 'var(--text-tertiary)', fontWeight: 400 }}> — {verdict.summary}</span>
-            )}
-          </p>
+            Today's Outlook
+          </span>
+          <h2
+            className="text-display-sm"
+            style={{ color: 'var(--text-primary)' }}
+          >
+            {verdict.rating}
+          </h2>
         </div>
 
-        {/* Content grid */}
-        <div className="grid md:grid-cols-2" style={{ gap: 'var(--space-8)' }}>
+        {/* Verdict summary - editorial style */}
+        {verdict.summary && (
+          <div style={{ marginBottom: 'var(--space-10)' }}>
+            <p
+              className="text-body-lg"
+              style={{
+                color: 'var(--text-secondary)',
+                lineHeight: 'var(--leading-relaxed)',
+                maxWidth: '600px'
+              }}
+            >
+              {verdict.summary}
+            </p>
+          </div>
+        )}
+
+        {/* Content grid with refined typography */}
+        <div
+          className="grid md:grid-cols-2"
+          style={{
+            gap: 'var(--space-10)',
+            marginTop: 'auto'
+          }}
+        >
           {/* Left column */}
           <div className="stack-lg">
             {firstMove && (
               <div>
-                <h3 className="section-header-label" style={{ marginBottom: 'var(--space-3)' }}>
+                <h3
+                  className="text-label-md"
+                  style={{
+                    marginBottom: 'var(--space-3)',
+                    color: 'var(--text-tertiary)'
+                  }}
+                >
                   Your First Move
                 </h3>
-                <p style={{ color: 'var(--text-primary)', fontWeight: 500, fontSize: '14px' }}>
+                <p
+                  className="text-body"
+                  style={{
+                    color: 'var(--text-primary)',
+                    fontWeight: 'var(--weight-medium)'
+                  }}
+                >
                   {firstMove.item}
                 </p>
                 <p
-                  style={{ color: 'var(--text-tertiary)', fontSize: '13px', marginTop: 'var(--space-1)' }}
+                  className="text-body-sm"
+                  style={{
+                    color: 'var(--text-tertiary)',
+                    marginTop: 'var(--space-1-5)'
+                  }}
                 >
                   {firstMove.context}
                 </p>
                 <p
-                  className="flex items-start"
-                  style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-2)', gap: 'var(--space-2)' }}
+                  className="flex items-start text-body-sm"
+                  style={{
+                    color: 'var(--text-secondary)',
+                    marginTop: 'var(--space-3)',
+                    gap: 'var(--space-2)'
+                  }}
                 >
-                  <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)', marginTop: '2px' }} />
+                  <ChevronRight
+                    className="w-4 h-4 flex-shrink-0"
+                    style={{
+                      color: 'var(--brand-primary)',
+                      marginTop: '2px'
+                    }}
+                  />
                   {firstMove.action}
                 </p>
               </div>
@@ -149,21 +235,37 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
             {freeTime && (
               <div
                 style={{
-                  backgroundColor: 'var(--bg-muted)',
-                  padding: 'var(--space-4)',
-                  borderRadius: 'var(--radius-lg)',
+                  backgroundColor: 'var(--bg-accent-subtle)',
+                  padding: 'var(--space-5)',
+                  borderRadius: 'var(--radius-xl)',
+                  border: '1px solid var(--border-subtle)'
                 }}
               >
-                <div className="flex items-center" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
-                  <Clock className="w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
-                  <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '14px' }}>
+                <div
+                  className="flex items-center"
+                  style={{
+                    gap: 'var(--space-2)',
+                    marginBottom: 'var(--space-2)'
+                  }}
+                >
+                  <Clock className="w-4 h-4" style={{ color: 'var(--brand-primary)' }} />
+                  <span
+                    className="text-mono"
+                    style={{
+                      fontWeight: 'var(--weight-semibold)',
+                      color: 'var(--text-primary)'
+                    }}
+                  >
                     {freeTime.duration} min free
                   </span>
-                  <span style={{ color: 'var(--text-tertiary)', fontSize: '13px' }}>
+                  <span
+                    className="text-mono-sm"
+                    style={{ color: 'var(--text-tertiary)' }}
+                  >
                     {freeTime.startTime}–{freeTime.endTime}
                   </span>
                 </div>
-                <p style={{ color: 'var(--text-tertiary)', fontSize: '13px' }}>
+                <p className="text-body-sm" style={{ color: 'var(--text-secondary)' }}>
                   {freeTime.suggestion}
                 </p>
               </div>
@@ -174,21 +276,39 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
           <div className="stack-lg">
             {waitingOnYou.length > 0 && (
               <div>
-                <h3 className="section-header-label" style={{ marginBottom: 'var(--space-3)' }}>
+                <h3
+                  className="text-label-md"
+                  style={{
+                    marginBottom: 'var(--space-3)',
+                    color: 'var(--text-tertiary)'
+                  }}
+                >
                   Waiting On You
                 </h3>
                 <div className="stack-md">
                   {waitingOnYou.map((item, i) => (
                     <div key={i}>
-                      <p style={{ color: 'var(--text-primary)', fontSize: '14px' }}>
-                        <strong>{item.person}</strong>
+                      <p className="text-body" style={{ color: 'var(--text-primary)' }}>
+                        <strong style={{ fontWeight: 'var(--weight-semibold)' }}>
+                          {item.person}
+                        </strong>
                         <span style={{ color: 'var(--text-tertiary)' }}> — {item.context}</span>
                       </p>
                       <p
-                        className="flex items-start"
-                        style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: 'var(--space-1)', gap: 'var(--space-2)' }}
+                        className="flex items-start text-body-sm"
+                        style={{
+                          color: 'var(--text-secondary)',
+                          marginTop: 'var(--space-2)',
+                          gap: 'var(--space-2)'
+                        }}
                       >
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)', marginTop: '2px' }} />
+                        <ChevronRight
+                          className="w-4 h-4 flex-shrink-0"
+                          style={{
+                            color: 'var(--brand-primary)',
+                            marginTop: '2px'
+                          }}
+                        />
                         {item.action}
                       </p>
                     </div>
@@ -199,12 +319,22 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
 
             {watchOut.length > 0 && (
               <div>
-                <h3 className="section-header-label" style={{ marginBottom: 'var(--space-3)', color: 'var(--semantic-warning)' }}>
+                <h3
+                  className="text-label-md"
+                  style={{
+                    marginBottom: 'var(--space-3)',
+                    color: 'var(--semantic-warning-vivid)'
+                  }}
+                >
                   Watch Out
                 </h3>
                 <div className="stack-sm">
                   {watchOut.map((item, i) => (
-                    <p key={i} style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
+                    <p
+                      key={i}
+                      className="text-body-sm"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       {item.warning}
                       {item.action && (
                         <span style={{ color: 'var(--text-tertiary)' }}> → {item.action}</span>
@@ -236,35 +366,36 @@ function HeroPriority({ oneThing, onAction }: {
     >
       <div className="hero-focus-card h-full flex flex-col">
         {/* Top bar: Label + Time context */}
-        <div className="flex items-center justify-between mb-6">
+        <div
+          className="flex items-center justify-between"
+          style={{ marginBottom: 'var(--space-8)' }}
+        >
           <div
-            className="hero-focus-label"
+            className="text-label-sm"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 8,
-              padding: '6px 14px',
+              gap: 'var(--space-2)',
+              padding: 'var(--space-2) var(--space-4)',
               borderRadius: 'var(--radius-full)',
               backgroundColor: 'transparent',
-              border: '1px solid var(--brand-primary)',
+              border: '1.5px solid var(--brand-primary)',
               color: 'var(--brand-primary)',
-              fontSize: 11,
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
             }}
           >
-            <span style={{
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              backgroundColor: 'var(--brand-primary)',
-              animation: 'pulse 2s infinite',
-            }} />
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                backgroundColor: 'var(--brand-primary)',
+                animation: 'pulse 2s infinite',
+              }}
+            />
             Focus Now
           </div>
 
-          {/* Time context */}
+          {/* Time context - monospace for technical precision */}
           <div
             style={{
               display: 'flex',
@@ -272,72 +403,59 @@ function HeroPriority({ oneThing, onAction }: {
               alignItems: 'flex-end',
             }}
           >
-            <span style={{
-              fontSize: 15,
-              fontWeight: 600,
-              color: 'var(--text-primary)',
-            }}>
+            <span
+              className="text-mono"
+              style={{
+                fontWeight: 'var(--weight-semibold)',
+                color: 'var(--text-primary)',
+              }}
+            >
               10:45 AM
             </span>
-            <span style={{
-              fontSize: 11,
-              color: 'var(--text-tertiary)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-            }}>
+            <span
+              className="text-label-sm"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
               best time
             </span>
           </div>
         </div>
 
-        {/* Main content - THE thing */}
+        {/* Main content - ARCHITECTURAL typography */}
         <h2
-          className="hero-focus-title"
+          className="text-display-md text-balance"
           style={{
-            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
-            fontWeight: 600,
             color: 'var(--text-primary)',
-            fontFamily: 'var(--font-heading)',
-            letterSpacing: '-0.03em',
-            lineHeight: 1.2,
-            marginBottom: 12,
+            marginBottom: 'var(--space-4)',
           }}
         >
           {oneThing.title}
         </h2>
 
         <p
+          className="text-body-lg"
           style={{
-            fontSize: 14,
-            color: 'var(--text-tertiary)',
-            lineHeight: 1.5,
-            marginBottom: 24,
+            color: 'var(--text-secondary)',
+            marginBottom: 'var(--space-8)',
+            maxWidth: '500px',
           }}
         >
           {oneThing.subtitle}
         </p>
 
-        {/* Actions - prominent */}
-        <div className="flex flex-wrap gap-3 mb-6">
+        {/* Actions - refined button system */}
+        <div
+          className="flex flex-wrap"
+          style={{
+            gap: 'var(--space-3)',
+            marginBottom: 'var(--space-8)',
+          }}
+        >
           {oneThing.actions.slice(0, 2).map((action, i) => (
             <button
               key={i}
               onClick={() => onAction(action.handler)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 8,
-                padding: i === 0 ? '14px 28px' : '14px 20px',
-                borderRadius: 'var(--radius-lg)',
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                border: 'none',
-                backgroundColor: i === 0 ? 'var(--brand-primary)' : 'var(--bg-muted)',
-                color: i === 0 ? 'var(--text-on-accent)' : 'var(--text-secondary)',
-              }}
+              className={i === 0 ? 'btn btn-primary btn-lg' : 'btn btn-secondary'}
             >
               {action.label}
             </button>
@@ -345,37 +463,34 @@ function HeroPriority({ oneThing, onAction }: {
           {oneThing.actions.length > 2 && (
             <button
               onClick={() => onAction(oneThing.actions[2].handler)}
-              style={{
-                padding: '14px 16px',
-                fontSize: 13,
-                color: 'var(--text-tertiary)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
+              className="btn btn-ghost"
             >
               {oneThing.actions[2].label}
             </button>
           )}
         </div>
 
-        {/* Why this first - collapsible */}
-        <div className="mt-auto">
+        {/* Why this first - refined collapsible */}
+        <div style={{ marginTop: 'auto' }}>
           <button
             onClick={() => setShowWhy(!showWhy)}
+            className="text-label-md"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
-              padding: '8px 0',
+              gap: 'var(--space-2)',
+              padding: 'var(--space-2) 0',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 12,
-              fontWeight: 500,
               color: 'var(--text-tertiary)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
+              transition: 'color var(--duration-fast) var(--ease-out-quart)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'var(--brand-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'var(--text-tertiary)';
             }}
           >
             <ChevronRight
@@ -383,7 +498,7 @@ function HeroPriority({ oneThing, onAction }: {
                 width: 14,
                 height: 14,
                 transform: showWhy ? 'rotate(90deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease',
+                transition: 'transform var(--duration-base) var(--ease-out-quart)',
               }}
             />
             Why this first?
@@ -391,18 +506,24 @@ function HeroPriority({ oneThing, onAction }: {
 
           {showWhy && (
             <div
+              className="animate-fade-in"
               style={{
-                padding: '12px 16px',
-                marginTop: 8,
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--bg-muted)',
-                fontSize: 13,
-                color: 'var(--text-secondary)',
-                lineHeight: 1.6,
-                animation: 'fadeIn 0.2s ease',
+                padding: 'var(--space-4) var(--space-5)',
+                marginTop: 'var(--space-3)',
+                borderRadius: 'var(--radius-xl)',
+                backgroundColor: 'var(--bg-accent-subtle)',
+                border: '1px solid var(--border-subtle)',
               }}
             >
-              {oneThing.why}
+              <p
+                className="text-body-sm"
+                style={{
+                  color: 'var(--text-secondary)',
+                  lineHeight: 'var(--leading-relaxed)',
+                }}
+              >
+                {oneThing.why}
+              </p>
             </div>
           )}
         </div>
