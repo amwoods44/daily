@@ -16,7 +16,7 @@ import { DayProgressCompact } from '@/components/ui/DayProgress';
 import { Celebration } from '@/components/ui/Confetti';
 import { SkeletonBrief, SkeletonHero, SkeletonTimeline, SkeletonTaskList } from '@/components/ui/Skeleton';
 import { LifePulseStrip, getDefaultPulseItems } from '@/components/life-pulse';
-import { VisualTimelineBar, getDefaultTimelineEvents } from '@/components/timeline';
+import { VisualTimelineBar, getDefaultTimelineEvents, EventDetailModal, type TimelineEvent } from '@/components/timeline';
 import { ViewModeProvider, ViewModeToggle } from '@/components/ui/ViewModeToggle';
 
 // ============================================================================
@@ -624,6 +624,8 @@ export default function DailyPulse() {
   const [commandBarOpen, setCommandBarOpen] = useState(false);
   const [completedTaskIds, setCompletedTaskIds] = useState<Set<string>>(new Set());
   const [showCelebration, setShowCelebration] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>(getDefaultTimelineEvents());
 
   // Global keyboard shortcut for command bar
   useEffect(() => {
@@ -722,6 +724,29 @@ export default function DailyPulse() {
     }
   }, []);
 
+  const handleEventClick = useCallback((eventId: string) => {
+    setSelectedEventId(eventId);
+  }, []);
+
+  const handleEventUpdate = useCallback((eventId: string, updates: Partial<TimelineEvent>) => {
+    // Optimistic update
+    setTimelineEvents(prev =>
+      prev.map(e => (e.id === eventId ? { ...e, ...updates } : e))
+    );
+
+    // TODO: Sync to Google Calendar API
+    console.log('Update event:', eventId, updates);
+  }, []);
+
+  const handleEventDelete = useCallback((eventId: string) => {
+    // Remove from timeline
+    setTimelineEvents(prev => prev.filter(e => e.id !== eventId));
+    setSelectedEventId(null);
+
+    // TODO: Sync deletion to Google Calendar API
+    console.log('Delete event:', eventId);
+  }, []);
+
   if (loading) {
     return (
       <div className="min-h-screen grain-overlay" style={{ backgroundColor: 'var(--bg-canvas)' }}>
@@ -818,9 +843,21 @@ export default function DailyPulse() {
         </div>
 
         <div className="card-accent" style={{ padding: 'var(--space-6)' }}>
-          <VisualTimelineBar events={getDefaultTimelineEvents()} />
+          <VisualTimelineBar
+            events={timelineEvents}
+            onEventClick={handleEventClick}
+          />
         </div>
       </div>
+
+      {/* Event Detail Modal */}
+      <EventDetailModal
+        event={timelineEvents.find(e => e.id === selectedEventId) || null}
+        isOpen={!!selectedEventId}
+        onClose={() => setSelectedEventId(null)}
+        onEdit={handleEventUpdate}
+        onDelete={handleEventDelete}
+      />
 
       {/* Main Content */}
       <main className="container-premium" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-16)' }}>

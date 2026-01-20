@@ -9,9 +9,9 @@ export async function GET() {
     process.env.GOOGLE_REDIRECT_URI
   );
 
-  // Scopes needed for Calendar and Gmail read access
+  // Scopes needed for Calendar write access and Gmail read access
   const scopes = [
-    'https://www.googleapis.com/auth/calendar.readonly',
+    'https://www.googleapis.com/auth/calendar', // Write access for event modifications
     'https://www.googleapis.com/auth/gmail.readonly',
   ];
 

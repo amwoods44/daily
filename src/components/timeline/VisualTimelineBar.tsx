@@ -4,19 +4,24 @@ import { useState, useEffect, useRef } from 'react';
 
 type EventType = 'meeting' | 'focus' | 'break' | 'task' | 'travel';
 
-interface TimelineEvent {
+export interface TimelineEvent {
   id: string;
   title: string;
   startTime: string; // HH:MM format
   endTime: string;
   type: EventType;
   subtitle?: string;
+  location?: string;
+  attendees?: string[];
+  meetLink?: string;
+  description?: string;
 }
 
 interface VisualTimelineBarProps {
   events: TimelineEvent[];
   dayStart?: string; // HH:MM, defaults to "08:00"
   dayEnd?: string; // HH:MM, defaults to "22:00"
+  onEventClick?: (eventId: string) => void;
 }
 
 const EVENT_COLORS: Record<EventType, { bg: string; border: string; text: string }> = {
@@ -69,6 +74,7 @@ export function VisualTimelineBar({
   events,
   dayStart = '08:00',
   dayEnd = '22:00',
+  onEventClick,
 }: VisualTimelineBarProps) {
   const [currentTime, setCurrentTime] = useState(getCurrentTimeString());
   const [hoveredEvent, setHoveredEvent] = useState<string | null>(null);
@@ -191,6 +197,7 @@ export function VisualTimelineBar({
               key={event.id}
               onMouseEnter={() => setHoveredEvent(event.id)}
               onMouseLeave={() => setHoveredEvent(null)}
+              onClick={() => onEventClick?.(event.id)}
               style={{
                 position: 'absolute',
                 left: `${left}%`,
@@ -380,6 +387,9 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '09:30',
       type: 'meeting',
       subtitle: 'Zoom',
+      attendees: ['Sarah Chen', 'Mike Rodriguez', 'Alex Kim'],
+      meetLink: 'https://zoom.us/j/example',
+      description: 'Daily sync on sprint progress and blockers',
     },
     {
       id: 'focus1',
@@ -388,6 +398,7 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '11:30',
       type: 'focus',
       subtitle: 'Q4 Planning Doc',
+      description: 'Draft quarterly objectives and key results',
     },
     {
       id: 'travel1',
@@ -396,6 +407,8 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '12:00',
       type: 'travel',
       subtitle: '25 min drive',
+      location: 'Downtown Office, 123 Main St, Austin, TX',
+      description: 'Drive to downtown office for afternoon meetings',
     },
     {
       id: 'lunch',
@@ -403,6 +416,8 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       startTime: '12:00',
       endTime: '13:00',
       type: 'break',
+      location: 'Riverside Cafe, 456 River Rd, Austin, TX',
+      description: 'Lunch with the team at Riverside Cafe',
     },
     {
       id: 'meeting1',
@@ -411,6 +426,9 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '14:30',
       type: 'meeting',
       subtitle: 'Career chat',
+      attendees: ['Sarah Chen'],
+      location: 'Conference Room B, Downtown Office',
+      description: 'Quarterly career development discussion',
     },
     {
       id: 'task1',
@@ -419,6 +437,7 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '16:00',
       type: 'task',
       subtitle: '3 pending',
+      description: 'Review pull requests from team members',
     },
     {
       id: 'focus2',
@@ -427,6 +446,7 @@ export function getDefaultTimelineEvents(): TimelineEvent[] {
       endTime: '18:00',
       type: 'focus',
       subtitle: 'Auth flow',
+      description: 'Implement OAuth 2.0 authentication for new API',
     },
   ];
 }
