@@ -221,57 +221,98 @@ function DayOverviewStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-md mx-auto"
+      style={{ maxWidth: '600px', margin: '0 auto' }}
     >
-      <h2 className="text-2xl font-semibold text-stone-900 text-center mb-8">
+      <h2
+        className="text-display-sm text-center text-balance"
+        style={{
+          color: 'var(--text-primary)',
+          marginBottom: 'var(--space-10)',
+        }}
+      >
         Your day at a glance
       </h2>
 
-      {/* Stats row */}
-      <div className="flex justify-center gap-8 mb-10">
+      {/* Stats row - monospace authority */}
+      <div
+        className="flex justify-center"
+        style={{
+          gap: 'var(--space-10)',
+          marginBottom: 'var(--space-12)',
+        }}
+      >
         <div className="text-center">
-          <div className="text-3xl font-light text-stone-900">{meetings.length}</div>
-          <div className="text-sm text-stone-500">meetings</div>
+          <div className="stat-medium">{meetings.length}</div>
+          <div className="stat-label">Meetings</div>
         </div>
         <div className="text-center">
-          <div className="text-3xl font-light text-stone-900">{meetingHours}h</div>
-          <div className="text-sm text-stone-500">in calls</div>
+          <div className="stat-medium">{meetingHours}h</div>
+          <div className="stat-label">In Calls</div>
         </div>
         <div className="text-center">
-          <div className="text-3xl font-light text-stone-900">{data.tasks.filter(t => !t.completed).length}</div>
-          <div className="text-sm text-stone-500">tasks</div>
+          <div className="stat-medium">{data.tasks.filter(t => !t.completed).length}</div>
+          <div className="stat-label">Tasks</div>
         </div>
       </div>
 
-      {/* Visual timeline */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 mb-8">
-        <div className="flex items-center gap-2 text-sm text-stone-500 mb-4">
+      {/* Visual timeline - card system */}
+      <div
+        className="card"
+        style={{
+          marginBottom: 'var(--space-10)',
+        }}
+      >
+        <div
+          className="flex items-center text-body-sm"
+          style={{
+            gap: 'var(--space-2)',
+            color: 'var(--text-tertiary)',
+            marginBottom: 'var(--space-5)',
+          }}
+        >
           <Calendar className="w-4 h-4" />
-          <span>Today&apos;s Schedule</span>
+          <span className="text-label-md">Today's Schedule</span>
         </div>
 
-        <div className="space-y-3">
+        <div className="stack-md">
           {meetings.slice(0, 4).map((meeting, i) => (
             <motion.div
               key={meeting.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 + i * 0.1 }}
-              className="flex items-center gap-4"
+              className="flex items-center"
+              style={{ gap: 'var(--space-4)' }}
             >
-              <div className="text-sm font-mono text-stone-400 w-16">
+              <div
+                className="text-mono-sm"
+                style={{
+                  color: 'var(--text-quaternary)',
+                  width: '64px',
+                }}
+              >
                 {meeting.start}
               </div>
-              <div className="flex-1">
-                <div className="text-sm font-medium text-stone-900">{meeting.title}</div>
+              <div style={{ flex: 1 }}>
+                <div className="text-body" style={{ fontWeight: 'var(--weight-medium)', color: 'var(--text-primary)' }}>
+                  {meeting.title}
+                </div>
                 {meeting.attendees && (
-                  <div className="text-xs text-stone-500">{meeting.attendees.join(', ')}</div>
+                  <div className="text-body-sm" style={{ color: 'var(--text-tertiary)' }}>
+                    {meeting.attendees.join(', ')}
+                  </div>
                 )}
               </div>
             </motion.div>
           ))}
           {meetings.length > 4 && (
-            <div className="text-sm text-stone-400 text-center pt-2">
+            <div
+              className="text-body-sm text-center"
+              style={{
+                color: 'var(--text-quaternary)',
+                paddingTop: 'var(--space-2)',
+              }}
+            >
               +{meetings.length - 4} more
             </div>
           )}
@@ -280,7 +321,11 @@ function DayOverviewStep({
 
       <button
         onClick={onNext}
-        className="w-full py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition flex items-center justify-center gap-2"
+        className="btn btn-primary btn-xl flex items-center justify-center"
+        style={{
+          width: '100%',
+          gap: 'var(--space-2)',
+        }}
       >
         What matters most today
         <ArrowRight className="w-5 h-5" />
@@ -304,21 +349,21 @@ function OneThingStep({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="text-center max-w-md mx-auto"
+        className="text-center"
+        style={{ maxWidth: '600px', margin: '0 auto' }}
       >
-        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
-          <Sparkles className="w-8 h-8 text-emerald-600" />
+        <div className="stat-icon" style={{ margin: '0 auto var(--space-8)' }}>
+          <Sparkles className="w-8 h-8" style={{ color: 'var(--semantic-success)' }} />
         </div>
-        <h2 className="text-2xl font-semibold text-stone-900 mb-2">All clear!</h2>
-        <p className="text-stone-500 mb-8">
+        <h2 className="text-display-sm" style={{ color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+          All clear!
+        </h2>
+        <p className="text-body-lg" style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-10)' }}>
           Nothing urgent needs your attention right now.
           <br />
           Enjoy the calm.
         </p>
-        <button
-          onClick={onNext}
-          className="px-8 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition"
-        >
+        <button onClick={onNext} className="btn btn-primary btn-lg">
           Continue
         </button>
       </motion.div>
@@ -330,18 +375,26 @@ function OneThingStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-md mx-auto text-center"
+      className="text-center"
+      style={{ maxWidth: '600px', margin: '0 auto' }}
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring' }}
-        className="w-16 h-16 mx-auto mb-6 rounded-full bg-amber-100 flex items-center justify-center"
+        className="stat-icon"
+        style={{ margin: '0 auto var(--space-8)' }}
       >
-        <Zap className="w-8 h-8 text-amber-600" />
+        <Zap className="w-8 h-8" style={{ color: 'var(--brand-primary)' }} />
       </motion.div>
 
-      <h2 className="text-sm uppercase tracking-widest text-stone-400 mb-4">
+      <h2
+        className="text-label-md text-center"
+        style={{
+          color: 'var(--text-tertiary)',
+          marginBottom: 'var(--space-6)',
+        }}
+      >
         If you do nothing else today
       </h2>
 
@@ -349,27 +402,37 @@ function OneThingStep({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white rounded-2xl p-6 shadow-lg border border-stone-200 mb-8"
+        className="card-hero"
+        style={{ marginBottom: 'var(--space-10)' }}
       >
-        <div className="text-4xl mb-4">{oneThing.emoji || '⚡'}</div>
-        <h3 className="text-xl font-semibold text-stone-900 mb-2">{oneThing.title}</h3>
-        <p className="text-stone-500">{oneThing.description}</p>
+        <div style={{ fontSize: 'var(--text-5xl)', marginBottom: 'var(--space-5)' }}>
+          {oneThing.emoji || '⚡'}
+        </div>
+        <h3 className="text-heading-xl" style={{ color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+          {oneThing.title}
+        </h3>
+        <p className="text-body-lg" style={{ color: 'var(--text-secondary)' }}>
+          {oneThing.description}
+        </p>
         {oneThing.context && (
-          <p className="text-sm text-amber-600 mt-4 italic">{oneThing.context}</p>
+          <p
+            className="text-body-sm"
+            style={{
+              color: 'var(--brand-primary)',
+              marginTop: 'var(--space-5)',
+              fontStyle: 'italic',
+            }}
+          >
+            {oneThing.context}
+          </p>
         )}
       </motion.div>
 
-      <div className="flex gap-3">
-        <button
-          onClick={onNext}
-          className="flex-1 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition"
-        >
+      <div className="flex" style={{ gap: 'var(--space-3)' }}>
+        <button onClick={onNext} className="btn btn-primary btn-lg" style={{ flex: 1 }}>
           Got it
         </button>
-        <button
-          onClick={onNext}
-          className="py-4 px-6 border border-stone-200 text-stone-600 rounded-xl font-medium hover:bg-stone-50 transition"
-        >
+        <button onClick={onNext} className="btn btn-secondary btn-lg">
           Do it now
         </button>
       </div>
@@ -413,18 +476,20 @@ function QuickWinsStep({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="text-center max-w-md mx-auto"
+        className="text-center"
+        style={{ maxWidth: '600px', margin: '0 auto' }}
       >
-        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-stone-100 flex items-center justify-center">
-          <Coffee className="w-8 h-8 text-stone-600" />
+        <div className="stat-icon" style={{ margin: '0 auto var(--space-8)' }}>
+          <Coffee className="w-8 h-8" style={{ color: 'var(--brand-primary)' }} />
         </div>
-        <h2 className="text-2xl font-semibold text-stone-900 mb-2">No quick wins right now</h2>
-        <p className="text-stone-500 mb-8">Your morning is clear for focus work.</p>
-        <button
-          onClick={onNext}
-          className="px-8 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition"
-        >
-          Let&apos;s go
+        <h2 className="text-display-sm" style={{ color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+          No quick wins right now
+        </h2>
+        <p className="text-body-lg" style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-10)' }}>
+          Your morning is clear for focus work.
+        </p>
+        <button onClick={onNext} className="btn btn-primary btn-lg">
+          Let's go
         </button>
       </motion.div>
     );
@@ -435,14 +500,18 @@ function QuickWinsStep({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-md mx-auto"
+      style={{ maxWidth: '600px', margin: '0 auto' }}
     >
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-stone-900 mb-2">Quick wins</h2>
-        <p className="text-stone-500">Knock these out in under 15 minutes</p>
+      <div className="text-center" style={{ marginBottom: 'var(--space-10)' }}>
+        <h2 className="text-display-sm" style={{ color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
+          Quick wins
+        </h2>
+        <p className="text-body-lg" style={{ color: 'var(--text-secondary)' }}>
+          Knock these out in under 15 minutes
+        </p>
       </div>
 
-      <div className="space-y-3 mb-8">
+      <div className="stack-md" style={{ marginBottom: 'var(--space-10)' }}>
         {wins.map((win, i) => (
           <motion.button
             key={win.id}
@@ -450,28 +519,52 @@ function QuickWinsStep({
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
             onClick={() => toggleWin(win.id)}
-            className={`w-full p-4 rounded-xl border-2 transition-all text-left flex items-center gap-4 ${
-              win.completed
-                ? 'border-emerald-200 bg-emerald-50'
-                : 'border-stone-200 bg-white hover:border-stone-300'
-            }`}
+            className={win.completed ? 'card-success' : 'card'}
+            style={{
+              width: '100%',
+              textAlign: 'left',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-4)',
+              cursor: 'pointer',
+            }}
           >
             <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl ${
-                win.completed ? 'bg-emerald-200' : 'bg-stone-100'
-              }`}
+              className={win.completed ? 'stat-icon' : 'stat-icon'}
+              style={{
+                backgroundColor: win.completed ? 'var(--semantic-success-subtle)' : 'var(--bg-muted)',
+              }}
             >
-              {win.completed ? <Check className="w-5 h-5 text-emerald-600" /> : win.emoji}
+              {win.completed ? (
+                <Check className="w-5 h-5" style={{ color: 'var(--semantic-success)' }} />
+              ) : (
+                <span style={{ fontSize: 'var(--text-2xl)' }}>{win.emoji}</span>
+              )}
             </div>
-            <div className="flex-1">
-              <div className={`font-medium ${win.completed ? 'text-emerald-700 line-through' : 'text-stone-900'}`}>
+            <div style={{ flex: 1 }}>
+              <div
+                className="text-body"
+                style={{
+                  fontWeight: 'var(--weight-medium)',
+                  color: win.completed ? 'var(--semantic-success)' : 'var(--text-primary)',
+                  textDecoration: win.completed ? 'line-through' : 'none',
+                }}
+              >
                 {win.title}
               </div>
               {win.subtitle && (
-                <div className="text-sm text-stone-500">{win.subtitle}</div>
+                <div className="text-body-sm" style={{ color: 'var(--text-tertiary)' }}>
+                  {win.subtitle}
+                </div>
               )}
             </div>
-            <div className="text-xs text-stone-400 flex items-center gap-1">
+            <div
+              className="flex items-center text-mono-sm"
+              style={{
+                color: 'var(--text-quaternary)',
+                gap: 'var(--space-1)',
+              }}
+            >
               <Clock className="w-3 h-3" />
               {win.estimatedMinutes}m
             </div>
@@ -486,11 +579,17 @@ function QuickWinsStep({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/20 z-50"
+            className="fixed inset-0 flex items-center justify-center z-50"
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
           >
-            <div className="bg-white rounded-2xl p-8 text-center shadow-xl">
-              <div className="text-6xl mb-4">🎉</div>
-              <div className="text-xl font-semibold text-stone-900">All done!</div>
+            <div
+              className="card-hero text-center"
+              style={{ maxWidth: '400px' }}
+            >
+              <div style={{ fontSize: 'var(--text-6xl)', marginBottom: 'var(--space-5)' }}>🎉</div>
+              <div className="text-heading-xl" style={{ color: 'var(--text-primary)' }}>
+                All done!
+              </div>
             </div>
           </motion.div>
         )}
@@ -498,7 +597,11 @@ function QuickWinsStep({
 
       <button
         onClick={onNext}
-        className="w-full py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition flex items-center justify-center gap-2"
+        className="btn btn-primary btn-xl flex items-center justify-center"
+        style={{
+          width: '100%',
+          gap: 'var(--space-2)',
+        }}
       >
         {completedCount === wins.length ? "I'm ready" : 'Continue to dashboard'}
         <ArrowRight className="w-5 h-5" />
@@ -541,18 +644,38 @@ function ReadyStep({ onComplete }: { onComplete: () => void }) {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring' }}
-        className="w-20 h-20 mx-auto mb-8 rounded-full bg-emerald-100 flex items-center justify-center"
+        className="stat-icon"
+        style={{
+          width: '80px',
+          height: '80px',
+          margin: '0 auto var(--space-10)',
+          backgroundColor: 'var(--semantic-success-subtle)',
+        }}
       >
-        <Heart className="w-10 h-10 text-emerald-600" />
+        <Heart className="w-10 h-10" style={{ color: 'var(--semantic-success)' }} />
       </motion.div>
 
-      <h2 className="text-3xl font-light text-stone-900 mb-4">You&apos;re set</h2>
-      <p className="text-lg text-stone-500 mb-8">Have a great day.</p>
-
-      <button
-        onClick={onComplete}
-        className="px-8 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition"
+      <h2
+        className="text-display-md"
+        style={{
+          color: 'var(--text-primary)',
+          marginBottom: 'var(--space-5)',
+          fontWeight: 'var(--weight-medium)',
+        }}
       >
+        You're set
+      </h2>
+      <p
+        className="text-body-xl"
+        style={{
+          color: 'var(--text-secondary)',
+          marginBottom: 'var(--space-10)',
+        }}
+      >
+        Have a great day.
+      </p>
+
+      <button onClick={onComplete} className="btn btn-primary btn-xl">
         Open dashboard
       </button>
     </motion.div>
