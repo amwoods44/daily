@@ -46,11 +46,11 @@ interface Goal {
 function getPriorityColor(priority: 'high' | 'medium' | 'low'): string {
   switch (priority) {
     case 'high':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'bg-[var(--semantic-error-subtle)] text-[var(--semantic-error)] border-[var(--semantic-error)]';
     case 'medium':
-      return 'bg-amber-100 text-amber-700 border-amber-200';
+      return 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)] border-[var(--semantic-warning)]';
     case 'low':
-      return 'bg-green-100 text-green-700 border-green-200';
+      return 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)] border-[var(--semantic-success)]';
   }
 }
 
@@ -72,27 +72,27 @@ function SuggestionCard({
   return (
     <motion.div
       layout
-      className="bg-white rounded-xl border border-stone-200 overflow-hidden"
+      className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] overflow-hidden"
     >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full p-4 text-left"
       >
         <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <Lightbulb className="w-4 h-4 text-amber-600" />
+          <div className="w-8 h-8 rounded-lg bg-[var(--semantic-warning-subtle)] flex items-center justify-center flex-shrink-0">
+            <Lightbulb className="w-4 h-4 text-[var(--semantic-warning)]" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-stone-900">{suggestion.title}</span>
+              <span className="font-medium text-[var(--text-primary)]">{suggestion.title}</span>
               <span className={`px-2 py-0.5 text-xs rounded-full border ${getPriorityColor(suggestion.priority)}`}>
                 {suggestion.priority}
               </span>
             </div>
-            <p className="text-sm text-stone-500 mt-1 line-clamp-1">{suggestion.reason}</p>
+            <p className="text-sm text-[var(--text-secondary)] mt-1 line-clamp-1">{suggestion.reason}</p>
           </div>
           <ChevronRight
-            className={`w-5 h-5 text-stone-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+            className={`w-5 h-5 text-[var(--text-tertiary)] transition-transform ${isExpanded ? 'rotate-90' : ''}`}
           />
         </div>
       </button>
@@ -107,20 +107,20 @@ function SuggestionCard({
           >
             <div className="px-4 pb-4 pt-0">
               <div className="pl-11">
-                <div className="p-3 bg-stone-50 rounded-lg mb-3">
-                  <p className="text-sm text-stone-600">{suggestion.actionable}</p>
+                <div className="p-3 bg-[var(--bg-muted)] rounded-lg mb-3">
+                  <p className="text-sm text-[var(--text-secondary)]">{suggestion.actionable}</p>
                 </div>
                 <div className="flex gap-2">
                   <button
                     onClick={onAccept}
-                    className="flex-1 py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm rounded-lg transition flex items-center justify-center gap-2"
+                    className="flex-1 py-2 px-3 bg-[var(--semantic-success)] hover:bg-[var(--semantic-success-vivid)] text-[var(--text-on-accent)] text-sm rounded-lg transition flex items-center justify-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     Add to Goals
                   </button>
                   <button
                     onClick={onDismiss}
-                    className="py-2 px-3 text-stone-500 hover:text-stone-700 text-sm transition"
+                    className="py-2 px-3 text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-sm transition"
                   >
                     Skip
                   </button>
@@ -153,15 +153,15 @@ function GoalItem({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="flex items-center gap-3 p-3 bg-white rounded-lg border border-stone-200"
+      className="flex items-center gap-3 p-3 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-default)]"
     >
-      <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center">
-        <CheckCircle className="w-3 h-3 text-emerald-600" />
+      <div className="w-6 h-6 rounded-full bg-[var(--semantic-success-subtle)] flex items-center justify-center">
+        <CheckCircle className="w-3 h-3 text-[var(--semantic-success)]" />
       </div>
       <div className="flex-1 min-w-0">
-        <span className="text-sm text-stone-900">{goal.text}</span>
+        <span className="text-sm text-[var(--text-primary)]">{goal.text}</span>
         {goal.scheduled && (
-          <div className="flex items-center gap-1 mt-1 text-xs text-stone-500">
+          <div className="flex items-center gap-1 mt-1 text-xs text-[var(--text-secondary)]">
             <Clock className="w-3 h-3" />
             <span>{goal.scheduled}</span>
           </div>
@@ -171,7 +171,7 @@ function GoalItem({
         {!goal.scheduled && (
           <button
             onClick={onSchedule}
-            className="p-1.5 text-stone-400 hover:text-blue-600 hover:bg-blue-50 rounded transition"
+            className="p-1.5 text-[var(--text-tertiary)] hover:text-[var(--semantic-info)] hover:bg-[var(--semantic-info-subtle)] rounded transition"
             title="Schedule time"
           >
             <Calendar className="w-4 h-4" />
@@ -179,7 +179,7 @@ function GoalItem({
         )}
         <button
           onClick={onRemove}
-          className="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition"
+          className="p-1.5 text-[var(--text-tertiary)] hover:text-[var(--semantic-error)] hover:bg-[var(--semantic-error-subtle)] rounded transition"
           title="Remove"
         >
           <X className="w-4 h-4" />
@@ -211,12 +211,12 @@ function AddGoalInput({ onAdd }: { onAdd: (text: string) => void }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Add a goal for next week..."
-        className="flex-1 px-4 py-2 bg-stone-50 rounded-lg text-sm text-stone-900 placeholder-stone-400 outline-none focus:ring-2 focus:ring-emerald-500"
+        className="flex-1 px-4 py-2 bg-[var(--bg-muted)] rounded-lg text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none focus:ring-2 focus:ring-[var(--semantic-success)]"
       />
       <button
         type="submit"
         disabled={!text.trim()}
-        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-stone-300 text-white text-sm rounded-lg transition flex items-center gap-2"
+        className="px-4 py-2 bg-[var(--semantic-success)] hover:bg-[var(--semantic-success-vivid)] disabled:bg-[var(--bg-muted)] disabled:text-[var(--text-tertiary)] text-[var(--text-on-accent)] text-sm rounded-lg transition flex items-center gap-2"
       >
         <Plus className="w-4 h-4" />
         Add
@@ -286,12 +286,12 @@ export function NextWeekPlanning({
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-          <Target className="w-5 h-5 text-white" />
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--semantic-info)] to-[var(--semantic-info-vivid)] flex items-center justify-center">
+          <Target className="w-5 h-5 text-[var(--text-on-accent)]" />
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-stone-900">Plan Next Week</h2>
-          <p className="text-sm text-stone-500">Set goals and intentions</p>
+          <h2 className="text-xl font-semibold text-[var(--text-primary)]">Plan Next Week</h2>
+          <p className="text-sm text-[var(--text-secondary)]">Set goals and intentions</p>
         </div>
       </div>
 
@@ -299,8 +299,8 @@ export function NextWeekPlanning({
       {visibleSuggestions.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <h3 className="text-sm font-medium text-stone-700">Suggested Goals</h3>
+            <Sparkles className="w-4 h-4 text-[var(--semantic-warning)]" />
+            <h3 className="text-sm font-medium text-[var(--text-primary)]">Suggested Goals</h3>
           </div>
           <div className="space-y-2">
             {visibleSuggestions.map(suggestion => (
@@ -318,15 +318,15 @@ export function NextWeekPlanning({
       {/* Goals List */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-stone-700">Your Goals</h3>
-          <span className="text-xs text-stone-400">{goals.length} goal{goals.length !== 1 ? 's' : ''}</span>
+          <h3 className="text-sm font-medium text-[var(--text-primary)]">Your Goals</h3>
+          <span className="text-xs text-[var(--text-tertiary)]">{goals.length} goal{goals.length !== 1 ? 's' : ''}</span>
         </div>
 
         {goals.length === 0 ? (
-          <div className="p-6 bg-stone-50 rounded-xl text-center">
-            <Target className="w-8 h-8 text-stone-300 mx-auto mb-2" />
-            <p className="text-stone-500 text-sm">No goals set yet.</p>
-            <p className="text-stone-400 text-xs mt-1">Add goals from suggestions or create your own.</p>
+          <div className="p-6 bg-[var(--bg-muted)] rounded-xl text-center">
+            <Target className="w-8 h-8 text-[var(--text-quaternary)] mx-auto mb-2" />
+            <p className="text-[var(--text-secondary)] text-sm">No goals set yet.</p>
+            <p className="text-[var(--text-tertiary)] text-xs mt-1">Add goals from suggestions or create your own.</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -351,17 +351,17 @@ export function NextWeekPlanning({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border border-emerald-100"
+          className="p-4 bg-[var(--semantic-success-subtle)] rounded-xl border border-[var(--semantic-success)]"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-emerald-600" />
+            <div className="w-10 h-10 rounded-full bg-[var(--semantic-success-subtle)] flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-[var(--semantic-success)]" />
             </div>
             <div className="flex-1">
-              <p className="font-medium text-emerald-900">Great planning!</p>
-              <p className="text-sm text-emerald-700">You&apos;re set for a productive week ahead.</p>
+              <p className="font-medium text-[var(--semantic-success)]">Great planning!</p>
+              <p className="text-sm text-[var(--semantic-success)]">You&apos;re set for a productive week ahead.</p>
             </div>
-            <ArrowRight className="w-5 h-5 text-emerald-400" />
+            <ArrowRight className="w-5 h-5 text-[var(--semantic-success)]" />
           </div>
         </motion.div>
       )}
