@@ -32,17 +32,17 @@ interface RelationshipHealthProps {
 // ============================================================================
 
 function getScoreColor(score: number): string {
-  if (score >= 80) return 'text-emerald-600';
-  if (score >= 60) return 'text-amber-600';
-  if (score >= 40) return 'text-orange-600';
-  return 'text-red-600';
+  if (score >= 80) return 'text-[var(--semantic-success)]';
+  if (score >= 60) return 'text-[var(--semantic-warning)]';
+  if (score >= 40) return 'text-[var(--semantic-warning)]';
+  return 'text-[var(--semantic-error)]';
 }
 
 function getScoreBackground(score: number): string {
-  if (score >= 80) return 'bg-emerald-100';
-  if (score >= 60) return 'bg-amber-100';
-  if (score >= 40) return 'bg-orange-100';
-  return 'bg-red-100';
+  if (score >= 80) return 'bg-[var(--semantic-success-subtle)]';
+  if (score >= 60) return 'bg-[var(--semantic-warning-subtle)]';
+  if (score >= 40) return 'bg-[var(--semantic-warning-subtle)]';
+  return 'bg-[var(--semantic-error-subtle)]';
 }
 
 function getScoreLabel(score: number): string {
@@ -85,7 +85,7 @@ function ScoreCircle({ score, size = 'md' }: { score: number; size?: 'sm' | 'md'
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-stone-200"
+          className="text-[var(--border-default)]"
         />
         {/* Progress circle */}
         <circle
@@ -121,17 +121,17 @@ function PriorityItem({
   onClick?: () => void;
 }) {
   const urgencyColors = {
-    high: 'bg-red-50 border-red-200',
-    medium: 'bg-amber-50 border-amber-200',
-    low: 'bg-yellow-50 border-yellow-200',
-    none: 'bg-stone-50 border-stone-200',
+    high: 'bg-[var(--semantic-error-subtle)] border-[var(--semantic-error)]',
+    medium: 'bg-[var(--semantic-warning-subtle)] border-[var(--semantic-warning)]',
+    low: 'bg-[var(--semantic-warning-subtle)] border-[var(--semantic-warning)]',
+    none: 'bg-[var(--bg-muted)] border-[var(--border-default)]',
   };
 
   const urgencyIcons = {
-    high: <AlertTriangle className="w-4 h-4 text-red-500" />,
-    medium: <AlertTriangle className="w-4 h-4 text-amber-500" />,
-    low: <Minus className="w-4 h-4 text-yellow-500" />,
-    none: <CheckCircle className="w-4 h-4 text-green-500" />,
+    high: <AlertTriangle className="w-4 h-4 text-[var(--semantic-error)]" />,
+    medium: <AlertTriangle className="w-4 h-4 text-[var(--semantic-warning)]" />,
+    low: <Minus className="w-4 h-4 text-[var(--semantic-warning)]" />,
+    none: <CheckCircle className="w-4 h-4 text-[var(--semantic-success)]" />,
   };
 
   return (
@@ -141,15 +141,15 @@ function PriorityItem({
     >
       {urgencyIcons[health.urgency]}
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900 truncate">{health.personName}</div>
-        <div className="text-xs text-stone-500">
+        <div className="font-medium text-[var(--text-primary)] truncate">{health.personName}</div>
+        <div className="text-xs text-[var(--text-secondary)]">
           {health.overdueBy > 0
             ? `${health.overdueBy} days overdue`
             : `Last contact ${health.daysSinceContact} days ago`}
         </div>
       </div>
       {health.nextAction && (
-        <ChevronRight className="w-4 h-4 text-stone-400" />
+        <ChevronRight className="w-4 h-4 text-[var(--text-tertiary)]" />
       )}
     </button>
   );
@@ -169,32 +169,32 @@ function FullRelationshipHealth({
   const overall = calculateOverallRelationshipHealth(relationships);
 
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-6">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-6">
       {/* Header with score */}
       <div className="flex items-start gap-6 mb-6">
         <ScoreCircle score={overall.score} size="lg" />
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-stone-900 mb-1">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">
             Relationship Health
           </h3>
-          <p className="text-sm text-stone-500 mb-3">
+          <p className="text-sm text-[var(--text-secondary)] mb-3">
             {getScoreLabel(overall.score)}
           </p>
           <div className="flex gap-4 text-sm">
             <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span className="text-stone-600">{overall.healthyCount} healthy</span>
+              <CheckCircle className="w-4 h-4 text-[var(--semantic-success)]" />
+              <span className="text-[var(--text-secondary)]">{overall.healthyCount} healthy</span>
             </div>
             {overall.atRiskCount > 0 && (
               <div className="flex items-center gap-1">
-                <AlertTriangle className="w-4 h-4 text-amber-500" />
-                <span className="text-stone-600">{overall.atRiskCount} at risk</span>
+                <AlertTriangle className="w-4 h-4 text-[var(--semantic-warning)]" />
+                <span className="text-[var(--text-secondary)]">{overall.atRiskCount} at risk</span>
               </div>
             )}
             {overall.criticalCount > 0 && (
               <div className="flex items-center gap-1">
-                <AlertTriangle className="w-4 h-4 text-red-500" />
-                <span className="text-stone-600">{overall.criticalCount} critical</span>
+                <AlertTriangle className="w-4 h-4 text-[var(--semantic-error)]" />
+                <span className="text-[var(--text-secondary)]">{overall.criticalCount} critical</span>
               </div>
             )}
           </div>
@@ -204,7 +204,7 @@ function FullRelationshipHealth({
       {/* Priorities */}
       {overall.topPriorities.length > 0 && (
         <div>
-          <h4 className="text-sm font-medium text-stone-700 mb-3">
+          <h4 className="text-sm font-medium text-[var(--text-secondary)] mb-3">
             Needs your attention
           </h4>
           <div className="space-y-2">
@@ -219,7 +219,7 @@ function FullRelationshipHealth({
       {onViewDetails && (
         <button
           onClick={onViewDetails}
-          className="mt-4 w-full py-2 text-sm text-stone-500 hover:text-stone-700 transition flex items-center justify-center gap-1"
+          className="mt-4 w-full py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition flex items-center justify-center gap-1"
         >
           View all relationships
           <ChevronRight className="w-4 h-4" />
@@ -245,14 +245,14 @@ function CompactRelationshipHealth({
   return (
     <button
       onClick={onViewDetails}
-      className="w-full flex items-center gap-4 p-4 bg-white rounded-xl border border-stone-200 hover:shadow-sm transition text-left"
+      className="w-full flex items-center gap-4 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] hover:shadow-sm transition text-left"
     >
       <div className={`w-12 h-12 rounded-full ${getScoreBackground(overall.score)} flex items-center justify-center`}>
         <Users className={`w-6 h-6 ${getScoreColor(overall.score)}`} />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900">Relationships</div>
-        <div className="text-sm text-stone-500">
+        <div className="font-medium text-[var(--text-primary)]">Relationships</div>
+        <div className="text-sm text-[var(--text-secondary)]">
           {overall.healthyCount} healthy
           {overall.atRiskCount > 0 && ` • ${overall.atRiskCount} need attention`}
         </div>
@@ -261,9 +261,9 @@ function CompactRelationshipHealth({
         <div className={`text-2xl font-light ${getScoreColor(overall.score)}`}>
           {overall.score}
         </div>
-        <div className="text-xs text-stone-400">score</div>
+        <div className="text-xs text-[var(--text-tertiary)]">score</div>
       </div>
-      <ChevronRight className="w-5 h-5 text-stone-400" />
+      <ChevronRight className="w-5 h-5 text-[var(--text-tertiary)]" />
     </button>
   );
 }
@@ -283,7 +283,7 @@ function MinimalRelationshipHealth({
     <div className="flex items-center gap-3">
       <Users className={`w-5 h-5 ${getScoreColor(overall.score)}`} />
       <div className="flex-1">
-        <div className="text-sm font-medium text-stone-700">Relationships</div>
+        <div className="text-sm font-medium text-[var(--text-secondary)]">Relationships</div>
       </div>
       <div className={`text-lg font-light ${getScoreColor(overall.score)}`}>
         {overall.score}

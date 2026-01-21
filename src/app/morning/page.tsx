@@ -271,7 +271,7 @@ function DayOverviewStep({
           }}
         >
           <Calendar className="w-4 h-4" />
-          <span className="text-label-md">Today's Schedule</span>
+          <span className="text-label-md">Today&apos;s Schedule</span>
         </div>
 
         <div className="stack-md">
@@ -489,7 +489,7 @@ function QuickWinsStep({
           Your morning is clear for focus work.
         </p>
         <button onClick={onNext} className="btn btn-primary btn-lg">
-          Let's go
+          Let&apos;s go
         </button>
       </motion.div>
     );
@@ -663,7 +663,7 @@ function ReadyStep({ onComplete }: { onComplete: () => void }) {
           fontWeight: 'var(--weight-medium)',
         }}
       >
-        You're set
+        You&apos;re set
       </h2>
       <p
         className="text-body-xl"

@@ -18,7 +18,6 @@ import { SkeletonBrief, SkeletonHero, SkeletonTimeline, SkeletonTaskList } from 
 import { LifePulseStrip, getDefaultPulseItems } from '@/components/life-pulse';
 import { VisualTimelineBar, getDefaultTimelineEvents, EventDetailModal, type TimelineEvent } from '@/components/timeline';
 import { ViewModeProvider, ViewModeToggle } from '@/components/ui/ViewModeToggle';
-import { ThemeSwitcher } from '@/components/theme';
 
 // ============================================================================
 // EDITORIAL COMPONENTS
@@ -148,7 +147,7 @@ function EditorsBrief({ briefing }: { briefing: ReturnType<typeof generateAIBrie
               display: 'block'
             }}
           >
-            Today's Outlook
+            Today&apos;s Outlook
           </span>
           <h2
             className="text-display-sm"
@@ -747,7 +746,7 @@ export default function DailyPulse() {
 
     // Join meeting
     if (actionId === 'join_meeting') {
-      const meetLink = (item as any)?.meetLink || (item as any)?.originalData?.meetLink;
+      const meetLink = item?.meetLink || (item?.originalData as { meetLink?: string })?.meetLink;
       if (meetLink) {
         window.open(meetLink, '_blank');
       } else {

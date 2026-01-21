@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+interface DirectionStep {
+  html_instructions: string;
+  distance: { text: string };
+  duration: { text: string };
+}
+
 /**
  * Google Maps Directions API
  * Returns route information including traffic-aware travel times
@@ -67,7 +73,7 @@ export async function POST(request: Request) {
       distance: leg.distance.text,
       duration: leg.duration.text,
       durationInTraffic: leg.duration_in_traffic?.text || leg.duration.text,
-      steps: leg.steps.map((step: any) => ({
+      steps: leg.steps.map((step: DirectionStep) => ({
         instruction: step.html_instructions.replace(/<[^>]*>/g, ''), // Strip HTML tags
         distance: step.distance.text,
         duration: step.duration.text,
