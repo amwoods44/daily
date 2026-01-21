@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Settings, Calendar, Mail, Cloud, Sparkles, ArrowLeft, Check, X, ExternalLink } from 'lucide-react';
+import { Settings, Calendar, Mail, Cloud, Sparkles, ArrowLeft, Check, X, ExternalLink, Sliders } from 'lucide-react';
 import Link from 'next/link';
 
 interface ConnectionStatus {
@@ -112,6 +112,40 @@ export default function SettingsPage() {
           padding: 'var(--space-8) var(--space-6)',
         }}
       >
+        {/* Dashboard Customization Card */}
+        <div
+          className="card-accent"
+          style={{
+            marginBottom: 'var(--space-8)',
+          }}
+        >
+          <div
+            className="flex items-center"
+            style={{ gap: 'var(--space-4)' }}
+          >
+            <div className="stat-icon">
+              <Sliders className="w-6 h-6" style={{ color: 'var(--brand-primary)' }} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <h2
+                className="text-heading-lg"
+                style={{
+                  color: 'var(--text-primary)',
+                  marginBottom: 'var(--space-1)',
+                }}
+              >
+                Customize Dashboard
+              </h2>
+              <p className="text-body-sm" style={{ color: 'var(--text-tertiary)' }}>
+                Personalize layout, toggle sections, set your name and location
+              </p>
+            </div>
+            <Link href="/settings/dashboard" className="btn btn-primary">
+              Configure →
+            </Link>
+          </div>
+        </div>
+
         <section
           className="card stack-xs"
           style={{
