@@ -77,15 +77,15 @@ function getAccountIcon(type: string) {
 function getAccountColor(type: string): string {
   switch (type) {
     case 'checking':
-      return 'bg-blue-100 text-blue-600';
+      return 'bg-[var(--semantic-info-subtle)] text-[var(--semantic-info)]';
     case 'savings':
-      return 'bg-emerald-100 text-emerald-600';
+      return 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)]';
     case 'credit':
-      return 'bg-purple-100 text-purple-600';
+      return 'bg-[var(--brand-primary-subtle)] text-[var(--brand-primary)]';
     case 'investment':
-      return 'bg-amber-100 text-amber-600';
+      return 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)]';
     default:
-      return 'bg-stone-100 text-stone-600';
+      return 'bg-[var(--bg-muted)] text-[var(--text-secondary)]';
   }
 }
 
@@ -102,21 +102,21 @@ function AccountCard({ account, onClick }: AccountCardProps) {
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-4 p-4 bg-white rounded-xl border border-stone-200 hover:shadow-sm transition text-left w-full"
+      className="flex items-center gap-4 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] hover:shadow-sm transition text-left w-full"
     >
       <div className={`w-10 h-10 rounded-lg ${getAccountColor(account.type)} flex items-center justify-center`}>
         {getAccountIcon(account.type)}
       </div>
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900 truncate">{account.name}</div>
-        <div className="text-xs text-stone-500 capitalize">{account.type}</div>
+        <div className="font-medium text-[var(--text-primary)] truncate">{account.name}</div>
+        <div className="text-xs text-[var(--text-secondary)] capitalize">{account.type}</div>
       </div>
       <div className="text-right">
-        <div className={`font-semibold ${isCredit ? 'text-purple-600' : 'text-stone-900'}`}>
+        <div className={`font-semibold ${isCredit ? 'text-[var(--brand-primary)]' : 'text-[var(--text-primary)]'}`}>
           {isCredit ? '-' : ''}{formatCurrencyDetailed(account.balance)}
         </div>
         {utilization !== undefined && (
-          <div className={`text-xs ${utilization > 30 ? 'text-amber-600' : 'text-stone-400'}`}>
+          <div className={`text-xs ${utilization > 30 ? 'text-[var(--semantic-warning)]' : 'text-[var(--text-tertiary)]'}`}>
             {Math.round(utilization)}% used
           </div>
         )}
@@ -146,23 +146,23 @@ function SpendingProgress({
   const isAheadOfPace = percentage > expectedPercentage + 10;
 
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-4">
+    <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-4">
       <div className="flex items-center justify-between mb-3">
-        <div className="text-sm font-medium text-stone-700">Monthly Budget</div>
-        <div className="text-xs text-stone-500">
+        <div className="text-sm font-medium text-[var(--text-primary)]">Monthly Budget</div>
+        <div className="text-xs text-[var(--text-secondary)]">
           {Math.round(percentage)}% used
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-2 bg-stone-100 rounded-full overflow-hidden mb-3">
+      <div className="h-2 bg-[var(--bg-muted)] rounded-full overflow-hidden mb-3">
         <div
           className={`h-full rounded-full transition-all ${
             isOverBudget
-              ? 'bg-red-500'
+              ? 'bg-[var(--semantic-error)]'
               : isAheadOfPace
-                ? 'bg-amber-500'
-                : 'bg-emerald-500'
+                ? 'bg-[var(--semantic-warning)]'
+                : 'bg-[var(--semantic-success)]'
           }`}
           style={{ width: `${Math.min(percentage, 100)}%` }}
         />
@@ -171,14 +171,14 @@ function SpendingProgress({
       {/* Stats */}
       <div className="flex justify-between text-sm">
         <div>
-          <div className="text-stone-500">Spent</div>
-          <div className="font-semibold text-stone-900">
+          <div className="text-[var(--text-secondary)]">Spent</div>
+          <div className="font-semibold text-[var(--text-primary)]">
             {formatCurrency(spent)}
           </div>
         </div>
         <div className="text-right">
-          <div className="text-stone-500">Remaining</div>
-          <div className={`font-semibold ${remaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+          <div className="text-[var(--text-secondary)]">Remaining</div>
+          <div className={`font-semibold ${remaining >= 0 ? 'text-[var(--semantic-success)]' : 'text-[var(--semantic-error)]'}`}>
             {formatCurrency(remaining)}
           </div>
         </div>
@@ -186,13 +186,13 @@ function SpendingProgress({
 
       {/* Warning */}
       {isAheadOfPace && !isOverBudget && (
-        <div className="mt-3 flex items-center gap-2 text-xs text-amber-600 bg-amber-50 p-2 rounded-lg">
+        <div className="mt-3 flex items-center gap-2 text-xs text-[var(--semantic-warning)] bg-[var(--semantic-warning-subtle)] p-2 rounded-lg">
           <AlertCircle className="w-4 h-4" />
           Spending faster than usual
         </div>
       )}
       {isOverBudget && (
-        <div className="mt-3 flex items-center gap-2 text-xs text-red-600 bg-red-50 p-2 rounded-lg">
+        <div className="mt-3 flex items-center gap-2 text-xs text-[var(--semantic-error)] bg-[var(--semantic-error-subtle)] p-2 rounded-lg">
           <AlertCircle className="w-4 h-4" />
           Over budget by {formatCurrency(Math.abs(remaining))}
         </div>
@@ -215,17 +215,17 @@ function InvestmentSummary({
   const isPositive = change >= 0;
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-      <div className="w-10 h-10 rounded-lg bg-amber-200 text-amber-700 flex items-center justify-center">
+    <div className="flex items-center gap-4 p-4 bg-[var(--semantic-warning-subtle)] rounded-xl border border-[var(--semantic-warning)]">
+      <div className="w-10 h-10 rounded-lg bg-[var(--semantic-warning)] text-[var(--text-on-accent)] flex items-center justify-center">
         <TrendingUp className="w-5 h-5" />
       </div>
       <div className="flex-1">
-        <div className="text-sm text-amber-700">Investments</div>
-        <div className="font-semibold text-amber-900">
+        <div className="text-sm text-[var(--semantic-warning)]">Investments</div>
+        <div className="font-semibold text-[var(--text-primary)]">
           {formatCurrency(value)}
         </div>
       </div>
-      <div className={`flex items-center gap-1 ${isPositive ? 'text-emerald-600' : 'text-red-600'}`}>
+      <div className={`flex items-center gap-1 ${isPositive ? 'text-[var(--semantic-success)]' : 'text-[var(--semantic-error)]'}`}>
         {isPositive ? (
           <ArrowUpRight className="w-4 h-4" />
         ) : (
@@ -253,12 +253,12 @@ function FullAccountOverview({
   return (
     <div className="space-y-4">
       {/* Net position header */}
-      <div className="bg-white rounded-xl border border-stone-200 p-5">
-        <div className="text-sm text-stone-500 mb-1">Available Cash</div>
-        <div className="text-3xl font-light text-stone-900">
+      <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] p-5">
+        <div className="text-sm text-[var(--text-secondary)] mb-1">Available Cash</div>
+        <div className="text-3xl font-light text-[var(--text-primary)]">
           {formatCurrencyDetailed(totalLiquid)}
         </div>
-        <div className="text-sm text-stone-500 mt-2">
+        <div className="text-sm text-[var(--text-secondary)] mt-2">
           Checking: {formatCurrency(finance.checking)} • Savings: {formatCurrency(finance.savings)}
         </div>
       </div>
@@ -305,7 +305,7 @@ function FullAccountOverview({
       {onViewDetails && (
         <button
           onClick={onViewDetails}
-          className="w-full py-3 text-sm text-stone-500 hover:text-stone-700 transition flex items-center justify-center gap-1"
+          className="w-full py-3 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition flex items-center justify-center gap-1"
         >
           View all accounts
           <ChevronRight className="w-4 h-4" />
@@ -332,27 +332,27 @@ function CompactAccountOverview({
   return (
     <button
       onClick={onViewDetails}
-      className="w-full flex items-center gap-4 p-4 bg-white rounded-xl border border-stone-200 hover:shadow-sm transition text-left"
+      className="w-full flex items-center gap-4 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] hover:shadow-sm transition text-left"
     >
-      <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
-        <Wallet className="w-6 h-6 text-emerald-600" />
+      <div className="w-12 h-12 rounded-full bg-[var(--semantic-success-subtle)] flex items-center justify-center">
+        <Wallet className="w-6 h-6 text-[var(--semantic-success)]" />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-stone-900">Finances</div>
-        <div className="text-sm text-stone-500">
+        <div className="font-medium text-[var(--text-primary)]">Finances</div>
+        <div className="text-sm text-[var(--text-secondary)]">
           {formatCurrency(totalLiquid)} available
           {spendingPercentage > 80 && (
-            <span className="text-amber-600"> • {Math.round(100 - spendingPercentage)}% budget left</span>
+            <span className="text-[var(--semantic-warning)]"> • {Math.round(100 - spendingPercentage)}% budget left</span>
           )}
         </div>
       </div>
       <div className="text-right">
-        <div className="text-2xl font-light text-emerald-600">
+        <div className="text-2xl font-light text-[var(--semantic-success)]">
           {formatCurrency(totalLiquid)}
         </div>
-        <div className="text-xs text-stone-400">liquid</div>
+        <div className="text-xs text-[var(--text-tertiary)]">liquid</div>
       </div>
-      <ChevronRight className="w-5 h-5 text-stone-400" />
+      <ChevronRight className="w-5 h-5 text-[var(--text-tertiary)]" />
     </button>
   );
 }
@@ -366,11 +366,11 @@ function MinimalAccountOverview({ finance }: { finance: FinanceOverview }) {
 
   return (
     <div className="flex items-center gap-3">
-      <Wallet className="w-5 h-5 text-emerald-600" />
+      <Wallet className="w-5 h-5 text-[var(--semantic-success)]" />
       <div className="flex-1">
-        <div className="text-sm font-medium text-stone-700">Finances</div>
+        <div className="text-sm font-medium text-[var(--text-primary)]">Finances</div>
       </div>
-      <div className="text-lg font-light text-emerald-600">
+      <div className="text-lg font-light text-[var(--semantic-success)]">
         {formatCurrency(totalLiquid)}
       </div>
     </div>
