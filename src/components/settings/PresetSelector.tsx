@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, Upload, Check } from 'lucide-react';
+import { Download, Upload } from 'lucide-react';
 import { PRESETS, type DashboardConfig } from '@/lib/preferences/dashboard-config';
 
 interface PresetSelectorProps {
@@ -12,12 +12,10 @@ interface PresetSelectorProps {
 }
 
 export function PresetSelector({
-  currentConfig,
   onApplyPreset,
   onExport,
   onImport,
 }: PresetSelectorProps) {
-  const [importing, setImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
 
   const handleExport = () => {
@@ -48,7 +46,6 @@ export function PresetSelector({
 
         if (success) {
           setImportError(null);
-          setImporting(false);
           alert('Settings imported successfully!');
         } else {
           setImportError('Invalid configuration file');
