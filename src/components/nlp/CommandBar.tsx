@@ -101,13 +101,13 @@ function SuggestionItem({
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-4 py-3 text-left transition ${
         isSelected
-          ? 'bg-stone-100 text-stone-900'
-          : 'text-stone-600 hover:bg-stone-50'
+          ? 'bg-[var(--bg-muted)] text-[var(--text-primary)]'
+          : 'text-[var(--text-secondary)] hover:bg-[var(--bg-accent-subtle)]'
       }`}
     >
-      <Icon className="w-4 h-4 text-stone-400" />
+      <Icon className="w-4 h-4 text-[var(--text-tertiary)]" />
       <span className="flex-1 text-sm">{suggestion}</span>
-      <ChevronRight className={`w-4 h-4 ${isSelected ? 'text-stone-500' : 'text-stone-300'}`} />
+      <ChevronRight className={`w-4 h-4 ${isSelected ? 'text-[var(--text-secondary)]' : 'text-[var(--text-quaternary)]'}`} />
     </button>
   );
 }
@@ -128,7 +128,7 @@ function QuickCommandChip({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-2 px-3 py-1.5 bg-stone-100 hover:bg-stone-200 rounded-full text-xs text-stone-600 transition"
+      className="flex items-center gap-2 px-3 py-1.5 bg-[var(--bg-muted)] hover:bg-[var(--border-default)] rounded-full text-xs text-[var(--text-secondary)] transition"
     >
       <Icon className="w-3 h-3" />
       <span>{label}</span>
@@ -153,22 +153,22 @@ function ResultDisplay({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`px-4 py-4 border-t border-stone-100 ${
-        result.success ? 'bg-stone-50' : 'bg-red-50'
+      className={`px-4 py-4 border-t border-[var(--border-subtle)] ${
+        result.success ? 'bg-[var(--bg-muted)]' : 'bg-[var(--semantic-error-subtle)]'
       }`}
     >
       <div className="flex items-start gap-3">
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-          result.success ? 'bg-emerald-100' : 'bg-red-100'
+          result.success ? 'bg-[var(--semantic-success-subtle)]' : 'bg-[var(--semantic-error-subtle)]'
         }`}>
           {result.success ? (
-            <Icon className="w-4 h-4 text-emerald-600" />
+            <Icon className="w-4 h-4 text-[var(--semantic-success)]" />
           ) : (
-            <AlertCircle className="w-4 h-4 text-red-600" />
+            <AlertCircle className="w-4 h-4 text-[var(--semantic-error)]" />
           )}
         </div>
         <div className="flex-1">
-          <p className={`text-sm ${result.success ? 'text-stone-700' : 'text-red-700'}`}>
+          <p className={`text-sm ${result.success ? 'text-[var(--text-secondary)]' : 'text-[var(--semantic-error)]'}`}>
             {result.message}
           </p>
 
@@ -176,11 +176,11 @@ function ResultDisplay({
           {result.success && result.data?.events && (
             <div className="mt-3 space-y-2">
               {result.data.events.slice(0, 3).map((event, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs text-stone-500">
+                <div key={i} className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
                   <Clock className="w-3 h-3" />
                   <span>{event.title}</span>
                   {event.time && (
-                    <span className="text-stone-400">
+                    <span className="text-[var(--text-tertiary)]">
                       {new Date(event.time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
                     </span>
                   )}
@@ -192,11 +192,11 @@ function ResultDisplay({
           {result.success && result.data?.tasks && (
             <div className="mt-3 space-y-2">
               {result.data.tasks.slice(0, 3).map((task, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs text-stone-500">
+                <div key={i} className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
                   <CheckSquare className="w-3 h-3" />
                   <span>{task.title}</span>
                   {task.priority === 'high' && (
-                    <span className="px-1.5 py-0.5 bg-red-100 text-red-600 rounded text-[10px]">High</span>
+                    <span className="px-1.5 py-0.5 bg-[var(--semantic-error-subtle)] text-[var(--semantic-error)] rounded text-[10px]">High</span>
                   )}
                 </div>
               ))}
@@ -209,17 +209,17 @@ function ResultDisplay({
                 const health = result.data.health as { sleep: { hours: number }; steps: number; hrv: number };
                 return (
                   <>
-                    <div className="text-center p-2 bg-white rounded-lg">
-                      <div className="text-lg font-medium text-stone-900">{health.sleep.hours.toFixed(1)}h</div>
-                      <div className="text-[10px] text-stone-500">Sleep</div>
+                    <div className="text-center p-2 bg-[var(--bg-surface)] rounded-lg">
+                      <div className="text-lg font-medium text-[var(--text-primary)]">{health.sleep.hours.toFixed(1)}h</div>
+                      <div className="text-[10px] text-[var(--text-secondary)]">Sleep</div>
                     </div>
-                    <div className="text-center p-2 bg-white rounded-lg">
-                      <div className="text-lg font-medium text-stone-900">{health.steps.toLocaleString()}</div>
-                      <div className="text-[10px] text-stone-500">Steps</div>
+                    <div className="text-center p-2 bg-[var(--bg-surface)] rounded-lg">
+                      <div className="text-lg font-medium text-[var(--text-primary)]">{health.steps.toLocaleString()}</div>
+                      <div className="text-[10px] text-[var(--text-secondary)]">Steps</div>
                     </div>
-                    <div className="text-center p-2 bg-white rounded-lg">
-                      <div className="text-lg font-medium text-stone-900">{health.hrv}</div>
-                      <div className="text-[10px] text-stone-500">HRV</div>
+                    <div className="text-center p-2 bg-[var(--bg-surface)] rounded-lg">
+                      <div className="text-lg font-medium text-[var(--text-primary)]">{health.hrv}</div>
+                      <div className="text-[10px] text-[var(--text-secondary)]">HRV</div>
                     </div>
                   </>
                 );
@@ -412,14 +412,14 @@ export function CommandBar({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+          className="relative w-full max-w-xl bg-[var(--bg-surface)] rounded-2xl shadow-2xl overflow-hidden"
         >
           {/* Input area */}
-          <div className="flex items-center gap-3 px-4 py-4 border-b border-stone-100">
+          <div className="flex items-center gap-3 px-4 py-4 border-b border-[var(--border-subtle)]">
             {isProcessing ? (
-              <Loader2 className="w-5 h-5 text-stone-400 animate-spin" />
+              <Loader2 className="w-5 h-5 text-[var(--text-tertiary)] animate-spin" />
             ) : (
-              <Command className="w-5 h-5 text-stone-400" />
+              <Command className="w-5 h-5 text-[var(--text-tertiary)]" />
             )}
             <input
               ref={inputRef}
@@ -428,7 +428,7 @@ export function CommandBar({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask anything..."
-              className="flex-1 text-stone-900 placeholder-stone-400 outline-none text-base"
+              className="flex-1 bg-transparent text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none text-base"
               disabled={isProcessing}
             />
             <div className="flex items-center gap-2">
@@ -436,8 +436,8 @@ export function CommandBar({
                 onClick={toggleVoice}
                 className={`p-2 rounded-lg transition ${
                   isListening
-                    ? 'bg-red-100 text-red-600'
-                    : 'hover:bg-stone-100 text-stone-400'
+                    ? 'bg-[var(--semantic-error-subtle)] text-[var(--semantic-error)]'
+                    : 'hover:bg-[var(--bg-muted)] text-[var(--text-tertiary)]'
                 }`}
               >
                 {isListening ? (
@@ -449,7 +449,7 @@ export function CommandBar({
               {input && (
                 <button
                   onClick={() => setInput('')}
-                  className="p-2 hover:bg-stone-100 rounded-lg text-stone-400"
+                  className="p-2 hover:bg-[var(--bg-muted)] rounded-lg text-[var(--text-tertiary)]"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -478,8 +478,8 @@ export function CommandBar({
 
           {/* Quick commands */}
           {!result && !input && (
-            <div className="px-4 py-3 border-t border-stone-100">
-              <div className="text-xs text-stone-400 mb-2">Quick commands</div>
+            <div className="px-4 py-3 border-t border-[var(--border-subtle)]">
+              <div className="text-xs text-[var(--text-tertiary)] mb-2">Quick commands</div>
               <div className="flex flex-wrap gap-2">
                 {QUICK_COMMANDS.map((cmd) => (
                   <QuickCommandChip
@@ -494,23 +494,23 @@ export function CommandBar({
           )}
 
           {/* Keyboard hints */}
-          <div className="px-4 py-2 bg-stone-50 border-t border-stone-100 flex items-center justify-between text-xs text-stone-400">
+          <div className="px-4 py-2 bg-[var(--bg-muted)] border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--text-tertiary)]">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-[10px]">↑↓</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] rounded border border-[var(--border-default)] text-[10px]">↑↓</kbd>
                 Navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-[10px]">Tab</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] rounded border border-[var(--border-default)] text-[10px]">Tab</kbd>
                 Complete
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-[10px]">↵</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] rounded border border-[var(--border-default)] text-[10px]">↵</kbd>
                 Execute
               </span>
             </div>
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-white rounded border border-stone-200 text-[10px]">Esc</kbd>
+              <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] rounded border border-[var(--border-default)] text-[10px]">Esc</kbd>
               Close
             </span>
           </div>
