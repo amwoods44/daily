@@ -58,9 +58,9 @@ export function MockBadge({
   }
 
   const statusColors = {
-    mock: 'bg-amber-100 text-amber-700 border-amber-200',
-    partial: 'bg-blue-100 text-blue-700 border-blue-200',
-    real: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+    mock: 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)] border-[var(--semantic-warning)]',
+    partial: 'bg-[var(--semantic-info-subtle)] text-[var(--semantic-info)] border-[var(--semantic-info)]',
+    real: 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)] border-[var(--semantic-success)]',
   };
 
   const positionClasses = {
@@ -99,37 +99,37 @@ export function MockBadge({
       </button>
 
       {expanded && (
-        <div className="absolute top-full right-0 mt-1 w-64 bg-white rounded-lg border border-stone-200 shadow-lg p-3 text-xs">
-          <div className="font-medium text-stone-900 mb-2">
+        <div className="absolute top-full right-0 mt-1 w-64 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-default)] shadow-lg p-3 text-xs">
+          <div className="font-medium text-[var(--text-primary)] mb-2">
             {source.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
           </div>
 
-          <div className="space-y-2 text-stone-600">
+          <div className="space-y-2 text-[var(--text-secondary)]">
             <div>
-              <span className="text-stone-400">Real provider:</span>
+              <span className="text-[var(--text-tertiary)]">Real provider:</span>
               <br />
               {sourceData.realProvider}
             </div>
 
             <div>
-              <span className="text-stone-400">Effort:</span>{' '}
+              <span className="text-[var(--text-tertiary)]">Effort:</span>{' '}
               <span className={`font-medium ${
-                sourceData.effort === 'low' ? 'text-emerald-600' :
-                sourceData.effort === 'medium' ? 'text-amber-600' :
-                'text-red-600'
+                sourceData.effort === 'low' ? 'text-[var(--semantic-success)]' :
+                sourceData.effort === 'medium' ? 'text-[var(--semantic-warning)]' :
+                'text-[var(--semantic-error)]'
               }`}>
                 {sourceData.effort}
               </span>
             </div>
 
             <div>
-              <span className="text-stone-400">Requirements:</span>
+              <span className="text-[var(--text-tertiary)]">Requirements:</span>
               <ul className="mt-1 space-y-0.5 list-disc list-inside text-[11px]">
                 {sourceData.requirements.slice(0, 3).map((req, i) => (
                   <li key={i}>{req}</li>
                 ))}
                 {sourceData.requirements.length > 3 && (
-                  <li className="text-stone-400">
+                  <li className="text-[var(--text-tertiary)]">
                     +{sourceData.requirements.length - 3} more
                   </li>
                 )}
@@ -196,7 +196,7 @@ export function DataSourcesPanel() {
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg border border-amber-300 shadow-lg transition text-sm font-medium"
+        className="fixed bottom-4 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-[var(--semantic-warning-subtle)] hover:bg-[var(--bg-muted)] text-[var(--semantic-warning)] rounded-lg border border-[var(--semantic-warning)] shadow-lg transition text-sm font-medium"
       >
         <AlertCircle className="w-4 h-4" />
         {mockCount}/{totalCount} Mock
@@ -204,21 +204,21 @@ export function DataSourcesPanel() {
 
       {/* Panel */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--text-primary)]/50">
+          <div className="bg-[var(--bg-surface)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-stone-200 flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-[var(--border-default)] flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-stone-900">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Data Sources Status
                 </h2>
-                <p className="text-sm text-stone-500">
+                <p className="text-sm text-[var(--text-tertiary)]">
                   {mockCount} of {totalCount} sources using mock data
                 </p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-stone-100 rounded-lg transition"
+                className="p-2 hover:bg-[var(--bg-muted)] rounded-lg transition"
               >
                 <ChevronDown className="w-5 h-5" />
               </button>
@@ -234,8 +234,8 @@ export function DataSourcesPanel() {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-3 bg-stone-50 border-t border-stone-200 text-xs text-stone-500">
-              Set <code className="bg-stone-200 px-1 rounded">NEXT_PUBLIC_SHOW_MOCK_INDICATORS=false</code> in .env.local to hide these indicators
+            <div className="px-6 py-3 bg-[var(--bg-muted)] border-t border-[var(--border-default)] text-xs text-[var(--text-tertiary)]">
+              Set <code className="bg-[var(--bg-canvas)] px-1 rounded">NEXT_PUBLIC_SHOW_MOCK_INDICATORS=false</code> in .env.local to hide these indicators
             </div>
           </div>
         </div>
@@ -248,28 +248,28 @@ function DataSourceRow({ name, source }: { name: string; source: DataSource }) {
   const [expanded, setExpanded] = useState(false);
 
   const statusColors = {
-    mock: 'bg-amber-100 text-amber-700',
-    partial: 'bg-blue-100 text-blue-700',
-    real: 'bg-emerald-100 text-emerald-700',
+    mock: 'bg-[var(--semantic-warning-subtle)] text-[var(--semantic-warning)]',
+    partial: 'bg-[var(--semantic-info-subtle)] text-[var(--semantic-info)]',
+    real: 'bg-[var(--semantic-success-subtle)] text-[var(--semantic-success)]',
   };
 
   const effortColors = {
-    low: 'text-emerald-600',
-    medium: 'text-amber-600',
-    high: 'text-red-600',
+    low: 'text-[var(--semantic-success)]',
+    medium: 'text-[var(--semantic-warning)]',
+    high: 'text-[var(--semantic-error)]',
   };
 
   return (
-    <div className="border border-stone-200 rounded-lg overflow-hidden">
+    <div className="border border-[var(--border-default)] rounded-lg overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-stone-50 transition text-left"
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-[var(--bg-muted)] transition text-left"
       >
         <div className="flex items-center gap-3">
           <span className={`px-2 py-0.5 text-xs font-medium rounded ${statusColors[source.status]}`}>
             {source.status}
           </span>
-          <span className="font-medium text-stone-900">
+          <span className="font-medium text-[var(--text-primary)]">
             {name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
           </span>
         </div>
@@ -278,23 +278,23 @@ function DataSourceRow({ name, source }: { name: string; source: DataSource }) {
             {source.effort} effort
           </span>
           {expanded ? (
-            <ChevronUp className="w-4 h-4 text-stone-400" />
+            <ChevronUp className="w-4 h-4 text-[var(--text-tertiary)]" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-stone-400" />
+            <ChevronDown className="w-4 h-4 text-[var(--text-tertiary)]" />
           )}
         </div>
       </button>
 
       {expanded && (
-        <div className="px-4 py-3 bg-stone-50 border-t border-stone-200 text-sm">
+        <div className="px-4 py-3 bg-[var(--bg-muted)] border-t border-[var(--border-default)] text-sm">
           <div className="mb-2">
-            <span className="text-stone-500">Real provider:</span>{' '}
-            <span className="text-stone-700">{source.realProvider}</span>
+            <span className="text-[var(--text-tertiary)]">Real provider:</span>{' '}
+            <span className="text-[var(--text-secondary)]">{source.realProvider}</span>
           </div>
 
           <div className="mb-2">
-            <span className="text-stone-500">Requirements:</span>
-            <ul className="mt-1 space-y-1 list-disc list-inside text-stone-600 text-xs">
+            <span className="text-[var(--text-tertiary)]">Requirements:</span>
+            <ul className="mt-1 space-y-1 list-disc list-inside text-[var(--text-secondary)] text-xs">
               {source.requirements.map((req, i) => (
                 <li key={i}>{req}</li>
               ))}
@@ -302,8 +302,8 @@ function DataSourceRow({ name, source }: { name: string; source: DataSource }) {
           </div>
 
           <div>
-            <span className="text-stone-500">Files to modify:</span>
-            <ul className="mt-1 space-y-0.5 text-xs font-mono text-stone-600">
+            <span className="text-[var(--text-tertiary)]">Files to modify:</span>
+            <ul className="mt-1 space-y-0.5 text-xs font-mono text-[var(--text-secondary)]">
               {source.files.map((file, i) => (
                 <li key={i}>{file}</li>
               ))}
