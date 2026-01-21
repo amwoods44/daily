@@ -126,7 +126,7 @@ export function AttachmentViewer({
         ) : isPdf ? (
           <iframe
             src={attachment.dataUrl}
-            className="w-full h-full bg-white rounded-lg"
+            className="w-full h-full bg-[var(--bg-surface)] rounded-lg"
             title={attachment.name}
           />
         ) : (
